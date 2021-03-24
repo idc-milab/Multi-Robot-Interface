@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Multi-Robot-Interface/static/css/main.a50b1b76.chunk.css",
+    "main.js": "/Multi-Robot-Interface/static/js/main.1a41b617.chunk.js",
+    "main.js.map": "/Multi-Robot-Interface/static/js/main.1a41b617.chunk.js.map",
+    "runtime-main.js": "/Multi-Robot-Interface/static/js/runtime-main.17da6232.js",
+    "runtime-main.js.map": "/Multi-Robot-Interface/static/js/runtime-main.17da6232.js.map",
+    "static/js/2.d6f4d3ba.chunk.js": "/Multi-Robot-Interface/static/js/2.d6f4d3ba.chunk.js",
+    "static/js/2.d6f4d3ba.chunk.js.map": "/Multi-Robot-Interface/static/js/2.d6f4d3ba.chunk.js.map",
+    "index.html": "/Multi-Robot-Interface/index.html",
+    "precache-manifest.3852245a4251616090f143351d7cd4a7.js": "/Multi-Robot-Interface/precache-manifest.3852245a4251616090f143351d7cd4a7.js",
+    "service-worker.js": "/Multi-Robot-Interface/service-worker.js",
+    "static/css/main.a50b1b76.chunk.css.map": "/Multi-Robot-Interface/static/css/main.a50b1b76.chunk.css.map",
+    "static/js/2.d6f4d3ba.chunk.js.LICENSE.txt": "/Multi-Robot-Interface/static/js/2.d6f4d3ba.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.17da6232.js",
+    "static/js/2.d6f4d3ba.chunk.js",
+    "static/css/main.a50b1b76.chunk.css",
+    "static/js/main.1a41b617.chunk.js"
+  ]
+}
