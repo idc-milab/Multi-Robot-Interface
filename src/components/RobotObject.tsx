@@ -17,12 +17,13 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
       console.error('Failed to get robot animations', res);
       return;
     }
-    const animations = res.data.Result.match(/\[.*\]/ig)[0].replace('[', '').replace(']', '').replace(' ', '').split(',');
+    const animations = res.data.Result.match(/\[.*\]/ig)[0].replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
+    console.log(animations);
     setAnimations(animations);
   }
 
   const playAnimationByName = (animation: string) => {
-    butterClient.playAnimation(animation);
+    butterClient.playAnimation(animation.trim());
   }
 
   return (
