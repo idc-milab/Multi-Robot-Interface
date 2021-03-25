@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
-import { RobotObject }  from './components/RobotObject'
+import { RobotObject }  from './components/RobotObject';
 import { useState } from 'react';
-
 
 export type AppState = {
 	dayNightStatus: boolean;
@@ -36,7 +35,8 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	onAddRobotObject = (ip: string) => {
 		const currentButterClient = new HttpClient(ip);
-		if (!this.state.currentButterClients.includes(currentButterClient)) {
+		currentButterClient.timeout = 120;
+		if (!this.state.currentButterClients.map(c => c.ip).some(c => c === ip)) {
 			this.setState({
 				currentButterClients: [...this.state.currentButterClients, currentButterClient]
 			})
@@ -66,7 +66,6 @@ export class App extends React.PureComponent<{}, AppState> {
 		const { currentButterClients } = this.state;
 
 		return (
-
 			<main>
 				<span className='top-font-sizes'>
 					<button onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }}> {this.state.dayNightStatus ? 'Bright' : 'Dark'}</button>
