@@ -1,5 +1,7 @@
 import React, { Component, useEffect, useState } from 'react'
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
+import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
+
 
 export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClient, onRemove: (ip: string) => void }) {
 
@@ -27,15 +29,27 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
   }
 
   return (
-    <div>
-      <div key={butterClient.ip} className='robot-object'>
-        {animations.length === 0 ? 'loading...' : animations.map(animation => (
-          <button className='animation-button'key={animation} onClick={() => playAnimationByName(animation)}>{animation}</button>
-        ))}
-        <footer >
-          <button className='remove' onClick={() => onRemove(butterClient.ip)}>Remove &#10005;</button>
-        </footer>
-      </div>
+    <div className='robot-card'>
+      <Card >
+        <Card.Header>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <p style={{ marginBottom: 0 }}>{butterClient.ip}</p>
+            <Button type="button"  className='remove btn' variant="outline-danger" aria-hidden="true" onClick={() => onRemove(butterClient.ip)} style={{ marginLeft: 'auto' }}> 
+            🗑🤮
+            </Button>
+          </div>
+        </Card.Header>
+        <Card.Body>
+          <div key={butterClient.ip} className='robot-object'>
+            {animations.length === 0 ? 'loading...' : animations.map(animation => (
+              <Button variant='secondary' className='animation-button' key={animation} onClick={() => playAnimationByName(animation)}>{animation}</Button>
+            ))}
+
+          </div>
+        </Card.Body>
+      </Card>
+
+
 
     </div>
   );
