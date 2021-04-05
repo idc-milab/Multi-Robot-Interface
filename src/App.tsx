@@ -84,8 +84,10 @@ export class App extends React.PureComponent<{}, AppState> {
 			<Container>
 					<Navbar bg="dark" variant="dark">
 						<Navbar.Brand href="#home">Multi Robot Operator</Navbar.Brand>
-						<Nav className="mr-auto">
+						<Nav className="ml-auto">
 							<Button variant="secondary" onClick={this.onToggleInstructions}>Instructions</Button>
+							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
+							
 							<Modal show={this.state.show} onHide={!this.state.show}>
 							<Modal.Header translate="true" closeButton>
 								<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
@@ -111,9 +113,6 @@ export class App extends React.PureComponent<{}, AppState> {
 							</Modal.Footer>
 							</Modal>
 						</Nav>
-						<Form inline>
-						<Button onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
-						</Form>
 					</Navbar>
 
 					<Navbar className='robot-search' bg="dark" variant="dark">
