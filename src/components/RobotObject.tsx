@@ -29,7 +29,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
   }
 
   return (
-    <div className='robot-card'>
+    <Container className='robot-card'>
       <Card >
         <Card.Header>
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -51,7 +51,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
 
 
 
-    </div>
+    </Container>
   );
 }
 

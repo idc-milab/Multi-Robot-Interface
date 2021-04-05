@@ -81,10 +81,23 @@ export class App extends React.PureComponent<{}, AppState> {
 
 
 		return (
-			<Container>
+			<div>
 					<Navbar bg="dark" variant="dark">
 						<Navbar.Brand href="#home">Multi Robot Operator</Navbar.Brand>
-						<Nav className="ml-auto">
+					</Navbar>
+
+					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
+					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+					
+						<Form inline>
+						<FormControl as="select" type="IPInput" placeholder="insert IP" className="mr-sm-2" value={this.state.currentIPInput} onChange={(e) => this.setIPValue(e.target.value)}>
+						{this.state.labCurrentIPs.map(ip => (<option>{ip}</option>))}
+						</FormControl>
+
+						<Button variant="outline-info" onClick={() => this.onAddRobotObject(this.state.currentIPInput)}>Connect to Robot</Button>
+						</Form>
+						<Navbar.Collapse id="responsive-navbar-nav">
+						<Nav className="ml-auto" >
 							<Button variant="secondary" onClick={this.onToggleInstructions}>Instructions</Button>
 							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
 							
@@ -113,21 +126,12 @@ export class App extends React.PureComponent<{}, AppState> {
 							</Modal.Footer>
 							</Modal>
 						</Nav>
-					</Navbar>
-
-					<Navbar className='robot-search' bg="dark" variant="dark">
-						<Form inline>
-						<FormControl as="select" type="IPInput" placeholder="insert IP" className="mr-sm-2" value={this.state.currentIPInput} onChange={(e) => this.setIPValue(e.target.value)}>
-						{this.state.labCurrentIPs.map(ip => (<option>{ip}</option>))}
-						</FormControl>
-
-						<Button variant="outline-info" onClick={() => this.onAddRobotObject(this.state.currentIPInput)}>Connect to Robot</Button>
-						</Form>
+						</Navbar.Collapse>
 					</Navbar>
 
 					{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
 
-			</Container>
+			</div>
 		)
 	}
 }
