@@ -41,7 +41,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
         </Card.Header>
         <Card.Body>
           <div key={butterClient.ip} className='robot-object'>
-            {animations.length === 0 ? 'loading...' : animations.map(animation => (
+            {animations.length === 0 ? 'There was a problem connecting to the robot.. please try again..' : animations.map(animation => (
               <Button variant='secondary' className='animation-button' key={animation} onClick={() => playAnimationByName(animation)}>{animation}</Button>
             ))}
 
