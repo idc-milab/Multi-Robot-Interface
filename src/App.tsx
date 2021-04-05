@@ -85,15 +85,27 @@ export class App extends React.PureComponent<{}, AppState> {
 					<Navbar bg="dark" variant="dark">
 						<Navbar.Brand href="#home">Multi Robot Operator</Navbar.Brand>
 						<Nav className="mr-auto">
-							<Button variant="primary" onClick={this.onToggleInstructions}>Instructions</Button>
+							<Button variant="secondary" onClick={this.onToggleInstructions}>Instructions</Button>
 							<Modal show={this.state.show} onHide={!this.state.show}>
-							<Modal.Header translate="false" closeButton>
-								<Modal.Title>Modal heading</Modal.Title>
+							<Modal.Header translate="true" closeButton>
+								<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
 							</Modal.Header>
-							<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+							<Modal.Body>
+								<p>
+								1. Make sure that your robot in connected to a ButterComposer on some laptop around the lab
+								</p>
+								<p>
+								2. Make sure that this computer is connected to milab_idc wifi network (password: milabspirit)
+								</p>
+								<p>
+								3. Try to remove and then add the robot card from the screen if there are no available animations buttons apeering on screen
+								</p>
+								4. Pray for some luck...
+
+							</Modal.Body>
 							<Modal.Footer>
 								<Button variant="secondary" onClick={this.onToggleInstructions}>
-								Close
+								I'm ready! go back
 								</Button>
 
 							</Modal.Footer>
