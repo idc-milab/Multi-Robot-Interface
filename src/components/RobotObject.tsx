@@ -1,7 +1,9 @@
 import React, { Component, useEffect, useState } from 'react'
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
+import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 
-export function RobotObject( { butterClient, onRemove }:  { butterClient: HttpClient, onRemove: (ip: string) => void } ) {
+
+export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClient, onRemove: (ip: string) => void }) {
 
   const [animations, setAnimations] = useState<string[]>([]);
 
@@ -17,25 +19,39 @@ export function RobotObject( { butterClient, onRemove }:  { butterClient: HttpCl
       console.error('Failed to get robot animations', res);
       return;
     }
-    const animations = res.data.Result.match(/\[.*\]/ig)[0].replace('[', '').replace(']', '').replace(' ', '').split(',');
+    const animations = res.data.Result.match(/\[.*\]/ig)[0].replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
+    console.log(animations);
     setAnimations(animations);
-}
+  }
 
   const playAnimationByName = (animation: string) => {
-    butterClient.playAnimation(animation);
+    butterClient.playAnimation(animation.trim());
   }
 
   return (
-    <div>
-      <div key={butterClient.ip} className='robot-object'>
-      <div>
-        <button onClick={() => onRemove(butterClient.ip)}>remove</button>
-      </div>
-        {animations.length === 0 ? 'loading...' : animations.map(animation => (
-          <button key={animation} onClick={()=>playAnimationByName(animation)}>{animation}</button>
-        ))}
-      </div>
-    </div>
+    <Container className='robot-card'>
+      <Card >
+        <Card.Header>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <p style={{ marginBottom: 0 }}>{butterClient.ip}</p>
+            <Button type="button"  className='remove btn' variant="outline-danger" aria-hidden="true" onClick={() => onRemove(butterClient.ip)} style={{ marginLeft: 'auto' }}> 
+            🗑🤮
+            </Button>
+          </div>
+        </Card.Header>
+        <Card.Body>
+          <div key={butterClient.ip} className='robot-object'>
+            {animations.length === 0 ? 'There was a problem connecting to the robot.. please try again..' : animations.map(animation => (
+              <Button variant='secondary' className='animation-button' key={animation} onClick={() => playAnimationByName(animation)}>{animation}</Button>
+            ))}
+
+          </div>
+        </Card.Body>
+      </Card>
+
+
+
+    </Container>
   );
 }
 

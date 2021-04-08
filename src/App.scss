@@ -4,43 +4,81 @@
 	--background-color: rgb(218, 218, 218);
 }
 
+.navbar-brand
+{
+  font-family: 'Lato', sans-serif;
+  color:grey;
+  font-size: 32px !important;
+  margin: 0px;
+}
+
+.robot-objects{
+	padding: 0px !important;
+
+}
+
+.robot-card{
+	padding: 12px 0 !important;
+	margin: 12px 10% !important;
+
+
+}
+
+.robot-search{
+	padding-bottom: 18px !important;
+}
+
+
+.robot-object{
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1.5fr));
+	grid-auto-flow: dense;
+	// padding: 12px;	
+	background-color: white;
+	border-radius: 8px;
+	color: #757575;
+	// border: 1px solid #616161;
+	background-color: #ffffff;
+	opacity: 0.7;
+	float: inline-start;
+	width: auto;
+	// margin: 15px 0;	
+}
+
+.animation-button{
+	background-color: white;
+	border-radius: 12px;
+	color: black;
+	border: 1px solid #64a8db;
+	background-color: #ffffff;
+	opacity: 0.95;
+	float:inline-end;
+	width:auto;		
+	margin-left: 5px;
+	padding: 5px;
+}
+.animation-button:hover{
+	border: 1px solid #72db64;
+}
+
+.remove{
+	color: red;
+	text-align: right;
+}
+
 body {
 
 	font-family: 'Open Sans', sans-serif;
-	padding-top: 100px;
-	padding: 50px;
+	// padding-top: 100px;
+	// padding: 50px;
 	background-color: var(--background-color);
-	background-image: linear-gradient(130deg, rgb(221, 221, 221), rgb(179, 179, 179) 41.07%, rgb(160, 182, 207) 76.05%);
-	.button {
-		margin-left: 50px;
-	}
+	background-color: #cfd9e4;		
 
-	.robot-object{
-		display: grid;
-		grid-gap: 10px;
-		grid-template-columns: auto auto auto auto auto;
-		justify-items: start;
-		text-align: end;
-		padding: 12px;	
-		background-color: white;
-		border-radius: 5px;
-		color: #757575;
-		border: 1px solid #ffffff;
-		background-color: #ffffff;
-		opacity: 0.7;
-		float:inline-start;
-		width:auto;
-		margin: 15px 0;	
-		left: 200px;
-		
-		.button{
-			float: right;
-		}
-	}
+
 	
 	&.background-night {
-		background-image: linear-gradient(130deg, rgb(92, 117, 155), rgb(211, 104, 131) 41.07%, rgb(190, 139, 72) 76.05%);
-		
+		background-color: #b4b0b0;
 	}
 
 	&.background-night:disabled{
@@ -55,6 +93,7 @@ body {
 		margin: 0 auto;
 
 
+
 		.top-font-sizes {
 			color: rgb(0, 0, 0);
 			padding-inline-start: 746px;
@@ -66,61 +105,7 @@ body {
 		font-weight: 300;
 	}
 
-	.prev-next{
-		background-color: white;
-		border-radius: 12px;
-		color: black;
-		border: 1px solid #64a8db;
-		background-color: #ffffff;
-		opacity: 0.7;
-		float:inline-end;
-		width:auto;		
-		margin-left: 5px;
-	}
-
-	.prev-next:disabled{
-		border: 1px solid #999999;
-		background-color: #cccccc;
-		color: #666666;
-	}
-
-	.hide{
-		text-align: end;
-		padding-top: 500;
-		padding: 9px;	
-		background-color: white;
-		border-radius: 5px;
-		color: #757575;
-		border: 1px solid #ffffff;
-		background-color: #ffffff;
-		opacity: 0.7;
-		float:inline-start;
-		width:auto;
-		margin-left: 5px;	
-		left: 200px;	
-
-		&:hover {
-			box-shadow: 0 2px 6px 1px #64a8db;
-		}
 	
-	}
-
-	.restore {
-		background-color: white;
-		border-radius: 5px;
-		color: black;
-		border: 1px solid #9fa819;
-		background-color: #ffffff;
-		opacity: 0.65;
-		float:inline-start;
-		width:auto;		
-		margin-right: 5px ;	
-	}
-
-	.results {
-		color: var(--text-color);
-		font-size: 12px;
-		margin: 12px 5px;
 	}
 
 	header {
@@ -160,75 +145,6 @@ body {
 		font-size: 12px;
 	}
 
-	.tickets {
-		
-		&.large {
-			font-size: large;
-		}
-
-
-		&.normal {
-			font-size: 15px;
-		}
-
-		&.small {
-			font-size: 12px;
-		}
-
-		margin: 0px;
-		padding: 0px;
-
-		.ticket {
-			color: gray;
-			resize: horizontal;
-			overflow: hidden;
-			height: 200px;
-			width: calc(50% - 70px);
-			margin: 15px;
-			display: inline-block;
-			border-radius: 18px;
-			padding: 30px 20px;
-			position: relative;
-			background-color: #fff;
-			box-shadow: 0 5px 6px 2px #c2c3c3;
-
-			> .content{
-				overflow: hidden;
-				max-height: 70px;
-				
-				&.open{
-					overflow: scroll;
-					height: 500px;
-				}
-
-			}
-
-			&:hover {
-				box-shadow: 0 2px 6px 1px #64a8db;
-			}
-
-			.title {
-				margin-top: 2px;
-				margin-bottom: 2px;
-				font-size: 17.5px;
-				font-weight: 400;
-				font-style: normal;
-				font-weight: 600;
-				color: var(--title-color);
-			}
-
-			.see-more {
-				background-color: white;
-				border-radius: 8px;
-				color:  #64a8db;
-				border: 1px solid #ffffff;
-				background-color: #ffffff;
-				opacity: 1;
-				float:inline-end;
-				width:auto;		
-				margin-left: 5px ;		
-			}
-
 			footer {
 
 				display: flex;
@@ -243,6 +159,6 @@ body {
 					flex-shrink: 0;
 				}
 			}
-		}
-	}
-}
+		
+	
+

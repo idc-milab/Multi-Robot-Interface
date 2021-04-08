@@ -1,14 +1,19 @@
 import React from 'react';
 import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
-import { RobotObject }  from './components/RobotObject'
+import { RobotObject } from './components/RobotObject';
 import { useState } from 'react';
+import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 export type AppState = {
 	dayNightStatus: boolean;
 	currentIPInput: string;
 	currentButterClients: HttpClient[];
+	show: boolean;
+	labCurrentIPs: string[];
 }
 
 export class App extends React.PureComponent<{}, AppState> {
@@ -17,9 +22,11 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	state: AppState = {
 		dayNightStatus: false,
-		currentIPInput: '',
+		currentIPInput: '192.168.57.30',
 		currentButterClients: [],
-	}	
+		show: false,
+		labCurrentIPs: ['192.168.57.30', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
+	}
 
 	SetDayNightStatus = () => {
 		this.setState({
@@ -36,7 +43,8 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	onAddRobotObject = (ip: string) => {
 		const currentButterClient = new HttpClient(ip);
-		if (!this.state.currentButterClients.includes(currentButterClient)) {
+		currentButterClient.timeout = 120;
+		if (!this.state.currentButterClients.map(c => c.ip).some(c => c === ip)) {
 			this.setState({
 				currentButterClients: [...this.state.currentButterClients, currentButterClient]
 			})
@@ -48,38 +56,82 @@ export class App extends React.PureComponent<{}, AppState> {
 			currentButterClients: this.state.currentButterClients.filter(butterClient => butterClient.ip !== ip)
 		})
 	}
-	
-	renderRobotObjects = () => {
-		
-	return (
-		<ul className='robot-objects'>
-			{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} />)}
-		</ul>
-	);
 
-
+	onToggleInstructions = () => {
+		this.setState({
+			show: !this.state.show
+		})
 	}
 
+
+	renderRobotObjects = () => {
+
+		return (
+			<ul className='robot-objects'>
+				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} />)}
+			</ul>
+		);
+	}
 
 	render() {
 
 		const { currentButterClients } = this.state;
+		const handleClose = () => this.state.show = false;
+		const handleShow = () => this.state.show = true;
+
 
 		return (
+			<div>
+					<Navbar bg="dark" variant="dark">
+						<Navbar.Brand href="#home">Multi Robot Operator</Navbar.Brand>
+					</Navbar>
 
-			<main>
-				<span className='top-font-sizes'>
-					<button onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }}> {this.state.dayNightStatus ? 'Bright' : 'Dark'}</button>
-				</span>
+					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
+					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+					
+						<Form inline>
+						<FormControl as="select" type="IPInput" placeholder="insert IP" className="mr-sm-2" value={this.state.currentIPInput} onChange={(e) => this.setIPValue(e.target.value)}>
+						{this.state.labCurrentIPs.map(ip => (<option>{ip}</option>))}
+						</FormControl>
 
-				<h1>Robots List</h1>
-				<div>
-					<input type="IPInput" placeholder="insert IP" value={this.state.currentIPInput} onChange={(e) => this.setIPValue(e.target.value)}/>
-					<button onClick={() => this.onAddRobotObject(this.state.currentIPInput)}>connect</button>
-				</div>
-				{currentButterClients !== [] ? this.renderRobotObjects() : <h2>Loading..</h2>}
+						<Button variant="outline-info" onClick={() => this.onAddRobotObject(this.state.currentIPInput)}>Connect to Robot</Button>
+						</Form>
+						<Navbar.Collapse id="responsive-navbar-nav">
+						<Nav className="ml-auto" >
+							<Button variant="secondary" onClick={this.onToggleInstructions}>Instructions</Button>
+							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
+							
+							<Modal show={this.state.show} onHide={!this.state.show}>
+							<Modal.Header translate="true" closeButton>
+								<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+								<p>
+								1. Make sure that your robot in connected to a ButterComposer on some laptop around the lab
+								</p>
+								<p>
+								2. Make sure that this computer is connected to milab_idc wifi network (password: milabspirit)
+								</p>
+								<p>
+								3. Try to remove and then add the robot card from the screen if there are no available animations buttons apeering on screen
+								</p>
+								4. Pray for some luck...
 
-			</main>
+							</Modal.Body>
+							<Modal.Footer>
+								<Button variant="secondary" onClick={this.onToggleInstructions}>
+								I'm ready! go back
+								</Button>
+
+							</Modal.Footer>
+							</Modal>
+						</Nav>
+						</Navbar.Collapse>
+					</Navbar>
+
+					{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
+
+			</div>
 		)
 	}
 }
