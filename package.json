@@ -2,11 +2,7 @@
   "name": "@fed-exam/client",
   "version": "1.0.0",
   "private": true,
-<<<<<<< HEAD
-  "homepage": "https://idc-milab.github.io/Multi-Robot-Interface/",
-=======
   "homepage": "http://idc-milab.github.io/Multi-Robot-Interface",
->>>>>>> develop
   "dependencies": {
     "@butter-robotics/mas-javascript-api": "^0.13.0",
     "@types/axios": "^0.14.0",
@@ -29,11 +25,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-<<<<<<< HEAD
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-=======
->>>>>>> develop
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
