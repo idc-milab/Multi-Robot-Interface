@@ -37,30 +37,19 @@ export const ScenarioButtons = ({ scenario } : { scenario: string }) => {
     </div>
 }
 
-export function BaselineButton () {
+// export function BaselineButton () {
 
-    const kip = new HttpClient('192.168.57.30');
+//     const kip = new HttpClient('192.168.57.30');
 
-    const playBaselineAnimations = () => {
-        kip.playAnimation('kip_start').then(kip.playAnimation('kip_H_Breath')).then(playBaselineAnimations()); //check with benny animation pipeline + recursion using while is better??
-      }
+//     const playBaselineAnimations = () => {
+//         kip.playAnimation('kip_start').then(kip.playAnimation('kip_H_Breath')).then(playBaselineAnimations()); //check with benny animation pipeline + recursion using while is better??
+//       }
 
-    return <>
+//     return <>
     
-    <Button variant='secondary' className='animation-button' onClick={() => playBaselineAnimations()}>
-        Start Baseline Scenario
-    </Button>
-    </>
-}
+//     <Button variant='secondary' className='animation-button' onClick={() => playBaselineAnimations()}>
+//         Start Baseline Scenario
+//     </Button>
+//     </>
+// }
 
-export function InGroupEmpowermentButton () {
-    return <>
-     
-     </>
-}
-
-export function OutGroupEmpowermentButton () {
-    return <>
-     
-     </>
-}
