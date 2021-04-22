@@ -85,6 +85,7 @@ export class App extends React.PureComponent<{}, AppState> {
 
 		return (
 			<div>
+			<Router>
 					<Navbar bg="dark" variant="dark">
 						<Navbar.Brand href="#home">Multi Robot Operator</Navbar.Brand>
 					</Navbar>
@@ -132,8 +133,20 @@ export class App extends React.PureComponent<{}, AppState> {
 						</Navbar.Collapse>
 					</Navbar>
 
-					{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
+					<Switch>
+						<Route path="/HHRRI/Baseline">
+							<ScenarioButtons scenario="Baseline" />
+						</Route>
+						<Route path="/HHRRI/In-Group">
+						<ScenarioButtons scenario="In-Group" />
+						</Route>
+						<Route path="/HHRRI/Out-Group">
+						<ScenarioButtons scenario="Out-Group" />
+						</Route>
+					</Switch>
 
+					{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
+			</Router>
 			</div>
 		)
 	}
