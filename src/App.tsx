@@ -3,8 +3,11 @@ import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
 import { useState } from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { ScenarioButtons } from './components/ScenariosButtons';
+import { LinkContainer } from 'react-router-bootstrap';
 
 
 
