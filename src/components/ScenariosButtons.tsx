@@ -2,10 +2,15 @@ import React from 'react';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 
+const kip = new HttpClient('192.168.57.30');
+kip.timeout = 240;
+
+let interval: NodeJS.Timeout;
+
 const scenarios: Map<string, any> = new Map<string, any>([
     ['Baseline', {
-        start: () => alert('starting baseline'),
-        stop: () => alert('stopping baseline')
+        start: () => interval = setInterval(function(){ kip.playAnimation('kip_start').then(kip.playAnimation('kip_H_Breath'));}, 10000),
+        stop: () => clearInterval(interval)
     }],
     ['In-Group', {
         start: () => alert('starting In-Group'),
