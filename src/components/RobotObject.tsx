@@ -35,7 +35,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>{butterClient.ip}</p>
             <Button type="button"  className='remove btn' variant="outline-danger" aria-hidden="true" onClick={() => onRemove(butterClient.ip)} style={{ marginLeft: 'auto' }}> 
-            🗑🤮
+            🗑
             </Button>
           </div>
         </Card.Header>
@@ -48,9 +48,6 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
           </div>
         </Card.Body>
       </Card>
-
-
-
     </Container>
   );
 }

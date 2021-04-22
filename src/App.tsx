@@ -3,8 +3,11 @@ import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
 import { useState } from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { ScenarioButtons } from './components/ScenariosButtons';
+import { LinkContainer } from 'react-router-bootstrap';
 
 
 
@@ -73,6 +76,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		);
 	}
 
+
 	render() {
 
 		const { currentButterClients } = this.state;
@@ -81,9 +85,18 @@ export class App extends React.PureComponent<{}, AppState> {
 
 
 		return (
+			<Router>
 			<div>
 					<Navbar bg="dark" variant="dark">
-						<Navbar.Brand href="#home">Multi Robot Operator</Navbar.Brand>
+						<Navbar.Brand href="/home">Multi Robot Operator</Navbar.Brand>
+						<Nav.Link href="/home" style={{ color: '#FFF' }}>Home</Nav.Link>
+						<NavDropdown title="HHRRI" id="basic-nav-dropdown" style={{ color: '#FFF' }}>
+							<NavDropdown.Item><Link to="/HHRRI/Baseline">Baseline</Link></NavDropdown.Item>
+							<NavDropdown.Divider />
+							<NavDropdown.Item><Link to="/HHRRI/In-Group">In-Group</Link></NavDropdown.Item>
+							<NavDropdown.Divider />
+							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item>
+						</NavDropdown>
 					</Navbar>
 
 					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
@@ -102,7 +115,7 @@ export class App extends React.PureComponent<{}, AppState> {
 							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
 							
 							<Modal show={this.state.show} onHide={!this.state.show}>
-							<Modal.Header translate="true" closeButton>
+							<Modal.Header translate="true">
 								<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
@@ -115,7 +128,7 @@ export class App extends React.PureComponent<{}, AppState> {
 								<p>
 								3. Try to remove and then add the robot card from the screen if there are no available animations buttons apeering on screen
 								</p>
-								4. Pray for some luck...
+								4. Once you have done steps 1,2,3 - try again!
 
 							</Modal.Body>
 							<Modal.Footer>
@@ -129,9 +142,23 @@ export class App extends React.PureComponent<{}, AppState> {
 						</Navbar.Collapse>
 					</Navbar>
 
+					<Switch>
+						<Route path="/HHRRI/Baseline">
+							<ScenarioButtons scenario="Baseline" />
+						</Route>
+						<Route path="/HHRRI/In-Group">
+						<ScenarioButtons scenario="In-Group" />
+						</Route>
+						<Route path="/HHRRI/Out-Group">
+						<ScenarioButtons scenario="Out-Group" />
+						</Route>
+					</Switch>
+
+
 					{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
 
 			</div>
+			</Router>
 		)
 	}
 }
