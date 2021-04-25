@@ -46,7 +46,7 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	onAddRobotObject = (ip: string) => {
 		const currentButterClient = new HttpClient(ip);
-		currentButterClient.timeout = 120;
+		currentButterClient.timeout = 240;
 		if (!this.state.currentButterClients.map(c => c.ip).some(c => c === ip)) {
 			this.setState({
 				currentButterClients: [...this.state.currentButterClients, currentButterClient]
@@ -76,6 +76,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		);
 	}
 
+
 	render() {
 
 		const { currentButterClients } = this.state;
@@ -84,10 +85,19 @@ export class App extends React.PureComponent<{}, AppState> {
 
 
 		return (
+			<Router>
 			<div>
 			<Router>
 					<Navbar bg="dark" variant="dark">
-						<Navbar.Brand href="#home">Multi Robot Operator</Navbar.Brand>
+						<Navbar.Brand href="/home">Multi Robot Operator</Navbar.Brand>
+						<Nav.Link href="/home" style={{ color: '#FFF' }}>Home</Nav.Link>
+						<NavDropdown title="HHRRI" id="basic-nav-dropdown" style={{ color: '#FFF' }}>
+							<NavDropdown.Item><Link to="/HHRRI/Baseline">Baseline</Link></NavDropdown.Item>
+							{/* <NavDropdown.Divider />
+							<NavDropdown.Item><Link to="/HHRRI/In-Group">In-Group</Link></NavDropdown.Item>
+							<NavDropdown.Divider />
+							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item> */}
+						</NavDropdown>
 					</Navbar>
 
 					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
@@ -106,7 +116,7 @@ export class App extends React.PureComponent<{}, AppState> {
 							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
 							
 							<Modal show={this.state.show} onHide={!this.state.show}>
-							<Modal.Header translate="true" closeButton>
+							<Modal.Header translate="true">
 								<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
@@ -119,7 +129,7 @@ export class App extends React.PureComponent<{}, AppState> {
 								<p>
 								3. Try to remove and then add the robot card from the screen if there are no available animations buttons apeering on screen
 								</p>
-								4. Pray for some luck...
+								4. Once you have done steps 1,2,3 - try again!
 
 							</Modal.Body>
 							<Modal.Footer>
@@ -148,6 +158,7 @@ export class App extends React.PureComponent<{}, AppState> {
 					{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
 			</Router>
 			</div>
+			</Router>
 		)
 	}
 }
