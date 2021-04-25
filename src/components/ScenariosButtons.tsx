@@ -1,30 +1,67 @@
 import React from 'react';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
+import { start } from 'repl';
 
-const kip = new HttpClient('192.168.57.30');
-kip.timeout = 240;
+const kip1 = new HttpClient('192.168.57.30');
+const kip2 = new HttpClient('192.168.56.188');
 
-let interval: NodeJS.Timeout;
+kip1.timeout = 240;
+kip2.timeout = 240;
+
+let interval1: NodeJS.Timeout;
+let interval2: NodeJS.Timeout;
 
 const scenarios: Map<string, any> = new Map<string, any>([
     ['Baseline', {
-        start: () => interval = setInterval(function(){ kip.playAnimation('kip_start').then(kip.playAnimation('kip_H_Breath'));}, 10000),
-        stop: () => clearInterval(interval)
+        kip1up: () => kip1.playAnimation('kip_start_45'),
+        kip1breath: () => {
+            kip1.playAnimation('kip_H1_Breath')
+            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath'), 4000)
+        },        
+        kip1down: () => {
+            clearInterval(interval1)
+            // kip1.stopAnimation();
+            kip1.playAnimation('kip_H1_back_90');
+        },
+        
+        kip2up: () => kip2.playAnimation('kip_start_45'),
+        kip2breath: () => {
+            kip1.playAnimation('kip_H1_Breath')
+            interval2 = setInterval(() => kip2.playAnimation('kip_H1_Breath'), 4000)
+        },
+        kip2down: () => {
+            clearInterval(interval2)
+            kip2.stopAnimation();
+            kip2.playAnimation('kip_H1_back_90'); 
+        },
     }],
+
     ['In-Group', {
-        start: () => alert('starting In-Group'),
-        stop: () => alert('stopping In-Group')
-    }],
-    ['Out-Group', {
-        start: () => alert('starting Out-Group'),
-        stop: () => alert('stopping Out-Group')
-    }],
+        kip1up: () => kip1.playAnimation('kip_start_45'),
+        kip1breath: () => {
+            kip1.playAnimation('kip_H1_Breath?--lenient=true')
+        },        
+        kip1down: () => {
+            kip1.playAnimation('kip_stop');
+            if (interval2) clearInterval(interval2);
+        },
+        
+        kip2up: () => kip2.playAnimation('kip_start'),
+        kip2breath: () => {
+            kip2.playAnimation('kip_H_Breath'); 
+            interval2 = setInterval(() => kip2.playAnimation('kip_H_Breath?--lenient=true'), 3500)
+        },
+        kip2down: () => {
+            kip2.playAnimation('kip_stop'); 
+            if (interval2) clearInterval(interval2);
+        },    }],
 
     ]);
 
 export const ScenarioButtons = ({ scenario } : { scenario: string }) => {
-    const { start, stop } = scenarios.get(scenario);
+
+    const { kip1up, kip1breath, kip1down, kip2up, kip2breath, kip2down } = scenarios.get(scenario);
     return <div>
     <Container className='scenario-component'>
       <Card >
@@ -32,8 +69,13 @@ export const ScenarioButtons = ({ scenario } : { scenario: string }) => {
             {scenario}
         </Card.Header>
         <Card.Body>
-            <Button onClick={start} variant="success">Start</Button>
-            <Button onClick={stop} variant="danger">Stop</Button>
+            <Button onClick={kip1up} variant="success">Start Kip 1</Button>
+            <Button onClick={kip1breath} variant="warning">Breath Kip 1</Button>
+            <Button onClick={kip1down} variant="danger">Stop Kip 1</Button>
+            <p></p>
+            <Button onClick={kip2up} variant="success">Start Kip 2</Button>
+            <Button onClick={kip2breath} variant="warning">Breath Kip 2</Button>
+            <Button onClick={kip2down} variant="danger">Stop Kip 2</Button>
         </Card.Body>
       </Card>
     </Container>
@@ -42,19 +84,4 @@ export const ScenarioButtons = ({ scenario } : { scenario: string }) => {
     </div>
 }
 
-// export function BaselineButton () {
-
-//     const kip = new HttpClient('192.168.57.30');
-
-//     const playBaselineAnimations = () => {
-//         kip.playAnimation('kip_start').then(kip.playAnimation('kip_H_Breath')).then(playBaselineAnimations()); //check with benny animation pipeline + recursion using while is better??
-//       }
-
-//     return <>
-    
-//     <Button variant='secondary' className='animation-button' onClick={() => playBaselineAnimations()}>
-//         Start Baseline Scenario
-//     </Button>
-//     </>
-// }
 

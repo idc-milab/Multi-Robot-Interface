@@ -92,10 +92,10 @@ export class App extends React.PureComponent<{}, AppState> {
 						<Nav.Link href="/home" style={{ color: '#FFF' }}>Home</Nav.Link>
 						<NavDropdown title="HHRRI" id="basic-nav-dropdown" style={{ color: '#FFF' }}>
 							<NavDropdown.Item><Link to="/HHRRI/Baseline">Baseline</Link></NavDropdown.Item>
-							<NavDropdown.Divider />
+							{/* <NavDropdown.Divider />
 							<NavDropdown.Item><Link to="/HHRRI/In-Group">In-Group</Link></NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item>
+							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item> */}
 						</NavDropdown>
 					</Navbar>
 
