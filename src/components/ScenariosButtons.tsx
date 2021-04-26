@@ -16,55 +16,58 @@ const scenarios: Map<string, any> = new Map<string, any>([
     ['Baseline', {
         kip1up: () => kip1.playAnimation('kip_start_45'),
         kip1breath: () => {
-            kip1.playAnimation('kip_H1_Breath')
-            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath'), 4000)
+            kip1.playAnimation('kip_H1_Breath', true)
+            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath', true), 4000)
         },        
         kip1down: () => {
-            clearInterval(interval1)
-            // kip1.stopAnimation();
-            kip1.playAnimation('kip_H1_back_90');
+            if (interval1) clearInterval(interval1);
+            kip2.clearAnimation();
+            kip2.stopAnimation().then(() => kip2.playAnimation('kip_H1_back_90', true));
         },
         
         kip2up: () => kip2.playAnimation('kip_start_45'),
         kip2breath: () => {
-            kip1.playAnimation('kip_H1_Breath')
-            interval2 = setInterval(() => kip2.playAnimation('kip_H1_Breath'), 4000)
+            kip1.playAnimation('kip_H1_Breath', true)
+            interval2 = setInterval(() => kip2.playAnimation('kip_H1_Breath', true), 4000)
         },
         kip2down: () => {
-            clearInterval(interval2)
-            kip2.stopAnimation();
-            kip2.playAnimation('kip_H1_back_90'); 
+            if (interval2) clearInterval(interval2);
+            kip2.clearAnimation();
+            kip2.stopAnimation().then(() => kip2.playAnimation('kip_H1_back_90', true));
+            
         },
     }],
 
     ['In-Group', {
         kip1up: () => kip1.playAnimation('kip_start_45'),
         kip1breath: () => {
-            kip1.playAnimation('kip_H1_Breath?--lenient=true')
+            kip1.playAnimation('kip_H1_Breath', true)
         },        
         kip1down: () => {
-            kip1.playAnimation('kip_stop');
             if (interval2) clearInterval(interval2);
+            kip2.clearAnimation();
+            kip2.stopAnimation().then(() => kip2.playAnimation('kip_stop', true));
         },
         
         kip2up: () => kip2.playAnimation('kip_start'),
         kip2breath: () => {
             kip2.playAnimation('kip_H_Breath'); 
-            interval2 = setInterval(() => kip2.playAnimation('kip_H_Breath?--lenient=true'), 3500)
+            interval2 = setInterval(() => kip2.playAnimation('kip_H_Breath', true), 4000)
         },
         kip2down: () => {
-            kip2.playAnimation('kip_stop'); 
             if (interval2) clearInterval(interval2);
-        },    }],
-
-    ]);
+            kip2.clearAnimation();
+            kip2.stopAnimation().then(() => kip2.playAnimation('kip_stop', true));
+        },    
+    }],
+]);
 
 export const ScenarioButtons = ({ scenario } : { scenario: string }) => {
 
     const { kip1up, kip1breath, kip1down, kip2up, kip2breath, kip2down } = scenarios.get(scenario);
     return <div>
     <Container className='scenario-component'>
-      <Card >
+      <Card>
         <Card.Header>
             {scenario}
         </Card.Header>
