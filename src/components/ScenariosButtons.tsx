@@ -17,12 +17,15 @@ const scenarios: Map<string, any> = new Map<string, any>([
         kip1up: () => kip1.playAnimation('kip_start_45'),
         kip1breath: () => {
             kip1.playAnimation('kip_H1_Breath', true)
-            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath', true), 4000)
+            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath', true), 3500)
         },        
         kip1down: () => {
             if (interval1) clearInterval(interval1);
-            kip2.clearAnimation();
-            kip2.stopAnimation().then(() => kip2.playAnimation('kip_H1_back_90', true));
+            kip1.clearAnimation();
+            kip1.stopAnimation();
+            setTimeout(() => {
+                kip1.playAnimation('kip_H1_back_90', false)
+            }, 500);
         },
         
         kip2up: () => kip2.playAnimation('kip_start_45'),
@@ -33,8 +36,10 @@ const scenarios: Map<string, any> = new Map<string, any>([
         kip2down: () => {
             if (interval2) clearInterval(interval2);
             kip2.clearAnimation();
-            kip2.stopAnimation().then(() => kip2.playAnimation('kip_H1_back_90', true));
-            
+            kip2.stopAnimation();
+            setTimeout(() => {
+                kip2.playAnimation('kip_H1_back_90', false)
+            }, 500);
         },
     }],
 
@@ -45,8 +50,9 @@ const scenarios: Map<string, any> = new Map<string, any>([
         },        
         kip1down: () => {
             if (interval2) clearInterval(interval2);
-            kip2.clearAnimation();
-            kip2.stopAnimation().then(() => kip2.playAnimation('kip_stop', true));
+            kip1.clearAnimation();
+            kip1.stopAnimation();
+            setTimeout(() => kip1.playAnimation('kip_stop', true), 200);
         },
         
         kip2up: () => kip2.playAnimation('kip_start'),
