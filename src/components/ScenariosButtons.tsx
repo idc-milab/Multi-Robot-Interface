@@ -17,28 +17,28 @@ const scenarios: Map<string, any> = new Map<string, any>([
         kip1up: () => kip1.playAnimation('kip_start_45'),
         kip1breath: () => {
             kip1.playAnimation('kip_H1_Breath', true)
-            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath', true), 4000)
+            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath', true), 2500)
         },        
         kip1down: () => {
             if (interval1) clearInterval(interval1);
             kip1.clearAnimation();
-            kip1.stopAnimation();
+            // kip1.stopAnimation();
             setTimeout(() => {
-                kip1.playAnimation('kip_H1_back_90', false)
+                kip1.playAnimation('kip_H1_back_90', true)
             }, 500);
         },
         
         kip2up: () => kip2.playAnimation('kip_start_45'),
         kip2breath: () => {
             kip1.playAnimation('kip_H1_Breath', true)
-            interval2 = setInterval(() => kip2.playAnimation('kip_H1_Breath', true), 4000)
+            interval2 = setInterval(() => kip2.playAnimation('kip_H1_Breath', true), 2500)
         },
         kip2down: () => {
             if (interval2) clearInterval(interval2);
             kip2.clearAnimation();
-            kip2.stopAnimation();
+            // kip2.stopAnimation();
             setTimeout(() => {
-                kip2.playAnimation('kip_H1_back_90', false)
+                kip2.playAnimation('kip_H1_back_90', true)
             }, 500);
         },
     }],
