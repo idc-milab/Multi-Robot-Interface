@@ -17,7 +17,7 @@ const scenarios: Map<string, any> = new Map<string, any>([
         kip1up: () => kip1.playAnimation('kip_start_45'),
         kip1breath: () => {
             kip1.playAnimation('kip_H1_Breath', true)
-            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath', true), 3500)
+            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath', true), 4000)
         },        
         kip1down: () => {
             if (interval1) clearInterval(interval1);
