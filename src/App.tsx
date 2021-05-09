@@ -91,11 +91,9 @@ export class App extends React.PureComponent<{}, AppState> {
 						<Navbar.Brand href="/home">Multi Robot Operator</Navbar.Brand>
 						<Nav.Link href="/home" style={{ color: '#FFF' }}>Home</Nav.Link>
 						<NavDropdown title="HHRRI" id="basic-nav-dropdown" style={{ color: '#FFF' }}>
-							<NavDropdown.Item><Link to="/HHRRI/Baseline">Baseline</Link></NavDropdown.Item>
-							{/* <NavDropdown.Divider />
 							<NavDropdown.Item><Link to="/HHRRI/In-Group">In-Group</Link></NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item> */}
+							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item> 
 						</NavDropdown>
 					</Navbar>
 
@@ -143,11 +141,8 @@ export class App extends React.PureComponent<{}, AppState> {
 					</Navbar>
 
 					<Switch>
-						<Route path="/HHRRI/Baseline">
-							<ScenarioButtons scenario="Baseline" />
-						</Route>
 						<Route path="/HHRRI/In-Group">
-						<ScenarioButtons scenario="In-Group" />
+							<ScenarioButtons scenario="In-Group" />
 						</Route>
 						<Route path="/HHRRI/Out-Group">
 						<ScenarioButtons scenario="Out-Group" />

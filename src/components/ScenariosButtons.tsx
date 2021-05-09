@@ -13,64 +13,165 @@ let interval1: NodeJS.Timeout;
 let interval2: NodeJS.Timeout;
 
 const scenarios: Map<string, any> = new Map<string, any>([
-    ['Baseline', {
-        kip1up: () => kip1.playAnimation('kip_start_45'),
-        kip1breath: () => {
-            kip1.playAnimation('kip_H1_Breath', true)
-            interval1 = setInterval(() => kip1.playAnimation('kip_H1_Breath', true), 2500)
-        },        
-        kip1down: () => {
-            if (interval1) clearInterval(interval1);
+    ['In-Group', {
+        start: () => {
+            kip1.playAnimation('kip_45_Full')
+            kip2.playAnimation('kip_45_Full')
+        },
+
+        breathFull: () => {
+            kip1.playAnimation('kip_45_Full_Breath', true)
+            kip2.playAnimation('kip_45_Full_Breath', true)
+        },  
+
+        fullToHalf: () => {
+            kip1.stopAnimation();
+            kip2.stopAnimation();
+
             kip1.clearAnimation();
-            // kip1.stopAnimation();
+            kip2.clearAnimation();
+
             setTimeout(() => {
-                kip1.playAnimation('kip_H1_back_90', true)
+                kip1.playAnimation('kip_45_FullToHalf', true)
+            }, 500);
+            setTimeout(() => {
+                kip2.playAnimation('kip_45_FullToHalf', true)
+            }, 500);
+        },
+
+        breathHalf: () => {
+            kip1.playAnimation('kip_Half_Breath')
+            kip2.playAnimation('kip_Half_Breath')
+        },
+
+        halfToFull: () => {
+            kip1.stopAnimation();
+            kip2.stopAnimation();
+
+            kip1.clearAnimation();
+            kip2.clearAnimation();
+
+            setTimeout(() => {
+                kip1.playAnimation('kip_45_HalfToFull', true)
+            }, 500);
+            setTimeout(() => {
+                kip2.playAnimation('kip_45_HalfToFull', true)
+            }, 500);
+        },
+
+        stopFull: () => {
+            kip1.stopAnimation();
+            kip2.stopAnimation();
+
+            kip1.clearAnimation();
+            kip2.clearAnimation();
+
+            setTimeout(() => {
+                kip1.playAnimation('kip_45_FullStop', true)
+            }, 500);
+            setTimeout(() => {
+                kip2.playAnimation('kip_45_FullStop', true)
+            }, 500);
+        },
+
+        stopHalf: () => {
+            kip1.stopAnimation();
+            kip2.stopAnimation();
+
+            kip1.clearAnimation();
+            kip2.clearAnimation();
+
+            setTimeout(() => {
+                kip1.playAnimation('kip_45_HalfStop', true)
+            }, 500);
+            setTimeout(() => {
+                kip2.playAnimation('kip_45_HalfStop', true)
             }, 500);
         },
         
-        kip2up: () => kip2.playAnimation('kip_start_45'),
-        kip2breath: () => {
-            kip1.playAnimation('kip_H1_Breath', true)
-            interval2 = setInterval(() => kip2.playAnimation('kip_H1_Breath', true), 2500)
-        },
-        kip2down: () => {
-            if (interval2) clearInterval(interval2);
-            kip2.clearAnimation();
-            // kip2.stopAnimation();
-            setTimeout(() => {
-                kip2.playAnimation('kip_H1_back_90', true)
-            }, 500);
-        },
     }],
 
-    ['In-Group', {
-        kip1up: () => kip1.playAnimation('kip_start_45'),
-        kip1breath: () => {
-            kip1.playAnimation('kip_H1_Breath', true)
-        },        
-        kip1down: () => {
-            if (interval2) clearInterval(interval2);
-            kip1.clearAnimation();
+    ['Out-Group', {
+        start: () => {
+            kip1.playAnimation('kip_45_Full')
+            kip2.playAnimation('kip_72_Full')
+        },
+
+        breathFull: () => {
+            kip1.playAnimation('kip_45_Full_Breath', true)
+            kip2.playAnimation('kip_72_Full_Breath', true)
+        },  
+
+        fullToHalf: () => {
             kip1.stopAnimation();
-            setTimeout(() => kip1.playAnimation('kip_stop', true), 200);
-        },
-        
-        kip2up: () => kip2.playAnimation('kip_start'),
-        kip2breath: () => {
-            kip2.playAnimation('kip_H_Breath'); 
-            interval2 = setInterval(() => kip2.playAnimation('kip_H_Breath', true), 4000)
-        },
-        kip2down: () => {
-            if (interval2) clearInterval(interval2);
+            kip2.stopAnimation();
+
+            kip1.clearAnimation();
             kip2.clearAnimation();
-            kip2.stopAnimation().then(() => kip2.playAnimation('kip_stop', true));
-        },    
+
+            setTimeout(() => {
+                kip1.playAnimation('kip_45_FullToHalf', true)
+            }, 500);
+            setTimeout(() => {
+                kip2.playAnimation('kip_72_FullToHalf', true)
+            }, 500);
+        },
+
+        breathHalf: () => {
+            kip1.playAnimation('kip_Half_Breath')
+            kip2.playAnimation('kip_Half_Breath') // make sure thats the right animation
+        },
+
+        halfToFull: () => {
+            kip1.stopAnimation();
+            kip2.stopAnimation();
+
+            kip1.clearAnimation();
+            kip2.clearAnimation();
+
+            setTimeout(() => {
+                kip1.playAnimation('kip_45_HalfToFull', true)
+            }, 500);
+            setTimeout(() => {
+                kip2.playAnimation('kip_72_HalfToFull', true)
+            }, 500);
+        },
+
+        stopFull: () => {
+            kip1.stopAnimation();
+            kip2.stopAnimation();
+
+            kip1.clearAnimation();
+            kip2.clearAnimation();
+
+            setTimeout(() => {
+                kip1.playAnimation('kip_45_FullStop', true)
+            }, 500);
+            setTimeout(() => {
+                kip2.playAnimation('kip_72_FullStop', true)
+            }, 500);
+        },
+
+        stopHalf: () => {
+            kip1.stopAnimation();
+            kip2.stopAnimation();
+
+            kip1.clearAnimation();
+            kip2.clearAnimation();
+
+            setTimeout(() => {
+                kip1.playAnimation('kip_45_HalfStop', true)
+            }, 500);
+            setTimeout(() => {
+                kip2.playAnimation('kip_72_HalfStop', true)
+            }, 500);
+        },
     }],
 ]);
 
 export const ScenarioButtons = ({ scenario } : { scenario: string }) => {
 
-    const { kip1up, kip1breath, kip1down, kip2up, kip2breath, kip2down } = scenarios.get(scenario);
+    const { start, breathFull, fullToHalf, breathHalf, halfToFull, stopFull, stopHalf } = scenarios.get(scenario);
     return <div>
     <Container className='scenario-component'>
       <Card>
@@ -78,13 +179,13 @@ export const ScenarioButtons = ({ scenario } : { scenario: string }) => {
             {scenario}
         </Card.Header>
         <Card.Body>
-            <Button onClick={kip1up} variant="success">Start Kip 1</Button>
-            <Button onClick={kip1breath} variant="warning">Breath Kip 1</Button>
-            <Button onClick={kip1down} variant="danger">Stop Kip 1</Button>
-            <p></p>
-            <Button onClick={kip2up} variant="success">Start Kip 2</Button>
-            <Button onClick={kip2breath} variant="warning">Breath Kip 2</Button>
-            <Button onClick={kip2down} variant="danger">Stop Kip 2</Button>
+            <Button onClick={start} variant="success">Start</Button>
+            <Button onClick={breathFull} variant="warning">Breath Full</Button>
+            <Button onClick={fullToHalf} variant="warning">Full To Half</Button>
+            <Button onClick={breathHalf} variant="warning">Breath Half</Button>
+            <Button onClick={halfToFull} variant="warning">Half To Full</Button>
+            <Button onClick={stopFull} variant="danger">Stop Full</Button>
+            <Button onClick={stopHalf} variant="danger">Stop Half</Button>
         </Card.Body>
       </Card>
     </Container>
