@@ -2,7 +2,7 @@
   "name": "@fed-exam/client",
   "version": "1.0.0",
   "private": true,
-  "homepage": "http://idc-milab.github.io/Multi-Robot-Interface",
+  "homepage": "www.milabrobotics.com",
   "dependencies": {
     "@butter-robotics/mas-javascript-api": "^0.13.2",
     "@types/axios": "^0.14.0",
