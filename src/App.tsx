@@ -80,9 +80,6 @@ export class App extends React.PureComponent<{}, AppState> {
 	render() {
 
 		const { currentButterClients } = this.state;
-		const handleClose = () => this.state.show = false;
-		const handleShow = () => this.state.show = true;
-
 
 		return (
 			<Router>
@@ -92,11 +89,9 @@ export class App extends React.PureComponent<{}, AppState> {
 						<Navbar.Brand href="/home">Multi Robot Operator</Navbar.Brand>
 						<Nav.Link href="/home" style={{ color: '#FFF' }}>Home</Nav.Link>
 						<NavDropdown title="HHRRI" id="basic-nav-dropdown" style={{ color: '#FFF' }}>
-							<NavDropdown.Item><Link to="/HHRRI/Baseline">Baseline</Link></NavDropdown.Item>
-							{/* <NavDropdown.Divider />
 							<NavDropdown.Item><Link to="/HHRRI/In-Group">In-Group</Link></NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item> */}
+							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item> 
 						</NavDropdown>
 					</Navbar>
 
@@ -116,42 +111,38 @@ export class App extends React.PureComponent<{}, AppState> {
 							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
 							
 							<Modal show={this.state.show} onHide={!this.state.show}>
-							<Modal.Header translate="true">
-								<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
-								<p>
-								1. Make sure that your robot in connected to a ButterComposer on some laptop around the lab
-								</p>
-								<p>
-								2. Make sure that this computer is connected to milab_idc wifi network (password: milabspirit)
-								</p>
-								<p>
-								3. Try to remove and then add the robot card from the screen if there are no available animations buttons apeering on screen
-								</p>
-								4. Once you have done steps 1,2,3 - try again!
+								<Modal.Header translate="true">
+									<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
+								</Modal.Header>
+								<Modal.Body>
+									<p>
+									1. Make sure that your robot in connected to a ButterComposer on some laptop around the lab
+									</p>
+									<p>
+									2. Make sure that this computer is connected to milab_idc wifi network (password: milabspirit)
+									</p>
+									<p>
+									3. Try to remove and then add the robot card from the screen if there are no available animations buttons apeering on screen
+									</p>
+									4. Once you have done steps 1,2,3 - try again!
 
-							</Modal.Body>
-							<Modal.Footer>
-								<Button variant="secondary" onClick={this.onToggleInstructions}>
-								I'm ready! go back
-								</Button>
-
-							</Modal.Footer>
+								</Modal.Body>
+								<Modal.Footer>
+									<Button variant="secondary" onClick={this.onToggleInstructions}>
+									I'm ready! go back
+									</Button>
+								</Modal.Footer>
 							</Modal>
 						</Nav>
 						</Navbar.Collapse>
 					</Navbar>
 
 					<Switch>
-						<Route path="/HHRRI/Baseline">
-							<ScenarioButtons scenario="Baseline" />
-						</Route>
 						<Route path="/HHRRI/In-Group">
-						<ScenarioButtons scenario="In-Group" />
+							<ScenarioButtons scenario="In-Group" />
 						</Route>
 						<Route path="/HHRRI/Out-Group">
-						<ScenarioButtons scenario="Out-Group" />
+							<ScenarioButtons scenario="Out-Group" />
 						</Route>
 					</Switch>
 
