@@ -20,8 +20,8 @@ const scenarios: Map<string, any> = new Map<string, any>([
         },
 
         breathFull: () => {
-            kip1.playAnimation('kip_45_Full_Breath', true)
-            kip2.playAnimation('kip_45_Full_Breath', true)
+            kip1.playAnimation('kip_Full_Breath', true)
+            kip2.playAnimation('kip_Full_Breath', true)
         },  
 
         fullToHalf: () => {
@@ -32,10 +32,10 @@ const scenarios: Map<string, any> = new Map<string, any>([
             kip2.clearAnimation();
 
             setTimeout(() => {
-                kip1.playAnimation('kip_45_FullToHalf', true)
+                kip1.playAnimation('kip_FullToHalf', true)
             }, 500);
             setTimeout(() => {
-                kip2.playAnimation('kip_45_FullToHalf', true)
+                kip2.playAnimation('kip_FullToHalf', true)
             }, 500);
         },
 
@@ -52,10 +52,10 @@ const scenarios: Map<string, any> = new Map<string, any>([
             kip2.clearAnimation();
 
             setTimeout(() => {
-                kip1.playAnimation('kip_45_HalfToFull', true)
+                kip1.playAnimation('kip_HalfToFull', true)
             }, 500);
             setTimeout(() => {
-                kip2.playAnimation('kip_45_HalfToFull', true)
+                kip2.playAnimation('kip_HalfToFull', true)
             }, 500);
         },
 
@@ -98,8 +98,8 @@ const scenarios: Map<string, any> = new Map<string, any>([
         },
 
         breathFull: () => {
-            kip1.playAnimation('kip_45_Full_Breath', true)
-            kip2.playAnimation('kip_72_Full_Breath', true)
+            kip1.playAnimation('kip_Full_Breath', true)
+            kip2.playAnimation('kip_Full_Breath', true)
         },  
 
         fullToHalf: () => {
@@ -110,16 +110,16 @@ const scenarios: Map<string, any> = new Map<string, any>([
             kip2.clearAnimation();
 
             setTimeout(() => {
-                kip1.playAnimation('kip_45_FullToHalf', true)
+                kip1.playAnimation('kip_FullToHalf', true)
             }, 500);
             setTimeout(() => {
-                kip2.playAnimation('kip_72_FullToHalf', true)
+                kip2.playAnimation('kip_FullToHalf', true)
             }, 500);
         },
 
         breathHalf: () => {
             kip1.playAnimation('kip_Half_Breath')
-            kip2.playAnimation('kip_Half_Breath') // make sure thats the right animation
+            kip2.playAnimation('kip_Half_Breath')
         },
 
         halfToFull: () => {
@@ -130,10 +130,10 @@ const scenarios: Map<string, any> = new Map<string, any>([
             kip2.clearAnimation();
 
             setTimeout(() => {
-                kip1.playAnimation('kip_45_HalfToFull', true)
+                kip1.playAnimation('kip_HalfToFull', true)
             }, 500);
             setTimeout(() => {
-                kip2.playAnimation('kip_72_HalfToFull', true)
+                kip2.playAnimation('kip_HalfToFull', true)
             }, 500);
         },
 
@@ -148,7 +148,7 @@ const scenarios: Map<string, any> = new Map<string, any>([
                 kip1.playAnimation('kip_45_FullStop', true)
             }, 500);
             setTimeout(() => {
-                kip2.playAnimation('kip_72_FullStop', true)
+                kip2.playAnimation('kip_70_FullStop', true)
             }, 500);
         },
 
@@ -163,7 +163,7 @@ const scenarios: Map<string, any> = new Map<string, any>([
                 kip1.playAnimation('kip_45_HalfStop', true)
             }, 500);
             setTimeout(() => {
-                kip2.playAnimation('kip_72_HalfStop', true)
+                kip2.playAnimation('kip_70_HalfStop', true)
             }, 500);
         },
     }],
