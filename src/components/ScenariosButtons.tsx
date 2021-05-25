@@ -94,7 +94,7 @@ const scenarios: Map<string, any> = new Map<string, any>([
     ['Out-Group', {
         start: () => {
             kip1.playAnimation('kip_45_Full')
-            kip2.playAnimation('kip_72_Full')
+            kip2.playAnimation('kip_70_Full')
         },
 
         breathFull: () => {
