@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/Multi-Robot-Interface/static/css/main.b6a00451.chunk.css",
-    "main.js": "/Multi-Robot-Interface/static/js/main.87a74a1d.chunk.js",
-    "main.js.map": "/Multi-Robot-Interface/static/js/main.87a74a1d.chunk.js.map",
-    "runtime-main.js": "/Multi-Robot-Interface/static/js/runtime-main.17da6232.js",
-    "runtime-main.js.map": "/Multi-Robot-Interface/static/js/runtime-main.17da6232.js.map",
-    "static/css/2.9233ae65.chunk.css": "/Multi-Robot-Interface/static/css/2.9233ae65.chunk.css",
-    "static/js/2.23dcb0f5.chunk.js": "/Multi-Robot-Interface/static/js/2.23dcb0f5.chunk.js",
-    "static/js/2.23dcb0f5.chunk.js.map": "/Multi-Robot-Interface/static/js/2.23dcb0f5.chunk.js.map",
-    "index.html": "/Multi-Robot-Interface/index.html",
-    "precache-manifest.98202a8615349e85edb6d4afdd1f119c.js": "/Multi-Robot-Interface/precache-manifest.98202a8615349e85edb6d4afdd1f119c.js",
-    "service-worker.js": "/Multi-Robot-Interface/service-worker.js",
-    "static/css/2.9233ae65.chunk.css.map": "/Multi-Robot-Interface/static/css/2.9233ae65.chunk.css.map",
-    "static/css/main.b6a00451.chunk.css.map": "/Multi-Robot-Interface/static/css/main.b6a00451.chunk.css.map",
-    "static/js/2.23dcb0f5.chunk.js.LICENSE.txt": "/Multi-Robot-Interface/static/js/2.23dcb0f5.chunk.js.LICENSE.txt"
+    "main.css": "/www.milabrobotics.com/static/css/main.d1f24ce5.chunk.css",
+    "main.js": "/www.milabrobotics.com/static/js/main.4a69ca47.chunk.js",
+    "main.js.map": "/www.milabrobotics.com/static/js/main.4a69ca47.chunk.js.map",
+    "runtime-main.js": "/www.milabrobotics.com/static/js/runtime-main.8699ad57.js",
+    "runtime-main.js.map": "/www.milabrobotics.com/static/js/runtime-main.8699ad57.js.map",
+    "static/css/2.9233ae65.chunk.css": "/www.milabrobotics.com/static/css/2.9233ae65.chunk.css",
+    "static/js/2.e2df96d8.chunk.js": "/www.milabrobotics.com/static/js/2.e2df96d8.chunk.js",
+    "static/js/2.e2df96d8.chunk.js.map": "/www.milabrobotics.com/static/js/2.e2df96d8.chunk.js.map",
+    "index.html": "/www.milabrobotics.com/index.html",
+    "precache-manifest.9368b6026260ca54c3dafbf7d99e3b15.js": "/www.milabrobotics.com/precache-manifest.9368b6026260ca54c3dafbf7d99e3b15.js",
+    "service-worker.js": "/www.milabrobotics.com/service-worker.js",
+    "static/css/2.9233ae65.chunk.css.map": "/www.milabrobotics.com/static/css/2.9233ae65.chunk.css.map",
+    "static/css/main.d1f24ce5.chunk.css.map": "/www.milabrobotics.com/static/css/main.d1f24ce5.chunk.css.map",
+    "static/js/2.e2df96d8.chunk.js.LICENSE.txt": "/www.milabrobotics.com/static/js/2.e2df96d8.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.17da6232.js",
+    "static/js/runtime-main.8699ad57.js",
     "static/css/2.9233ae65.chunk.css",
-    "static/js/2.23dcb0f5.chunk.js",
-    "static/css/main.b6a00451.chunk.css",
-    "static/js/main.87a74a1d.chunk.js"
+    "static/js/2.e2df96d8.chunk.js",
+    "static/css/main.d1f24ce5.chunk.css",
+    "static/js/main.4a69ca47.chunk.js"
   ]
 }
