@@ -24,7 +24,6 @@ export type AppState = {
 export class App extends React.PureComponent<{}, AppState> {
 
 
-
 	state: AppState = {
 		dayNightStatus: false,
 		NewIPInput: '',
