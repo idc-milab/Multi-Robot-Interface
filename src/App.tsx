@@ -77,17 +77,22 @@ export class App extends React.PureComponent<{}, AppState> {
 			StateArray[index] = false;
 			return(
 				<>
-				<Button variant="outline-danger" onClick={() => this.setState(() => this.onRemoveRobotIP(ip))}>I'm Sure, Delete!</Button>
-				<Button variant="outline-success" onClick={() => this.setState({IPdeleteState: StateArray})}>Oops, Go Back!</Button>
+				<Button variant="secondary" disabled>Are you sure you want to delete {ip}?</Button>
+				<Button variant="outline-danger" onClick={() => this.setState(() => this.onRemoveRobotIP(ip))}>🗸</Button>
+				<Button variant="outline-secondary" onClick={() => this.setState({IPdeleteState: StateArray})}>✗</Button>
 				</>
 			);
 		}
 		else {
 			StateArray[index] = true;
-			return(<Button variant="outline-danger" onClick={() => this.setState({IPdeleteState: StateArray})}>🗑</Button>);
+			return(
+				<>
+				<Button variant="secondary" onClick={() => this.onAddRobotObject(ip)}>Connect to: {ip}</Button>
+				<Button variant="outline-danger" onClick={() => this.setState({IPdeleteState: StateArray})}>🗑</Button>
+				</>
+			);
 		}
 	}
-
 	
 	onToggleInstructions = () => {
 		this.setState({
@@ -97,7 +102,8 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	onToggleIPadd = () => {
 		this.setState({
-			showNewIP: !this.state.showNewIP
+			showNewIP: !this.state.showNewIP,
+			IPdeleteState: this.state.IPdeleteState.fill(false)
 		})
 	}
 
@@ -159,7 +165,7 @@ export class App extends React.PureComponent<{}, AppState> {
 									{this.state.labCurrentIPs.map(ip => (
 										<ListGroup.Item>
 											<ButtonGroup aria-label="Basic example">
-												<Button variant="secondary" onClick={() => this.onAddRobotObject(ip)}>Connect to: {ip}</Button>
+												
 
 												{this.renderRemoveButtons(ip)}
 
@@ -176,7 +182,7 @@ export class App extends React.PureComponent<{}, AppState> {
 									  	value={this.state.NewIPInput}
 									  	onChange={this.handleChange}
     								/>
-    								<Button variant="outline-secondary" id="button-addon2" onClick={this.NewIpADDED}>✓</Button>
+    								<Button variant="outline-secondary" id="button-addon2" onClick={this.NewIpADDED}>➕</Button>
 								</InputGroup>
 							</Modal.Body>
 							<Modal.Footer>
