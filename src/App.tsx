@@ -2,12 +2,10 @@ import React from 'react';
 import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
-import { useState } from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown, InputGroup, ButtonGroup, ListGroup, ModalTitle } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, InputGroup, ButtonGroup, ListGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { ScenarioButtons } from './components/ScenariosButtons';
-import { LinkContainer } from 'react-router-bootstrap';
 
 
 
@@ -178,7 +176,7 @@ export class App extends React.PureComponent<{}, AppState> {
 									  	value={this.state.NewIPInput}
 									  	onChange={this.handleChange}
     								/>
-    								<Button variant="outline-secondary" id="button-addon2" onClick={this.NewIpADDED}>➕</Button>
+    								<Button variant="outline-secondary" id="button-addon2" onClick={this.NewIpADDED}>Add</Button>
 								</InputGroup>
 							</Modal.Body>
 							<Modal.Footer>

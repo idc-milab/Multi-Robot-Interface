@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
-import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
+import { Button, Container, Card } from 'react-bootstrap';
 
 
 export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClient, onRemove: (ip: string) => void }) {
