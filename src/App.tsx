@@ -41,17 +41,6 @@ export class App extends React.PureComponent<{}, AppState> {
 		})
 	}
 
-
-	onRemoveRobotIP = (ip: string) => {
-		var array = [...this.state.labCurrentIPs];
-		let StateArray = [...this.state.IPdeleteState];
-		var index = array.indexOf(ip);
-		array.splice(index, 1);
-		StateArray.splice(index, 1);
-		this.setState({labCurrentIPs: array});
-		this.setState({IPdeleteState: StateArray});
-	}
-
 	onAddRobotObject = (ip: string) => {
 		const currentButterClient = new HttpClient(ip);
 		currentButterClient.timeout = 240;
@@ -67,6 +56,16 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({
 			currentButterClients: this.state.currentButterClients.filter(butterClient => butterClient.ip !== ip)
 		})
+	}
+
+	onRemoveRobotIP = (ip: string) => {
+		var array = [...this.state.labCurrentIPs];
+		let StateArray = [...this.state.IPdeleteState];
+		var index = array.indexOf(ip);
+		array.splice(index, 1);
+		StateArray.splice(index, 1);
+		this.setState({labCurrentIPs: array});
+		this.setState({IPdeleteState: StateArray});
 	}
 
 	renderRemoveButtons(ip: string) {
@@ -165,10 +164,7 @@ export class App extends React.PureComponent<{}, AppState> {
 									{this.state.labCurrentIPs.map(ip => (
 										<ListGroup.Item>
 											<ButtonGroup aria-label="Basic example">
-												
-
-												{this.renderRemoveButtons(ip)}
-
+											{this.renderRemoveButtons(ip)}
 						    				</ButtonGroup>
 										</ListGroup.Item>
 									))}
