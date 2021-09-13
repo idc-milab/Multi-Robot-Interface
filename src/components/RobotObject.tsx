@@ -9,7 +9,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
 
   useEffect(() => {
     loadAnimations();
-  }, []);
+  });
 
   const loadAnimations = async () => {
     setTimeout(() => {
