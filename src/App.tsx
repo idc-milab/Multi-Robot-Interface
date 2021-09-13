@@ -68,7 +68,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({IPdeleteState: StateArray});
 	}
 
-	renderButtons(ip: string) {
+	renderRemoveButtons(ip: string) {
 		let IParray = [...this.state.labCurrentIPs];
 		let StateArray = [...this.state.IPdeleteState];
 		let index = IParray.indexOf(ip);
@@ -164,7 +164,7 @@ export class App extends React.PureComponent<{}, AppState> {
 									{this.state.labCurrentIPs.map(ip => (
 										<ListGroup.Item>
 											<ButtonGroup aria-label="Basic example">
-											{this.renderButtons(ip)}
+											{this.renderRemoveButtons(ip)}
 						    				</ButtonGroup>
 										</ListGroup.Item>
 									))}
