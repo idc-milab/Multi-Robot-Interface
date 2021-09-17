@@ -30,7 +30,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		showInst: false,
 		showNewIP: false,
 		labCurrentIPs: ['192.168.57.30', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
-		IPdeleteState: [false, false, false, false, false, false],
+		IPdeleteState: Array(6).fill(false),
 	}
 
 	SetDayNightStatus = () => {
@@ -74,7 +74,7 @@ export class App extends React.PureComponent<{}, AppState> {
 			StateArray[index] = false;
 			return(
 				<>
-				<Button variant="secondary" disabled>Are you sure you want to delete {ip}?</Button>
+				<Button variant="secondary" disabled>Delete {ip}?</Button>
 				<Button variant="outline-danger" onClick={() => this.setState(() => this.onRemoveRobotIP(ip))}>🗸</Button>
 				<Button variant="outline-secondary" onClick={() => this.setState({IPdeleteState: StateArray})}>✗</Button>
 				</>
@@ -105,17 +105,30 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	NewIpADDED = () => {
-		this.setState({
-			labCurrentIPs: [...this.state.labCurrentIPs, this.state.NewIPInput],
-			IPdeleteState: [...this.state.IPdeleteState, false],
-			NewIPInput: ''
-		})
+		const pattern = /^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$/g;
+		const result = pattern.test(this.state.NewIPInput);
+		if (result) {
+			this.setState({
+				labCurrentIPs: [...this.state.labCurrentIPs, this.state.NewIPInput],
+				IPdeleteState: [...this.state.IPdeleteState, false],
+				NewIPInput: ''
+			});
+		}
+		else {
+			alert('Incorrect Input');
+		}
 	}
 
 	handleChange = (event: { target: { value: any; }; }) => {
 		this.setState({
 			NewIPInput: event.target.value
 		})
+	}
+
+	handlePress = (event: { key: string; }) => {
+		if (event.key === 'Enter') {
+			this.NewIpADDED();
+		}
 	}
 
 
@@ -158,7 +171,7 @@ export class App extends React.PureComponent<{}, AppState> {
 								<Modal.Title>Robots List:</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
-								<ListGroup>
+								<ListGroup className='navbar-brand'>
 									{this.state.labCurrentIPs.map(ip => (
 										<ListGroup.Item>
 											<ButtonGroup aria-label="Basic example">
@@ -175,6 +188,7 @@ export class App extends React.PureComponent<{}, AppState> {
       									aria-describedby="basic-addon2"
 									  	value={this.state.NewIPInput}
 									  	onChange={this.handleChange}
+										onKeyPress={this.handlePress}
     								/>
     								<Button variant="outline-secondary" id="button-addon2" onClick={this.NewIpADDED}>Add</Button>
 								</InputGroup>
