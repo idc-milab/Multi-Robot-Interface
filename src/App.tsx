@@ -30,7 +30,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		showInst: false,
 		showNewIP: false,
 		labCurrentIPs: ['192.168.57.30', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
-		IPdeleteState: Array().fill(false),
+		IPdeleteState: Array(6).fill(false),
 	}
 
 	SetDayNightStatus = () => {
@@ -109,7 +109,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		const result = pattern.test(this.state.NewIPInput);
 		let index = this.state.labCurrentIPs.indexOf(this.state.NewIPInput);
 		if (result) {
-			if (index == -1) {
+			if (index === -1) {
 				this.setState({
 					labCurrentIPs: [...this.state.labCurrentIPs, this.state.NewIPInput],
 					IPdeleteState: [...this.state.IPdeleteState, false]
