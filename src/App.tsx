@@ -107,10 +107,15 @@ export class App extends React.PureComponent<{}, AppState> {
 	NewIpADDED = () => {
 		const pattern = /^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$/g;
 		const result = pattern.test(this.state.NewIPInput);
+		let index = this.state.labCurrentIPs.indexOf(this.state.NewIPInput);
 		if (result) {
+			if (index == -1) {
+				this.setState({
+					labCurrentIPs: [...this.state.labCurrentIPs, this.state.NewIPInput],
+					IPdeleteState: [...this.state.IPdeleteState, false]
+				});
+			}
 			this.setState({
-				labCurrentIPs: [...this.state.labCurrentIPs, this.state.NewIPInput],
-				IPdeleteState: [...this.state.IPdeleteState, false],
 				NewIPInput: ''
 			});
 		}
