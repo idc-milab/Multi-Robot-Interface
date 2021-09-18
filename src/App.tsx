@@ -30,7 +30,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		showInst: false,
 		showNewIP: false,
 		labCurrentIPs: ['192.168.57.30', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
-		IPdeleteState: Array(6).fill(false),
+		IPdeleteState: Array().fill(false),
 	}
 
 	SetDayNightStatus = () => {
