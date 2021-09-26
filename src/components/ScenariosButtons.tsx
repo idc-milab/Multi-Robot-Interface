@@ -9,6 +9,9 @@ kip1.timeout = 240;
 kip2.timeout = 240;
 
 
+let interval1: NodeJS.Timeout;
+let interval2: NodeJS.Timeout;
+
 const scenarios: Map<string, any> = new Map<string, any>([
     ['In-Group', {
         start: () => {

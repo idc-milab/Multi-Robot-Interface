@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
-import { Button, Container, Card } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 
 
 export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClient, onRemove: (ip: string) => void }) {
@@ -9,7 +9,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
 
   useEffect(() => {
     loadAnimations();
-  });
+  }, []);
 
   const loadAnimations = async () => {
     setTimeout(() => {
@@ -19,7 +19,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
       console.error('Failed to get robot animations', res);
       return;
     }
-    const animations = res.data.Result.match(/\[.*\]/ig)[0].replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
+    const animations = res.data.response.data.replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
     console.log(animations);
     setAnimations(animations);
   }
