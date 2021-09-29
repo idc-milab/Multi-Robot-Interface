@@ -1,13 +1,13 @@
 import React from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
+import { Button, Container, Card } from 'react-bootstrap';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
-import { start } from 'repl';
 
 const kip1 = new HttpClient('192.168.57.30');
 const kip2 = new HttpClient('192.168.56.188');
 
 kip1.timeout = 240;
 kip2.timeout = 240;
+
 
 let interval1: NodeJS.Timeout;
 let interval2: NodeJS.Timeout;

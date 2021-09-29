@@ -2,21 +2,22 @@ import React from 'react';
 import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
-import { useState } from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, InputGroup, ButtonGroup, ListGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { ScenarioButtons } from './components/ScenariosButtons';
-import { LinkContainer } from 'react-router-bootstrap';
+import { useState } from 'react';
 
 
 
 export type AppState = {
 	dayNightStatus: boolean;
-	currentIPInput: string;
+	NewIPInput: string;
 	currentButterClients: HttpClient[];
-	show: boolean;
+	showInst: boolean;
+	showNewIP: boolean;
 	labCurrentIPs: string[];
+	IPdeleteState: boolean[];
 }
 
 export class App extends React.PureComponent<{}, AppState> {
@@ -25,10 +26,12 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	state: AppState = {
 		dayNightStatus: false,
-		currentIPInput: '192.168.57.30',
+		NewIPInput: '',
 		currentButterClients: [],
-		show: false,
+		showInst: false,
+		showNewIP: false,
 		labCurrentIPs: ['192.168.57.30', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
+		IPdeleteState: Array(6).fill(false),
 	}
 
 	SetDayNightStatus = () => {
@@ -37,19 +40,13 @@ export class App extends React.PureComponent<{}, AppState> {
 		})
 	}
 
-
-	setIPValue = (ip: string) => {
-		this.setState({
-			currentIPInput: ip
-		})
-	}
-
 	onAddRobotObject = (ip: string) => {
 		const currentButterClient = new HttpClient(ip);
 		currentButterClient.timeout = 240;
 		if (!this.state.currentButterClients.map(c => c.ip).some(c => c === ip)) {
 			this.setState({
-				currentButterClients: [...this.state.currentButterClients, currentButterClient]
+				currentButterClients: [...this.state.currentButterClients, currentButterClient],
+				showNewIP: !this.state.showNewIP
 			})
 		}
 	}
@@ -60,10 +57,84 @@ export class App extends React.PureComponent<{}, AppState> {
 		})
 	}
 
+	onRemoveRobotIP = (ip: string) => {
+		var array = [...this.state.labCurrentIPs];
+		let StateArray = [...this.state.IPdeleteState];
+		var index = array.indexOf(ip);
+		array.splice(index, 1);
+		StateArray.splice(index, 1);
+		this.setState({labCurrentIPs: array});
+		this.setState({IPdeleteState: StateArray});
+	}
+
+	renderButtons(ip: string) {
+		let IParray = [...this.state.labCurrentIPs];
+		let StateArray = [...this.state.IPdeleteState];
+		let index = IParray.indexOf(ip);
+		if (this.state.IPdeleteState[index]) {
+			StateArray[index] = false;
+			return(
+				<>
+				<Button variant="secondary" disabled>Delete {ip}?</Button>
+				<Button variant="outline-danger" onClick={() => this.setState(() => this.onRemoveRobotIP(ip))}>🗸</Button>
+				<Button variant="outline-secondary" onClick={() => this.setState({IPdeleteState: StateArray})}>✗</Button>
+				</>
+			);
+		}
+		else {
+			StateArray[index] = true;
+			return(
+				<>
+				<Button variant="secondary" onClick={() => this.onAddRobotObject(ip)}>Connect to: {ip}</Button>
+				<Button variant="outline-danger" onClick={() => this.setState({IPdeleteState: StateArray})}>🗑</Button>
+				</>
+			);
+		}
+	}
+	
 	onToggleInstructions = () => {
 		this.setState({
-			show: !this.state.show
+			showInst: !this.state.showInst
 		})
+	}
+
+	onToggleIPadd = () => {
+		this.setState({
+			showNewIP: !this.state.showNewIP,
+			IPdeleteState: this.state.IPdeleteState.fill(false)
+		})
+	}
+
+	NewIpADDED = () => {
+		const pattern = /^[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+$/g;
+		const result = pattern.test(this.state.NewIPInput);
+		let index = this.state.labCurrentIPs.indexOf(this.state.NewIPInput);
+		if (result) {
+			if (index === -1) {
+				this.setState({
+					labCurrentIPs: [...this.state.labCurrentIPs, this.state.NewIPInput],
+					IPdeleteState: [...this.state.IPdeleteState, false]
+				});
+			}
+			this.setState({
+				NewIPInput: ''
+			});
+		}
+		else {
+			alert('Incorrect Input');
+		}
+	}
+
+	handleChange = (event: { target: { value: any; }; }) => {
+		this.setState({
+			NewIPInput: event.target.value
+		})
+	}
+
+	handlePress = (event: { key: string; }) => {
+		if (event.key === 'Enter') {
+			this.NewIpADDED();
+		}
 	}
 
 
@@ -99,18 +170,48 @@ export class App extends React.PureComponent<{}, AppState> {
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					
 						<Form inline>
-						<FormControl as="select" type="IPInput" placeholder="insert IP" className="mr-sm-2" value={this.state.currentIPInput} onChange={(e) => this.setIPValue(e.target.value)}>
-						{this.state.labCurrentIPs.map(ip => (<option>{ip}</option>))}
-						</FormControl>
+						<Button variant="outline-info" onClick={this.onToggleIPadd}>Connect to a Robot</Button>
 
-						<Button variant="outline-info" onClick={() => this.onAddRobotObject(this.state.currentIPInput)}>Connect to Robot</Button>
+						<Modal show={this.state.showNewIP} onHide={this.onToggleIPadd}>
+							<Modal.Header translate="true">
+								<Modal.Title>Robots List:</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+								<ListGroup className='navbar-brand'>
+									{this.state.labCurrentIPs.map(ip => (
+										<ListGroup.Item>
+											<ButtonGroup aria-label="Basic example">
+											{this.renderButtons(ip)}
+						    				</ButtonGroup>
+										</ListGroup.Item>
+									))}
+								</ListGroup>
+								<p></p>
+								<InputGroup className="mb-3">
+    								<FormControl
+      									placeholder="New Robot's IP"
+      									aria-label="New Robot's IP"
+      									aria-describedby="basic-addon2"
+									  	value={this.state.NewIPInput}
+									  	onChange={this.handleChange}
+										onKeyPress={this.handlePress}
+    								/>
+    								<Button variant="outline-secondary" id="button-addon2" onClick={this.NewIpADDED}>Add</Button>
+								</InputGroup>
+							</Modal.Body>
+							<Modal.Footer>
+								<Button variant="secondary"  onClick={this.onToggleIPadd}>🡆</Button>
+							</Modal.Footer>
+						</Modal>
+						
 						</Form>
+
 						<Navbar.Collapse id="responsive-navbar-nav">
 						<Nav className="ml-auto" >
 							<Button variant="secondary" onClick={this.onToggleInstructions}>Instructions</Button>
 							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
 							
-							<Modal show={this.state.show} onHide={!this.state.show}>
+							<Modal show={this.state.showInst} onHide={this.onToggleInstructions}>
 								<Modal.Header translate="true">
 									<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
 								</Modal.Header>
@@ -133,6 +234,7 @@ export class App extends React.PureComponent<{}, AppState> {
 									</Button>
 								</Modal.Footer>
 							</Modal>
+
 						</Nav>
 						</Navbar.Collapse>
 					</Navbar>
