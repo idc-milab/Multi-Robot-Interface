@@ -41,7 +41,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
             </Button>
           </div>
         </Card.Header>
-        <Card.Body>
+        <Card.Body style={{backgroundColor: "#e5f0f7"}}>
           <div key={butterClient.ip} className='robot-object'>
           {animations.length === 0 ? 'There was a problem connecting to the robot.. please try again..' : <Pipeline animationsList={animations} butterclient={butterClient} />}
 
