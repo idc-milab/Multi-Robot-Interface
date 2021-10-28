@@ -25,10 +25,10 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	state: AppState = {
 		dayNightStatus: false,
-		currentIPInput: '192.168.57.30',
+		currentIPInput: '192.168.56.227',
 		currentButterClients: [],
 		show: false,
-		labCurrentIPs: ['192.168.57.30', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
+		labCurrentIPs: ['192.168.56.227', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
 	}
 
 	SetDayNightStatus = () => {
