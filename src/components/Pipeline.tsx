@@ -12,25 +12,24 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
   const [AnimationDelay, setAnimationDelay] = useState(1);
 
 
-  const HandleClick = (move: string) => {
-    const indexInQueue = QueuedMoves.indexOf(move);
+  const HandleClickAdd = (move: string) => {
     var TempQueue = ExtractMoves(QueuedMoves);
 
-    if (indexInQueue === -1) { // move is NOT in queue
       if (ActiveNum < MaxNum) {
         TempQueue = TempQueue.concat(move);
         setActiveNum(ActiveNum + 1);
+        UpdateQueue(TempQueue);
       }
       else alert('Queue is Full!');
-    }
-
-    else { // move IS in queue
-      TempQueue.splice(indexInQueue, 1);
-      setActiveNum(ActiveNum - 1);
-    }
-
-    UpdateQueue(TempQueue);
   };
+
+  const HandleClickRemove = (index: any) => {
+    var TempQueue = ExtractMoves(QueuedMoves);
+
+    TempQueue.splice(index, 1);
+    setActiveNum(ActiveNum - 1);
+    UpdateQueue(TempQueue);
+  }
 
   const UpdateQueue = (Active: string[]) => {
     var Queue = Array(MaxNum).fill(null);
@@ -53,17 +52,18 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
   const renderMovesListButton = (move: string) => {
     if (QueuedMoves.indexOf(move) === -1) {
       return (
-        <ButtonGroup><Button variant="outline-primary" onClick={() => HandleClick(move)}>{move}</Button></ButtonGroup>
+        <ButtonGroup><Button variant="outline-primary" onClick={() => HandleClickAdd(move)}>{move}</Button></ButtonGroup>
       );
     }
     else {
       return (
-        <ButtonGroup><Button variant="outline-secondary" disabled>{move}</Button></ButtonGroup>
+        //<ButtonGroup><Button variant="outline-secondary" disabled>{move}</Button></ButtonGroup>
+        <ButtonGroup><Button variant="outline-success" onClick={() => HandleClickAdd(move)}>{move}</Button></ButtonGroup>
       );
     }
   }
 
-  const renderPipelineButton = (move: string) => {
+  const renderPipelineButton = (move: string, index: any) => {
     if (move === null) {
       return (
         <Button variant="outline-success" disabled>-</Button>
@@ -71,9 +71,9 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
     }
     else {
       return (
-        <Button variant="outline-danger" onClick={() => HandleClick(move)}>{move}</Button>
-      );
-    }
+      <Button variant="outline-danger" onClick={() => HandleClickRemove(index)}>{move}</Button>
+    );
+      }
   }
 
   const playAnimations = async (animations: string[]) => {
@@ -97,7 +97,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
             </ButtonToolbar>
         </Card.Header>
         <Dropdown as={ButtonGroup}>
-          {QueuedMoves.map((move) => renderPipelineButton(move))}
+          {QueuedMoves.map((move, index) => renderPipelineButton(move, index))}
           <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
            <Dropdown.Menu>
              <Dropdown.ItemText>
