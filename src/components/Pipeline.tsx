@@ -48,32 +48,16 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
     }
     return Moves;
   }
-
+  
   const renderMovesListButton = (move: string) => {
-    if (QueuedMoves.indexOf(move) === -1) {
       return (
-        <ButtonGroup><Button variant="outline-primary" onClick={() => HandleClickAdd(move)}>{move}</Button></ButtonGroup>
+        <ButtonGroup><Button variant={QueuedMoves.indexOf(move) === -1 ? "outline-primary" :"outline-success"} onClick={() => HandleClickAdd(move)}>{move}</Button></ButtonGroup>
       );
-    }
-    else {
-      return (
-        //<ButtonGroup><Button variant="outline-secondary" disabled>{move}</Button></ButtonGroup>
-        <ButtonGroup><Button variant="outline-success" onClick={() => HandleClickAdd(move)}>{move}</Button></ButtonGroup>
-      );
-    }
   }
 
   const renderPipelineButton = (move: string, index: any) => {
-    if (move === null) {
-      return (
-        <Button variant="outline-success" disabled>-</Button>
-      );
-    }
-    else {
-      return (
-      <Button variant="outline-danger" onClick={() => HandleClickRemove(index)}>{move}</Button>
-    );
-      }
+    if (move === null) return (<Button variant="outline-success" disabled>-</Button>);
+    else return (<Button variant="outline-danger" onClick={() => HandleClickRemove(index)}>{move}</Button>);
   }
 
   const playAnimations = async (animations: string[]) => {
@@ -82,7 +66,6 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
       await timeout(1000 * AnimationDelay); //for 1 sec delay
      }
   }
-
   function timeout(delay: number) {
     return new Promise( res => setTimeout(res, delay) );
 }
