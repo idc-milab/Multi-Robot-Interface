@@ -10,26 +10,35 @@ import { ScenarioButtons } from './components/ScenariosButtons';
 import { LinkContainer } from 'react-router-bootstrap';
 
 
+/*this is where we declare an object called AppState and in it all the constants \
+that appear on the top of the website page 
+*/
 
 export type AppState = {
 	dayNightStatus: boolean;
 	currentIPInput: string;
-	currentButterClients: HttpClient[];
+	currentButterClients: HttpClient[]; //import all the clients from butter
 	show: boolean;
-	labCurrentIPs: string[];
+	labCurrentIPs: string[]; //array of ip's
 }
 
 export class App extends React.PureComponent<{}, AppState> {
 
 
-
+/**
+ * declaring what the default values of the const. will be
+ */
 	state: AppState = {
 		dayNightStatus: false,
 		currentIPInput: '192.168.56.227',
 		currentButterClients: [],
 		show: false,
+		//why do we need the correct ip names and not any name for example why not have it as kip?
 		labCurrentIPs: ['192.168.56.227', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
 	}
+	/**declaring the function of set nightstatus to be false. notice the setState command
+	 * re-renders the pervious AppState command
+	  */
 
 	SetDayNightStatus = () => {
 		this.setState({
@@ -37,13 +46,14 @@ export class App extends React.PureComponent<{}, AppState> {
 		})
 	}
 
-
+/**declaring what the current ip will be setState command re-renders the previous command */
 	setIPValue = (ip: string) => {
 		this.setState({
 			currentIPInput: ip
 		})
 	}
 
+	/**adding robot objects to the ip array */
 	onAddRobotObject = (ip: string) => {
 		const currentButterClient = new HttpClient(ip);
 		currentButterClient.timeout = 240;
@@ -54,12 +64,14 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 	}
 
+	/**this function will be used when we want to remove a robot object from the the screen */
 	onRemoveRobotObject = (ip: string) => {
 		this.setState({
 			currentButterClients: this.state.currentButterClients.filter(butterClient => butterClient.ip !== ip)
 		})
 	}
 
+	/**this is the state of the toggle instructions button on the webpage */
 	onToggleInstructions = () => {
 		this.setState({
 			show: !this.state.show
@@ -68,7 +80,7 @@ export class App extends React.PureComponent<{}, AppState> {
 
 
 	renderRobotObjects = () => {
-
+/**this is const that enables the connect robot button on the webpage */
 		return (
 			<ul className='robot-objects'>
 				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} />)}
