@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Card, Button, ButtonGroup, ButtonToolbar, Dropdown, InputGroup } from 'react-bootstrap';
+import { Container, Card, Button, ButtonGroup, ButtonToolbar, Dropdown, InputGroup, SplitButton } from 'react-bootstrap';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import RangeSlider from 'react-bootstrap-range-slider';
 
@@ -79,21 +79,19 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
               {animationsList.map((move) => renderMovesListButton(move))}
             </ButtonToolbar>
         </Card.Header>
-        <Dropdown as={ButtonGroup}>
+        <ButtonGroup>
           {QueuedMoves.map((move, index) => renderPipelineButton(move, index))}
-          <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-           <Dropdown.Menu>
-             <Dropdown.ItemText>
-               <InputGroup className="mb-3">
-                 Delay length (seconds):
-               </InputGroup>
-             </Dropdown.ItemText>
-             <Dropdown.ItemText>
-               <RangeSlider value={AnimationDelay} min={0} max={10} tooltip='auto' onChange={changeEvent => setAnimationDelay(parseInt(changeEvent.target.value))} />
-             </Dropdown.ItemText>
-           </Dropdown.Menu>
-           <Button  variant="danger"  onClick={ () => playAnimations(ExtractMoves(QueuedMoves))}>START</Button>
-         </Dropdown>
+          <SplitButton title="START" id="dropdown-menu-align-responsive-2" variant="danger" onClick={() => playAnimations(ExtractMoves(QueuedMoves))}>
+            <Dropdown.ItemText>
+              <InputGroup className="mb-3">
+                Delay length (seconds):
+              </InputGroup>
+            </Dropdown.ItemText>
+            <Dropdown.ItemText>
+              <RangeSlider value={AnimationDelay} min={0} max={10} tooltip='auto' onChange={changeEvent => setAnimationDelay(parseInt(changeEvent.target.value))} />
+            </Dropdown.ItemText>
+          </SplitButton>
+        </ButtonGroup>
 		   </Card> 
 		</>
   );
