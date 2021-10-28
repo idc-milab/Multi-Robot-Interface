@@ -9,7 +9,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
 
   const [QueuedMoves, setQueuedMoves] = useState(Array(MaxNum).fill(null));
   const [ActiveNum, setActiveNum] = useState(0);
-  const [AnimationDelay, setAnimationDelay] = useState(1);
+  const [AnimationDelay, setAnimationDelay] = useState(0);
 
 
   const HandleClickAdd = (move: string) => {
@@ -66,9 +66,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
       await timeout(1000 * AnimationDelay); //for 1 sec delay
      }
   }
-  function timeout(delay: number) {
-    return new Promise( res => setTimeout(res, delay) );
-}
+  function timeout(delay: number) { return new Promise(res => setTimeout(res, delay)); }
   
     return (
     < >
@@ -79,16 +77,18 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
               {animationsList.map((move) => renderMovesListButton(move))}
             </ButtonToolbar>
         </Card.Header>
+        <Card.Body></Card.Body>
+        <Card.Footer>Current Sequence:</Card.Footer>
         <ButtonGroup>
           {QueuedMoves.map((move, index) => renderPipelineButton(move, index))}
           <SplitButton title="START" id="dropdown-menu-align-responsive-2" variant="danger" onClick={() => playAnimations(ExtractMoves(QueuedMoves))}>
             <Dropdown.ItemText>
               <InputGroup className="mb-3">
-                Delay length (seconds):
+                Delay between animations (in seconds):
               </InputGroup>
             </Dropdown.ItemText>
             <Dropdown.ItemText>
-              <RangeSlider value={AnimationDelay} min={0} max={10} tooltip='auto' onChange={changeEvent => setAnimationDelay(parseInt(changeEvent.target.value))} />
+              <RangeSlider value={AnimationDelay} min={0} max={20} tooltip='auto' onChange={changeEvent => setAnimationDelay(parseInt(changeEvent.target.value))} />
             </Dropdown.ItemText>
           </SplitButton>
         </ButtonGroup>
