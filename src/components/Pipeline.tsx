@@ -56,8 +56,8 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
   }
 
   const renderPipelineButton = (move: string, index: any) => {
-    if (move === null) return (<Button variant="outline-success" disabled>-</Button>);
-    else return (<Button variant="outline-danger" onClick={() => HandleClickRemove(index)}>{move}</Button>);
+    if (move === null) return (<Button variant="outline-secondary" disabled>-</Button>);
+    else return (<Button variant="outline-success" onClick={() => HandleClickRemove(index)}>{move}</Button>);
   }
 
   const playAnimations = async (animations: string[]) => {
