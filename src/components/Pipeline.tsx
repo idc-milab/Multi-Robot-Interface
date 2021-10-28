@@ -78,7 +78,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
 
   const playAnimations = async (animations: string[]) => {
     for (var i =0; i<animations.length; i++) {
-      butterclient.playAnimation(animations[i].trim())
+      butterclient.playAnimation(animations[i].trim(), true);
       await timeout(1000 * AnimationDelay); //for 1 sec delay
      }
   }
