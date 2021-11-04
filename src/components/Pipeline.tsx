@@ -16,7 +16,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
     if (ActiveNum < MaxNum) {
       TempQueue = TempQueue.concat(move);
       setActiveNum(ActiveNum + 1);
-      UpdateQueue(TempQuesue);
+      UpdateQueue(TempQueue);
     }
     else alert('Queue is Full!');
   };
