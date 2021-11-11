@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "34daae9a4afa1c2eab999e0df2ed9fc0",
+    "revision": "8f586fa52d66ac1adb6890e07291bf18",
     "url": "/www.milabrobotics.com/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/www.milabrobotics.com/static/css/2.9233ae65.chunk.css"
   },
   {
-    "revision": "7c58454a04ad7369a0e2",
+    "revision": "fcc5635f1cf49c8b2f64",
     "url": "/www.milabrobotics.com/static/css/main.b6a00451.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/www.milabrobotics.com/static/js/2.430d322f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7c58454a04ad7369a0e2",
-    "url": "/www.milabrobotics.com/static/js/main.00acb4c8.chunk.js"
+    "revision": "fcc5635f1cf49c8b2f64",
+    "url": "/www.milabrobotics.com/static/js/main.d1123e8b.chunk.js"
   },
   {
     "revision": "7ba942e260fbc5f07302",

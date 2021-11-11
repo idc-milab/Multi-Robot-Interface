@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/www.milabrobotics.com/precache-manifest.aa143513e4650cb4407ca60e96215c14.js"
+  "/www.milabrobotics.com/precache-manifest.188857e44eac170d550e62090f9c3e76.js"
 );
 
 self.addEventListener('message', (event) => {
