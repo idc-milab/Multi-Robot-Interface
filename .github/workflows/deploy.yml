@@ -24,8 +24,6 @@ jobs:
 
     - name: Build
       run: |
-        git config --global user.email "MilabAction@Milab.com"
-        git config --global user.name "MilabAction"
         npm install
         npm run build
         npm run deploy
