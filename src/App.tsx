@@ -153,7 +153,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		const { currentButterClients } = this.state;
 
 		return (
-			<Router>
+			<Router basename="/Multi-Robot-Interface">
 			<div>
 			<Router>
 					<Navbar bg="dark" variant="dark">
