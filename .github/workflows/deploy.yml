@@ -22,15 +22,18 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Checkout
+        uses: actions/checkout@v2.3.1
+
     - name: Build
       run: |
         npm install
         npm run build
       env:
          CI: false
-
-    - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      
+     - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./out
+          branch: gh-pages
+          folder: build
