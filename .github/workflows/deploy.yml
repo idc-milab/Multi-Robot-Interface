@@ -24,8 +24,6 @@ jobs:
 
     - name: Build
       run: |
-        git config --global user.email "omer.sadeh@protonmail.com"
-        git config --global user.name "OmerSadeh"
         npm install
         npm run build
         npm run deploy
