@@ -27,3 +27,5 @@ jobs:
         npm install
         npm run build
         gh-pages -d build
+      env:
+         CI: false
