@@ -2,7 +2,7 @@
   "name": "@fed-exam/client",
   "version": "1.0.0",
   "private": false,
-  "homepage": ".",
+  "homepage": "www.milabrobotics.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
