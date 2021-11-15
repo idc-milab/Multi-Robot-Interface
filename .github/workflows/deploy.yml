@@ -26,6 +26,13 @@ jobs:
       run: |
         npm install
         npm run build
-        npm run deploy
       env:
          CI: false
+
+    - name: GH Pages deploy
+      uses: Cecilapp/GitHub-Pages-deploy@3.2.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        email: arnaud@ligny.org
+        build_dir: build
