@@ -72,7 +72,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
           )}
         </Droppable>
       </DragDropContext>
-      <Button variant="danger" className="list-container" onClick={() => playAnimations}>START</Button>
+      { QueuedMoves.length>0 ? <Button variant="danger" className="list-container" onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
       </div>
     );
   }
@@ -83,12 +83,12 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
       <Card>
         <Card.Header>
           <Card.Title>Available Moves:</Card.Title>
-            <ButtonToolbar>
-              {animationsList.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => HandleClick(move)}>{move}</Button></ButtonGroup>))} 
-            </ButtonToolbar>
+          <ButtonToolbar>
+            {animationsList.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => HandleClick(move)}>{move}</Button></ButtonGroup>))} 
+          </ButtonToolbar>
         </Card.Header>
         <Card.Body></Card.Body>
-        <Card.Footer>Sequence mod: <Switch onChange={() => handleSwitch()} checked={PipelineMode} /></Card.Footer>
+        <Card.Footer>Sequence mode: <Switch onChange={() => handleSwitch()} checked={PipelineMode} height={23} width={45} /></Card.Footer>
         {PipelineMode ? renderPipeline() : null }
 		   </Card>
 		</>
