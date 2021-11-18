@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Card, Button, ButtonGroup, ButtonToolbar, Dropdown, InputGroup, SplitButton } from 'react-bootstrap';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
-import RangeSlider from 'react-bootstrap-range-slider';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Switch from "react-switch";
 
 function Pipeline(this: any, {animationsList, butterclient}: {animationsList:string[], butterclient: HttpClient})  {
 
   const [QueuedMoves, setQueuedMoves] = useState(Array(0).fill(null));
   const [AnimationDelay, setAnimationDelay] = useState(0);
+  const [PipelineMode, setPipelineMode] = useState(false);
 
-  const HandleClickAdd = (move: string) => { // Adding of a new animation to Queue
-    var TempQueue = QueuedMoves.concat();
-    TempQueue = TempQueue.concat({name: move, id: new Date().getTime().toString()});
-    setQueuedMoves(TempQueue);
+  const HandleClick = (move: string) => { // Adding of a new animation to Queue
+    if (PipelineMode) {
+      var TempQueue = QueuedMoves.concat();
+      TempQueue = TempQueue.concat({name: move, id: new Date().getTime().toString()});
+      setQueuedMoves(TempQueue);
+    }
+    else butterclient.playAnimation(move.trim(), true);
   };
 
   const playAnimations = async () => { // Run an animations list one-by-one
@@ -33,19 +37,14 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
     setQueuedMoves(updatedList);
   };
 
+  const handleSwitch = () => {
+    if (PipelineMode) setQueuedMoves(Array(0).fill(null));
+    setPipelineMode(!PipelineMode);
+  }
 
+  const renderPipeline = () => {
     return (
-    < >
-      <Card>
-        <Card.Header>
-          <Card.Title>Available Moves:</Card.Title>
-            <ButtonToolbar>
-              {animationsList.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => HandleClickAdd(move)}>{move}</Button></ButtonGroup>))} 
-            </ButtonToolbar>
-        </Card.Header>
-        <Card.Body></Card.Body>
-        <Card.Footer>Current Sequence:</Card.Footer>
-        <div>
+      <div>
         <DragDropContext onDragEnd={handleDrop}>
         <Droppable droppableId="list-container">
           {(provided: any) => (
@@ -75,6 +74,22 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
       </DragDropContext>
       <Button variant="danger" className="list-container" onClick={() => playAnimations}>START</Button>
       </div>
+    );
+  }
+
+
+    return (
+    < >
+      <Card>
+        <Card.Header>
+          <Card.Title>Available Moves:</Card.Title>
+            <ButtonToolbar>
+              {animationsList.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => HandleClick(move)}>{move}</Button></ButtonGroup>))} 
+            </ButtonToolbar>
+        </Card.Header>
+        <Card.Body></Card.Body>
+        <Card.Footer>Sequence mod: <Switch onChange={() => handleSwitch()} checked={PipelineMode} /></Card.Footer>
+        {PipelineMode ? renderPipeline() : null }
 		   </Card>
 		</>
   );
