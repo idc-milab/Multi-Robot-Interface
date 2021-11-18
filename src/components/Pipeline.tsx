@@ -11,7 +11,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
 
   const HandleClickAdd = (move: string) => { // Adding of a new animation to Queue
     var TempQueue = QueuedMoves.concat();
-    TempQueue = TempQueue.concat({name: move, id: Math.floor((Math.random() * 1000) + 1).toString()});
+    TempQueue = TempQueue.concat({name: move, id: new Date().getTime().toString()});
     setQueuedMoves(TempQueue);
   };
 
