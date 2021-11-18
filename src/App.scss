@@ -71,6 +71,23 @@
 	text-align: right;
 }
 
+.list-container {
+	display: flex;
+	font-size: 18px;
+	background-color: #eee;
+	flex-direction: column;
+	width: 25%;
+	align-self: center;
+  }
+  .item-container {
+	background-color: #fff;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 5px 5px;
+	margin: 2px 5px;
+	text-align: center;
+  }
+
 body {
 	font-family: 'Open Sans', sans-serif;
 	// padding-top: 100px;
