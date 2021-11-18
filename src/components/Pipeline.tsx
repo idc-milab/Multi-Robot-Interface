@@ -72,7 +72,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
           )}
         </Droppable>
       </DragDropContext>
-      { QueuedMoves.length>0 ? <Button variant="danger" className="list-container" onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
+      { QueuedMoves.length > 0 ? <Button variant="danger" className="list-container" onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
       </div>
     );
   }
