@@ -30,7 +30,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		currentButterClients: [],
 		showInst: false,
 		showNewIP: false,
-		labCurrentIPs: ['192.168.57.27', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.227'],
+		labCurrentIPs: ['192.168.57.35', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.227'],
 		IPdeleteState: Array(6).fill(false),
 	}
 
