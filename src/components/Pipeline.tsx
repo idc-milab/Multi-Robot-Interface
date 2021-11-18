@@ -15,9 +15,9 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
     setQueuedMoves(TempQueue);
   };
 
-  const playAnimations = async (animations: string[]) => { // Run an animations list one-by-one
-    for (var i =0; i<animations.length; i++) {
-      butterclient.playAnimation(animations[i].trim(), true);
+  const playAnimations = async () => { // Run an animations list one-by-one
+    for (var i =0; i<QueuedMoves.length; i++) {
+      butterclient.playAnimation(QueuedMoves[i].name.trim(), true);
       await timeout(1000 * AnimationDelay); //for 1 sec delay
      }
   }
@@ -45,6 +45,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
         </Card.Header>
         <Card.Body></Card.Body>
         <Card.Footer>Current Sequence:</Card.Footer>
+        <div>
         <DragDropContext onDragEnd={handleDrop}>
         <Droppable droppableId="list-container">
           {(provided: any) => (
@@ -62,7 +63,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
                     >
-                      {item.name}
+                      {index} - {item.name}
                     </div>
                   )}
                 </Draggable>
@@ -72,6 +73,8 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
           )}
         </Droppable>
       </DragDropContext>
+      <Button variant="danger" className="list-container" onClick={() => playAnimations}>START</Button>
+      </div>
 		   </Card>
 		</>
   );
