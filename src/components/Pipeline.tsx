@@ -96,8 +96,8 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
       </DragDropContext>
       <ButtonGroup className="list-container">
         <div>
-          { QueuedMoves.length > 0 ? <Button variant="danger" style={{width: '64%'}} onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
           { QueuedMoves.length > 0 ? <Button variant="secondary" style={{width: '36%'}} onClick={() => setDelayAdderMode(true)}>Add delay</Button> : null }
+          { QueuedMoves.length > 0 ? <Button variant="success" style={{width: '64%'}} onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
         </div>
       </ButtonGroup>
 
