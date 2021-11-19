@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Card, Button, ButtonGroup, ButtonToolbar, Dropdown, InputGroup, SplitButton } from 'react-bootstrap';
+import { Container, Card, Button, ButtonGroup, ButtonToolbar, Dropdown, InputGroup, SplitButton, FormControl, Modal } from 'react-bootstrap';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Switch from "react-switch";
@@ -7,25 +7,47 @@ import Switch from "react-switch";
 function Pipeline(this: any, {animationsList, butterclient}: {animationsList:string[], butterclient: HttpClient})  {
 
   const [QueuedMoves, setQueuedMoves] = useState(Array(0).fill(null));
-  const [AnimationDelay, setAnimationDelay] = useState(0);
+  const [AnimationDelay, setAnimationDelay] = useState('');
   const [PipelineMode, setPipelineMode] = useState(false);
+  const [DelayAdderMode, setDelayAdderMode] = useState(false);
+  const [DelayMinutes, setDelayMinutes] = useState(false);
 
   const HandleClick = (move: string) => { // Adding of a new animation to Queue
     if (PipelineMode) {
       var TempQueue = QueuedMoves.concat();
-      TempQueue = TempQueue.concat({name: move, id: new Date().getTime().toString()});
+      TempQueue = TempQueue.concat({name: move, id: new Date().getTime().toString(), type: 'animation'});
       setQueuedMoves(TempQueue);
     }
     else butterclient.playAnimation(move.trim(), true);
   };
 
+  const AddDelay = () => {
+    var Amount = parseInt(AnimationDelay);
+    if (!isNaN(Amount)) {
+      var TempQueue = QueuedMoves.concat();
+      var Name =  'Delay for ' + Amount;
+      if (DelayMinutes) Name += ' minutes';
+      else Name += ' seconds';
+      TempQueue = TempQueue.concat({name: Name, id: new Date().getTime().toString(), type: 'delay', minutes: DelayMinutes, amount: Amount});
+      setQueuedMoves(TempQueue);
+      setDelayAdderMode(false);
+    }
+    else alert('Please enter a valit number!');
+    
+  }
+
   const playAnimations = async () => { // Run an animations list one-by-one
     for (var i =0; i<QueuedMoves.length; i++) {
-      butterclient.playAnimation(QueuedMoves[i].name.trim(), true);
-      await timeout(1000 * AnimationDelay); //for 1 sec delay
+      if (QueuedMoves[i].type === 'animation') {
+        butterclient.playAnimation(QueuedMoves[i].name.trim(), true);
+      }
+      else {
+        if (QueuedMoves[i].minutes) await timeout(60000 * QueuedMoves[i].amount);
+        else await timeout(1000 * QueuedMoves[i].amount);
      }
-  }
-  function timeout(delay: number) { return new Promise(res => setTimeout(res, delay)); } // delay function
+    }
+  };
+  function timeout(delay: number) { return new Promise(res => setTimeout(res, delay)); }; // delay function
 
   const handleDrop = (droppedItem: any) => {
     var updatedList = QueuedMoves.concat();
@@ -40,12 +62,12 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
   const handleSwitch = () => {
     if (PipelineMode) setQueuedMoves(Array(0).fill(null));
     setPipelineMode(!PipelineMode);
-  }
+  };
 
   const renderPipeline = () => {
     return (
-      <div>
-        <DragDropContext onDragEnd={handleDrop}>
+      <>
+      <DragDropContext onDragEnd={handleDrop}>
         <Droppable droppableId="list-container">
           {(provided: any) => (
             <div
@@ -73,10 +95,25 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
         </Droppable>
       </DragDropContext>
       { QueuedMoves.length > 0 ? <Button variant="danger" className="list-container" onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
-      </div>
-    );
-  }
+      { QueuedMoves.length > 0 ? <Button variant="secondary" className="list-container" onClick={() => setDelayAdderMode(true)}>Add delay</Button> : null }
 
+      <Modal size="sm" show={DelayAdderMode} onHide={() => setDelayAdderMode(false)} centered>
+        <Modal.Header translate="true" closeButton>
+          <Modal.Title>
+            Delay properties:
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InputGroup className="mb-3">
+            <FormControl placeholder="0" onChange={(event: any) => setAnimationDelay(event.target.value)}/>
+            <Button variant="outline-secondary" onClick={() => setDelayMinutes(!DelayMinutes)}>{DelayMinutes ? 'minutes' : 'seconds'}</Button>
+            <Button variant="outline-secondary" onClick={() => AddDelay()}>Add</Button>
+          </InputGroup>
+        </Modal.Body>
+      </Modal>
+      </>
+    );
+  };
 
     return (
     < >
@@ -88,7 +125,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
           </ButtonToolbar>
         </Card.Header>
         <Card.Body></Card.Body>
-        <Card.Footer>Sequence mode: <Switch onChange={() => handleSwitch()} checked={PipelineMode} height={23} width={45} /></Card.Footer>
+        <Card.Footer>Sequence mode: <Switch onChange={() => handleSwitch()} checked={PipelineMode} height={23} width={45}/></Card.Footer>
         {PipelineMode ? renderPipeline() : null }
 		   </Card>
 		</>
