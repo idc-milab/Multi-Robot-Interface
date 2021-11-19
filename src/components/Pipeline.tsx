@@ -94,8 +94,12 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
           )}
         </Droppable>
       </DragDropContext>
-      { QueuedMoves.length > 0 ? <Button variant="danger" className="list-container" onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
-      { QueuedMoves.length > 0 ? <Button variant="secondary" className="list-container" onClick={() => setDelayAdderMode(true)}>Add delay</Button> : null }
+      <ButtonGroup className="list-container">
+        <div>
+          { QueuedMoves.length > 0 ? <Button variant="danger" style={{width: '64%'}} onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
+          { QueuedMoves.length > 0 ? <Button variant="secondary" style={{width: '36%'}} onClick={() => setDelayAdderMode(true)}>Add delay</Button> : null }
+        </div>
+      </ButtonGroup>
 
       <Modal size="sm" show={DelayAdderMode} onHide={() => setDelayAdderMode(false)} centered>
         <Modal.Header translate="true" closeButton>
