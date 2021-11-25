@@ -96,7 +96,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
       <ButtonGroup className="list-container">
         <div>
           <Button variant="secondary" style={{width: '30%'}} onClick={() => setDelayAdderMode(true)}>➕⌚</Button>
-          <Button variant="success" style={{width: '70%'}} onClick={() => playAnimations}>➤</Button>
+          <Button variant="success" style={{width: '70%'}} onClick={() => playAnimations()}>➤</Button>
         </div>
       </ButtonGroup>
 
