@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react'
-import { HttpClient } from '@butter-robotics/mas-javascript-api';
+import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 import Pipeline from './Pipeline';
 
@@ -15,13 +15,13 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
   const loadAnimations = async () => {
     setTimeout(() => {
     }, 5000)
-    const res = await butterClient.getAvailableAnimations();
+    const res:Response = await butterClient.getAvailableAnimations();
     if (res.status !== 200) {
       console.error('Failed to get robot animations', res);
       return;
     }
-    console.log();
-    const animations = res.data.response.data.replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
+    const data: string = res.data.response.data as string;
+    const animations = data.replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
     console.log(animations);
     setAnimations(animations);
   }
