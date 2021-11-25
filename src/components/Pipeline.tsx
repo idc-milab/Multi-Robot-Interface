@@ -25,15 +25,14 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
     var Amount = parseInt(AnimationDelay);
     if (!isNaN(Amount)) {
       var TempQueue = QueuedMoves.concat();
-      var Name =  'Delay for ' + Amount;
-      if (DelayMinutes) Name += ' minutes';
-      else Name += ' seconds';
+      var Name =  '' + Amount;
+      if (DelayMinutes) Name += ' minutes delay';
+      else Name += ' seconds delay';
       TempQueue = TempQueue.concat({name: Name, id: new Date().getTime().toString(), type: 'delay', minutes: DelayMinutes, amount: Amount});
       setQueuedMoves(TempQueue);
       setDelayAdderMode(false);
     }
     else alert('Please enter a valit number!');
-    
   }
 
   const playAnimations = async () => { // Run an animations list one-by-one
@@ -66,7 +65,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
 
   const renderPipeline = () => {
     return (
-      <>
+      <div style={{ marginRight: 'auto', marginLeft: 'auto' }}>
       <DragDropContext onDragEnd={handleDrop}>
         <Droppable droppableId="list-container">
           {(provided: any) => (
@@ -84,7 +83,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
                     >
-                      {index} - {item.name}
+                      action {index + 1} - <span style={{ color: '#28a745'}}>{item.name}</span>
                     </div>
                   )}
                 </Draggable>
@@ -96,8 +95,8 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
       </DragDropContext>
       <ButtonGroup className="list-container">
         <div>
-          { QueuedMoves.length > 0 ? <Button variant="secondary" style={{width: '36%'}} onClick={() => setDelayAdderMode(true)}>Add delay</Button> : null }
-          { QueuedMoves.length > 0 ? <Button variant="success" style={{width: '64%'}} onClick={() => playAnimations}>RUN SEQUENCE</Button> : null }
+          <Button variant="secondary" style={{width: '30%'}} onClick={() => setDelayAdderMode(true)}>➕⌚</Button>
+          <Button variant="success" style={{width: '70%'}} onClick={() => playAnimations}>➤</Button>
         </div>
       </ButtonGroup>
 
@@ -115,7 +114,7 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
           </InputGroup>
         </Modal.Body>
       </Modal>
-      </>
+      </div>
     );
   };
 
@@ -128,9 +127,10 @@ function Pipeline(this: any, {animationsList, butterclient}: {animationsList:str
             {animationsList.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => HandleClick(move)}>{move}</Button></ButtonGroup>))} 
           </ButtonToolbar>
         </Card.Header>
-        <Card.Body></Card.Body>
+        <Card.Body>
+          {PipelineMode && QueuedMoves.length > 0 ? renderPipeline() : null }
+        </Card.Body>
         <Card.Footer>Sequence mode: <Switch onChange={() => handleSwitch()} checked={PipelineMode} height={23} width={45}/></Card.Footer>
-        {PipelineMode ? renderPipeline() : null }
 		   </Card>
 		</>
   );
