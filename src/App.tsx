@@ -41,7 +41,7 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	onAddRobotObject = (ip: string) => {
-		const currentButterClient = new HttpClient(ip, 3000);
+		const currentButterClient = new HttpClient(ip);
 		currentButterClient.timeout = 240;
 		if (!this.state.currentButterClients.map(c => c.ip).some(c => c === ip)) {
 			this.setState({
