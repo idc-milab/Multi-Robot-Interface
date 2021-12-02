@@ -165,6 +165,18 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 	  };
 
+	  resetPipeline = () => {
+		this.setState({
+			PipelineItems: []
+		})
+	  }
+
+	  renderPipeline = () => {
+		  return (
+			<PipelineCard PipelineList={this.state.PipelineItems} handlePipelineDrag={this.handlePipelineDrag} handleDelete={this.handlePipelineDelete} DelayAdderMode={this.onToggleDelayAdder} run={this.runPipeline} reset={this.resetPipeline}/>
+		  );
+	  }
+
 
 	render() {
 
@@ -236,7 +248,9 @@ export class App extends React.PureComponent<{}, AppState> {
 
 					<div className='robot-card' style={{ display: "flex" }}>
 						{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
-						<PipelineCard PipelineList={this.state.PipelineItems} handlePipelineDrag={this.handlePipelineDrag} handleDelete={this.handlePipelineDelete} DelayAdderMode={this.onToggleDelayAdder} run={this.runPipeline}/>
+						<div style={{ marginLeft: 'auto' }}>
+							{this.renderPipeline()}
+						</div>
 					</div>
 
 					<Modal size="sm" show={this.state.AdderMode} onHide={this.onToggleDelayAdder} centered>
@@ -253,7 +267,6 @@ export class App extends React.PureComponent<{}, AppState> {
           					</InputGroup>
         				</Modal.Body>
       				</Modal>
-
 			</div>
 			</Router>
 		)
