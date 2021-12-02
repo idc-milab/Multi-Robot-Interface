@@ -14,7 +14,7 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
   const loadAnimations = async () => {
     setTimeout(() => {
     }, 5000)
-    const res:Response = await butterClient.getAvailableAnimations();
+    const res = await butterClient.getAvailableAnimations();
     if (res.status !== 200) {
       console.error('Failed to get robot animations', res);
       return;
