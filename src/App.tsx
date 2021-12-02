@@ -3,11 +3,12 @@ import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
 import { useState } from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { ScenarioButtons } from './components/ScenariosButtons';
 import { LinkContainer } from 'react-router-bootstrap';
+import PipelineCard from './components/Pipeline/PipelineCard';
 
 
 /*this is where we declare an object called AppState and in it all the constants \
@@ -20,6 +21,7 @@ export type AppState = {
 	currentButterClients: HttpClient[]; //import all the clients from butter
 	show: boolean;
 	labCurrentIPs: string[]; //array of ip's
+	PipelineItems: any[];
 }
 
 export class App extends React.PureComponent<{}, AppState> {
@@ -35,6 +37,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		show: false,
 		//why do we need the correct ip names and not any name for example why not have it as kip?
 		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34'],
+		PipelineItems: [],
 	}
 	/**declaring the function of set nightstatus to be false. notice the setState command
 	 * re-renders the pervious AppState command
@@ -83,9 +86,40 @@ export class App extends React.PureComponent<{}, AppState> {
 /**this is const that enables the connect robot button on the webpage */
 		return (
 			<ul className='robot-objects'>
-				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} />)}
+				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} addToPipeline={this.addItemToPipeline} />)}
 			</ul>
 		);
+	}
+
+	handlePipelineDrag = (droppedItem: any) => {
+		if (!droppedItem.destination) return;
+		var updatedList = this.state.PipelineItems.concat();
+		const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
+		if (droppedItem.destination) {
+		  updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
+		}
+		this.setState({ PipelineItems: updatedList });
+	};
+	
+	handlePipelineDelete = (index: number) => {
+		var updatedList = this.state.PipelineItems.concat();
+		updatedList.splice(index, 1);
+		this.setState({ PipelineItems: updatedList });
+	}
+
+	addItemToPipeline = (Item: any, Type: string, Client: any = null) => {
+		var updatedList = this.state.PipelineItems.concat();
+		var newId = new Date().getTime().toString();
+		if (Type === 'animation') {
+		  updatedList = updatedList.concat({name: Item, id: newId, type: Type, client: Client});
+		}
+		if (Type === 'delay') {
+		  updatedList = updatedList.concat({name: 'delay duration', id: newId, type: Type});
+		}
+		if (Type === 'script') {
+		  updatedList = updatedList.concat({name: 'script name', id: newId, type: Type});
+		}
+		this.setState({ PipelineItems: updatedList });
 	}
 
 
@@ -157,8 +191,10 @@ export class App extends React.PureComponent<{}, AppState> {
 						</Route>
 					</Switch>
 
-
-					{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
+					<div className='robot-card' style={{ display: "flex" }}>
+						{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
+						<PipelineCard PipelineList={this.state.PipelineItems} handlePipelineDrag={this.handlePipelineDrag} handleDelete={this.handlePipelineDelete}/>
+					</div>
 
 			</div>
 			</Router>

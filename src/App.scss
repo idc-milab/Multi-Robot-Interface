@@ -25,8 +25,8 @@
 }
 
 .robot-card {
-	padding: 12px 0 !important;
-	margin: 12px 10% !important;
+	padding: 12px 12px 0px 12px !important;
+	//margin: 12px 1 !important;
 }
 
 .robot-search{
@@ -75,17 +75,26 @@
 	display: flex;
 	font-size: 18px;
 	background-color: #f7f7f7;
+  border: solid 1px #106ef8;
 	flex-direction: column;
 	width: 350px;
   }
   .item-container {
-	background-color: transparent;
+	//background-color: transparent;
 	border: solid 1px #106ef8;
 	color: #106ef8;
 	border-radius: 5px;
 	padding: 5px 5px;
 	margin: 2px 5px;
 	text-align: center;
+  user-select: none;
+  }
+  .button-container {
+    background-color: transparent;
+    border: solid 1px #106ef8;
+    color: #106ef8;
+    border-radius: 5px;
+    text-align: center;
   }
 
 body {
