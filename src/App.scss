@@ -26,7 +26,13 @@
 
 .robot-card {
 	padding: 12px 12px 0px 12px !important;
-	//margin: 12px 1 !important;
+	margin: 12px 1 !important;
+}
+
+.pipeline-card {
+	padding: 12px 12px 0px 12px !important;
+	margin: 12px 1 !important;
+	min-width: 600px;
 }
 
 .robot-search{
@@ -46,7 +52,7 @@
 	background-color: #ffffff;
 	opacity: 0.7;
 	float: inline-start;
-	width: auto;
+	min-width: 700px;
 	// margin: 15px 0;	
 }
 
@@ -75,7 +81,7 @@
 	display: flex;
 	font-size: 18px;
 	background-color: #f7f7f7;
-  border: solid 1px #106ef8;
+  	//border: solid 1px #106ef8;
 	flex-direction: column;
 	width: auto;//700px;
   }

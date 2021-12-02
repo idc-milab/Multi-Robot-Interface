@@ -94,7 +94,7 @@ export class App extends React.PureComponent<{}, AppState> {
 /**this is const that enables the connect robot button on the webpage */
 		return (
 			<ul className='robot-objects'>
-				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} addToPipeline={this.addItemToPipeline} />)}
+				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} addToPipeline={this.addAnimationToPipeline} />)}
 			</ul>
 		);
 	}
@@ -115,41 +115,25 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: updatedList });
 	}
 
-	addItemToPipeline = (Item: any, Type: string, Client: any = null) => {
-		var updatedList = this.state.PipelineItems.concat();
+	addAnimationToPipeline = (Item: any, Type: string, Client: any = null) => {
 		var newId = new Date().getTime().toString();
-		if (Type === 'animation') {
-		  updatedList = updatedList.concat({name: Item, id: newId, type: Type, client: Client});
-		}
-		if (Type === 'delay') {
-		  updatedList = updatedList.concat({name: 'delay duration', id: newId, type: Type});
-		}
-		if (Type === 'script') {
-		  updatedList = updatedList.concat({name: 'script name', id: newId, type: Type});
-		}
-		this.setState({ PipelineItems: updatedList });
+		var newAnimationItem = {name: Item, id: newId, type: Type, client: Client};
+		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	}
 
-	AddDelayToPipeline = () => {
+	  AddDelayToPipeline = () => {
 		var Amount = parseInt(this.state.delayAmount);
+		var MinState = this.state.DelayMinutesState ? 'minutes' : 'seconds';
 		if (!isNaN(Amount)) {
-		  var TempQueue = this.state.PipelineItems.concat();
-		  var Name =  '' + Amount;
-		  if (this.state.DelayMinutesState) Name += ' minutes delay';
-		  else Name += ' seconds delay';
-		  TempQueue = TempQueue.concat({name: Name, id: new Date().getTime().toString(), type: 'delay', minutes: this.state.DelayMinutesState, amount: Amount});
+		  var Name = Amount + ' ' + MinState + ' delay';
+		  var newDelayItem = {name: Name, id: new Date().getTime().toString(), type: 'delay', minutes: this.state.DelayMinutesState, amount: Amount};
 		  this.setState({
-			PipelineItems: TempQueue,
+			PipelineItems: [...this.state.PipelineItems, newDelayItem],
 			AdderMode: !this.state.AdderMode
-		})
+			})
 		}
 		else alert('Please enter a valit number!');
 	  }
-	onToggleDelayAdder = () => {
-		this.setState({
-			AdderMode: !this.state.AdderMode
-		});
-	}
 
 	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
@@ -165,15 +149,18 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 	  };
 
-	  resetPipeline = () => {
-		this.setState({
-			PipelineItems: []
-		})
-	  }
-
+	  resetPipeline = () => this.setState({PipelineItems: []});
+	  onToggleDelayAdder = () => this.setState({AdderMode: !this.state.AdderMode});
 	  renderPipeline = () => {
 		  return (
-			<PipelineCard PipelineList={this.state.PipelineItems} handlePipelineDrag={this.handlePipelineDrag} handleDelete={this.handlePipelineDelete} DelayAdderMode={this.onToggleDelayAdder} run={this.runPipeline} reset={this.resetPipeline}/>
+			<PipelineCard
+				PipelineList={this.state.PipelineItems}
+				handlePipelineDrag={this.handlePipelineDrag}
+				handleDelete={this.handlePipelineDelete}
+				DelayAdderMode={this.onToggleDelayAdder}
+				run={this.runPipeline}
+				reset={this.resetPipeline}
+			/>
 		  );
 	  }
 
@@ -246,7 +233,7 @@ export class App extends React.PureComponent<{}, AppState> {
 						</Route>
 					</Switch>
 
-					<div className='robot-card' style={{ display: "flex" }}>
+					<div style={{ display: "flex" }}>
 						{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
 						<div style={{ marginLeft: 'auto' }}>
 							{this.renderPipeline()}
@@ -262,7 +249,9 @@ export class App extends React.PureComponent<{}, AppState> {
         				<Modal.Body>
           					<InputGroup className="mb-3">
             					<FormControl placeholder="0" onChange={(event: any) => this.setState({ delayAmount: event.target.value })}/>
-            					<Button variant="outline-secondary" onClick={() => this.setState({ DelayMinutesState: !this.state.DelayMinutesState })}>{this.state.DelayMinutesState ? 'minutes' : 'seconds'}</Button>
+            					<Button variant="outline-secondary" onClick={() => this.setState({ DelayMinutesState: !this.state.DelayMinutesState })}>
+									{this.state.DelayMinutesState ? 'minutes' : 'seconds'}
+								</Button>
             					<Button variant="outline-secondary" onClick={() => this.AddDelayToPipeline()}>Add</Button>
           					</InputGroup>
         				</Modal.Body>

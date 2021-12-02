@@ -1,7 +1,6 @@
 import React, { Component, useEffect, useState } from 'react'
 import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
-import Pipeline from './Pipeline';
 
 
 export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, addToPipeline: any }) {
@@ -41,7 +40,7 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
             </Button>
           </div>
         </Card.Header>
-        <Card.Body style={{backgroundColor: "#e5f0f7"}}>
+        <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
           <div key={butterClient.ip} className='robot-object'>
           {animations.length === 0 ? 'There was a problem connecting to the robot.. please try again..' : 
           animations.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => addToPipeline(move, 'animation', butterClient)}>{move}</Button></ButtonGroup>))

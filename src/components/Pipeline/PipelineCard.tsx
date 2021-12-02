@@ -8,6 +8,7 @@ import { ButtonsGroup } from '../../baseUI/ButtonsGroup';
 function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdderMode, run, reset}:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdderMode: any, run: any, reset: any}) {
 
     return(
+      <div className='pipeline-card'>
       <Card>
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
@@ -26,6 +27,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
         </DragDropContext>
         </Card.Body>
       </Card>
+      </div>
     );
 }
 
