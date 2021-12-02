@@ -4,7 +4,10 @@ import { Button } from 'react-bootstrap';
 
 function DragItem({item, index, handleDelete}:{item: any, index: number, handleDelete: any}) {
 
-
+  const getItemStyle = (isDragging: any, draggableStyle: any) => ({
+    boxShadow: isDragging ? '0 4px 8px 0 grey' : 'none',
+    ...draggableStyle
+  });
 
   const contents = () => {
     if (item.type === 'animation'){
@@ -32,12 +35,16 @@ function DragItem({item, index, handleDelete}:{item: any, index: number, handleD
 
   return(
     <Draggable key={item.id} draggableId={item.id} index={index}>
-      {(provided: any) => (
+      {(provided: any, snapshot: any) => (
         <div
           className="item-container"
           ref={provided.innerRef}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
+          style={getItemStyle(
+            snapshot.isDragging,
+            provided.draggableProps.style
+          )}
         >
           {contents()}
         </div>
