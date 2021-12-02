@@ -3,7 +3,7 @@ import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
 import { useState } from 'react';
-import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown, Card } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown, Card, InputGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { ScenarioButtons } from './components/ScenariosButtons';
@@ -15,6 +15,8 @@ import PipelineCard from './components/Pipeline/PipelineCard';
 that appear on the top of the website page 
 */
 
+function timeout(delay: number) { return new Promise(res => setTimeout(res, delay)); }; // delay function
+
 export type AppState = {
 	dayNightStatus: boolean;
 	currentIPInput: string;
@@ -22,6 +24,9 @@ export type AppState = {
 	show: boolean;
 	labCurrentIPs: string[]; //array of ip's
 	PipelineItems: any[];
+	delayAmount: string;
+	DelayMinutesState: boolean;
+	AdderMode: boolean;
 }
 
 export class App extends React.PureComponent<{}, AppState> {
@@ -38,6 +43,9 @@ export class App extends React.PureComponent<{}, AppState> {
 		//why do we need the correct ip names and not any name for example why not have it as kip?
 		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34'],
 		PipelineItems: [],
+		delayAmount: '',
+		DelayMinutesState: false,
+		AdderMode: false,
 	}
 	/**declaring the function of set nightstatus to be false. notice the setState command
 	 * re-renders the pervious AppState command
@@ -122,6 +130,41 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: updatedList });
 	}
 
+	AddDelayToPipeline = () => {
+		var Amount = parseInt(this.state.delayAmount);
+		if (!isNaN(Amount)) {
+		  var TempQueue = this.state.PipelineItems.concat();
+		  var Name =  '' + Amount;
+		  if (this.state.DelayMinutesState) Name += ' minutes delay';
+		  else Name += ' seconds delay';
+		  TempQueue = TempQueue.concat({name: Name, id: new Date().getTime().toString(), type: 'delay', minutes: this.state.DelayMinutesState, amount: Amount});
+		  this.setState({
+			PipelineItems: TempQueue,
+			AdderMode: !this.state.AdderMode
+		})
+		}
+		else alert('Please enter a valit number!');
+	  }
+	onToggleDelayAdder = () => {
+		this.setState({
+			AdderMode: !this.state.AdderMode
+		});
+	}
+
+	runPipeline = async () => {
+		var QueuedMoves = this.state.PipelineItems.concat();
+		for (var i =0; i<QueuedMoves.length; i++) {
+		  if (QueuedMoves[i].type === 'animation') {
+			QueuedMoves[i].client.playAnimation(QueuedMoves[i].name.trim(), true);
+		  }
+		  else if (QueuedMoves[i].type === 'delay') {
+			if (QueuedMoves[i].minutes) await timeout(60000 * QueuedMoves[i].amount);
+			else await timeout(1000 * QueuedMoves[i].amount);
+		 }
+		 else alert('Problem with pipeline items!');
+		}
+	  };
+
 
 	render() {
 
@@ -193,8 +236,23 @@ export class App extends React.PureComponent<{}, AppState> {
 
 					<div className='robot-card' style={{ display: "flex" }}>
 						{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
-						<PipelineCard PipelineList={this.state.PipelineItems} handlePipelineDrag={this.handlePipelineDrag} handleDelete={this.handlePipelineDelete}/>
+						<PipelineCard PipelineList={this.state.PipelineItems} handlePipelineDrag={this.handlePipelineDrag} handleDelete={this.handlePipelineDelete} DelayAdderMode={this.onToggleDelayAdder} run={this.runPipeline}/>
 					</div>
+
+					<Modal size="sm" show={this.state.AdderMode} onHide={this.onToggleDelayAdder} centered>
+        				<Modal.Header translate="true" closeButton>
+          					<Modal.Title>
+            					Delay properties:
+          					</Modal.Title>
+        				</Modal.Header>
+        				<Modal.Body>
+          					<InputGroup className="mb-3">
+            					<FormControl placeholder="0" onChange={(event: any) => this.setState({ delayAmount: event.target.value })}/>
+            					<Button variant="outline-secondary" onClick={() => this.setState({ DelayMinutesState: !this.state.DelayMinutesState })}>{this.state.DelayMinutesState ? 'minutes' : 'seconds'}</Button>
+            					<Button variant="outline-secondary" onClick={() => this.AddDelayToPipeline()}>Add</Button>
+          					</InputGroup>
+        				</Modal.Body>
+      				</Modal>
 
 			</div>
 			</Router>

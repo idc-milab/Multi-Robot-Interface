@@ -77,17 +77,16 @@
 	background-color: #f7f7f7;
   border: solid 1px #106ef8;
 	flex-direction: column;
-	width: 350px;
+	width: auto;//700px;
   }
   .item-container {
-	//background-color: transparent;
 	border: solid 1px #106ef8;
 	color: #106ef8;
 	border-radius: 5px;
 	padding: 5px 5px;
 	margin: 2px 5px;
 	text-align: center;
-  user-select: none;
+  	user-select: none;
   }
   .button-container {
     background-color: transparent;
