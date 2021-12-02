@@ -97,7 +97,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		);
 	}
 
-	handlePipelineDrag = (droppedItem: any) => {
+	handlePipelineDrag = (droppedItem: any) => { // D-N-D dragging function
 		if (!droppedItem.destination) return;
 		var updatedList = this.state.PipelineItems.concat();
 		const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
@@ -119,7 +119,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	}
 
-	  AddDelayToPipeline = () => {
+	AddDelayToPipeline = () => {
 		var Amount = parseInt(this.state.delayAmount);
 		var MinState = this.state.DelayMinutesState ? 'minutes' : 'seconds';
 		if (!isNaN(Amount)) {
@@ -131,7 +131,7 @@ export class App extends React.PureComponent<{}, AppState> {
 			})
 		}
 		else alert('Please enter a valit number!');
-	  }
+	}
 
 	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
@@ -145,12 +145,12 @@ export class App extends React.PureComponent<{}, AppState> {
 		 }
 		 else alert('Problem with pipeline items!');
 		}
-	  };
+	};
 
-	  resetPipeline = () => this.setState({PipelineItems: []});
-	  onToggleDelayAdder = () => this.setState({AdderMode: !this.state.AdderMode});
-	  renderPipeline = () => {
-		  return (
+	resetPipeline = () => this.setState({PipelineItems: []});
+	onToggleDelayAdder = () => this.setState({AdderMode: !this.state.AdderMode});
+	renderPipeline = () => {
+		return (
 			<PipelineCard
 				PipelineList={this.state.PipelineItems}
 				handlePipelineDrag={this.handlePipelineDrag}
@@ -159,8 +159,8 @@ export class App extends React.PureComponent<{}, AppState> {
 				run={this.runPipeline}
 				reset={this.resetPipeline}
 			/>
-		  );
-	  }
+		);
+	}
 
 
 	render() {
