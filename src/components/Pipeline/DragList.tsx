@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Droppable } from "react-beautiful-dnd";
 import DragItem from './DragItem';
-import { HttpClient } from '@butter-robotics/mas-javascript-api';
 
 function DragList({name, arr, handleDelete}:{name: string, arr: any[], handleDelete: any}) {
 

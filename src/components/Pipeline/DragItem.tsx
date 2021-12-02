@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import { Button } from 'react-bootstrap';
-import { HttpClient } from '@butter-robotics/mas-javascript-api';
 
 function DragItem({item, index, handleDelete}:{item: any, index: number, handleDelete: any}) {
 
@@ -28,6 +27,7 @@ function DragItem({item, index, handleDelete}:{item: any, index: number, handleD
         </div>
       );
     }
+    else alert('Problem with item type inserting to the list!');
   }
 
   return(

@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { Navbar, Nav, Form, FormControl, Button, Container, Modal, ModalBody, NavDropdown, Card, ButtonGroup } from 'react-bootstrap';
+import React from 'react';
+import { DragDropContext } from "react-beautiful-dnd";
+import { Button, Card, ButtonGroup } from 'react-bootstrap';
 import DragList from './DragList';
-import { HttpClient } from '@butter-robotics/mas-javascript-api';
-import { ButtonsGroup } from '../../baseUI/ButtonsGroup';
 
 function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdderMode, run, reset}:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdderMode: any, run: any, reset: any}) {
 
