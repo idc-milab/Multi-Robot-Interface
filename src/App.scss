@@ -32,7 +32,6 @@
 .pipeline-card {
 	padding: 12px 12px 0px 12px !important;
 	margin: 12px 1 !important;
-	min-width: 600px;
 }
 
 .robot-search{
@@ -43,7 +42,6 @@
 	display: grid;
 	gap: 10px;
 	grid-template-columns: repeat(auto-fit, minmax(200px, 1.5fr));
-	grid-auto-flow: dense;
 	// padding: 12px;	
 	background-color: white;
 	border-radius: 8px;
@@ -52,8 +50,15 @@
 	background-color: #ffffff;
 	opacity: 0.7;
 	float: inline-start;
-	min-width: 700px;
-	// margin: 15px 0;	
+	//min-width: 700px;
+	// margin: 15px 0;
+	width: 100%;
+}
+
+.main-grid {
+	display: grid;
+	grid-template-columns: 60% 40%;
+	grid-auto-flow: row dense;
 }
 
 .animation-button {

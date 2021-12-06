@@ -1,12 +1,12 @@
 import React from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
-import { Button, Card, ButtonGroup } from 'react-bootstrap';
+import { Button, Card, ButtonGroup, Container } from 'react-bootstrap';
 import DragList from './DragList';
 
 function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdderMode, run, reset}:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdderMode: any, run: any, reset: any}) {
 
     return(
-      <div className='pipeline-card'>
+      <Container className='pipeline-card'>
       <Card>
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
@@ -25,7 +25,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
         </DragDropContext>
         </Card.Body>
       </Card>
-      </div>
+      </Container>
     );
 }
 

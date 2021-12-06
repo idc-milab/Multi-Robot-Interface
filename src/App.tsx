@@ -231,11 +231,9 @@ export class App extends React.PureComponent<{}, AppState> {
 						</Route>
 					</Switch>
 
-					<div style={{ display: "flex" }}>
+					<div className="main-grid">
 						{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
-						<div style={{ marginLeft: 'auto' }}>
-							{this.renderPipeline()}
-						</div>
+						{this.renderPipeline()}
 					</div>
 
 					<Modal size="sm" show={this.state.AdderMode} onHide={this.onToggleDelayAdder} centered>
