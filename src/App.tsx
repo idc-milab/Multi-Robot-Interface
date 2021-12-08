@@ -39,7 +39,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		currentButterClients: [],
 		show: false,
 		//why do we need the correct ip names and not any name for example why not have it as kip?
-		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34'],
+		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34','192.168.56.188'],
 		PipelineItems: [],
 		delayAmount: '',
 		DelayMinutesState: false,
