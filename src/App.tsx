@@ -143,7 +143,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		for (var i =0; i<QueuedMoves.length; i++) {
 		console.log("running animation: " + QueuedMoves[i].name);
 		if (QueuedMoves[i].type === 'animation') {
-			QueuedMoves[i].client.playAnimation(QueuedMoves[i].name.trim(), true);
+			await QueuedMoves[i].client.playAnimation(QueuedMoves[i].name.trim(), true);
 		}
 		else if (QueuedMoves[i].type === 'delay') {
 			if (QueuedMoves[i].minutes) await timeout(60000 * QueuedMoves[i].amount);
