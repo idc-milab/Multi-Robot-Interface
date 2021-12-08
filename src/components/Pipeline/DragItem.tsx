@@ -10,27 +10,29 @@ function DragItem({item, index, handleDelete}:{item: any, index: number, handleD
   });
 
   const contents = () => {
-    if (item.type === 'animation'){
+
+    if (item.type === 'animation'){ // render animation info
       return(
         <div style={{display: "flex", justifyContent: "space-around"}}>
-          [ {index + 1} ]
-          <div style={{ color: '#28a745'}}>[ {item.client.ip} ]</div>
-          <div style={{ color: '#28a745'}}>{item.name}</div>
+          [{index + 1}]
+          <div><span style={{color: '#757575',opacity: '0.7'}}>{item.client.ip}:</span><span style={{ color: '#28a745'}}>{item.name}</span></div>
           <Button variant="outline-danger" onClick={() => handleDelete(index)}>🗑</Button>
         </div>
       );
     }
-    else if (item.type === 'delay') {
+
+    else if (item.type === 'delay') { // render delay info
       return(
         <div style={{display: "flex", justifyContent: "space-around"}}>
           [ {index + 1} ]
-          <div style={{ color: '#e69226'}}>[ Delay ]</div>
-          <div style={{ color: '#28a745'}}>{item.name}</div>
+          <div><span style={{color: '#757575',opacity: '0.7'}}>Time: </span><span style={{ color: '#e69226'}}>{item.name}</span></div>
           <Button variant="outline-danger" onClick={() => handleDelete(index)}>🗑</Button>
         </div>
       );
     }
-    else alert('Problem with item type inserting to the list!');
+
+    else alert('Problem with item type insertion to the list!');
+
   }
 
   return(
