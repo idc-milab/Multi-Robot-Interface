@@ -43,7 +43,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		PipelineItems: [],
 		delayAmount: '',
 		DelayMinutesState: false,
-		AdderMode: false,
+		AdderMode: false
 	}
 	/**declaring the function of set nightstatus to be false. notice the setState command
 	 * re-renders the pervious AppState command
