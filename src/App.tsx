@@ -98,7 +98,6 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	handlePipelineDrag = (droppedItem: any) => {
-	/**this is the pipeline's drag function */
 		if (!droppedItem.destination) return;
 		var updatedList = this.state.PipelineItems.concat();
 		const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
@@ -109,21 +108,18 @@ export class App extends React.PureComponent<{}, AppState> {
 	};
 	
 	handlePipelineDelete = (index: number) => {
-	/**this is called when deleting an item from the pipeline */
 		var updatedList = this.state.PipelineItems.concat();
 		updatedList.splice(index, 1);
 		this.setState({ PipelineItems: updatedList });
 	}
 
 	addAnimationToPipeline = (Item: any, Type: string, Client: any = null) => {
-	/**this is called when adding an animation the pipeline */
 		var newId = new Date().getTime().toString();
 		var newAnimationItem = {name: Item, id: newId, type: Type, client: Client};
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	}
 
 	AddDelayToPipeline = () => {
-	/**this is called when adding a delay the pipeline */
 		var Amount = parseInt(this.state.delayAmount);
 		var MinState = this.state.DelayMinutesState ? 'minutes' : 'seconds';
 		if (!isNaN(Amount)) {
@@ -138,7 +134,6 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	runPipeline = async () => {
-	/**this is called when running the pipeline */
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
 		console.log("running animation: " + QueuedMoves[i].name);
@@ -153,10 +148,9 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 	};
 
-	resetPipeline = () => this.setState({PipelineItems: []}); // simple function to clear the pipeline
-	onToggleDelayAdder = () => this.setState({AdderMode: !this.state.AdderMode}); // toggle the delay adding window
+	resetPipeline = () => this.setState({PipelineItems: []});
+	onToggleDelayAdder = () => this.setState({AdderMode: !this.state.AdderMode});
 	renderPipeline = () => {
-	/**this is called when rendering the pipeline */
 		return (
 			<PipelineCard
 				PipelineList={this.state.PipelineItems}
