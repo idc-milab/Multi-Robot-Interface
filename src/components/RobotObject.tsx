@@ -1,9 +1,8 @@
 import React, { Component, useEffect, useState } from 'react'
-import { HttpClient } from '@butter-robotics/mas-javascript-api';
+import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 
-
-export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClient, onRemove: (ip: string) => void }) {
+export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, addToPipeline: any }) {
 
   const [animations, setAnimations] = useState<string[]>([]);
 
@@ -14,13 +13,13 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
   const loadAnimations = async () => {
     setTimeout(() => {
     }, 5000)
-    const res = await butterClient.getAvailableAnimations();
+    const res:Response = await butterClient.getAvailableAnimations();
     if (res.status !== 200) {
       console.error('Failed to get robot animations', res);
       return;
     }
-    console.log();
-    const animations = res.data.response.data.replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
+    const data: string = res.data.response.data as string;
+    const animations = data.replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
     console.log(animations);
     setAnimations(animations);
   }
@@ -40,12 +39,11 @@ export function RobotObject({ butterClient, onRemove }: { butterClient: HttpClie
             </Button>
           </div>
         </Card.Header>
-        <Card.Body>
+        <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
           <div key={butterClient.ip} className='robot-object'>
-            {animations.length === 0 ? 'There was a problem connecting to the robot.. please try again..' : animations.map(animation => (
-              <Button variant='secondary' className='animation-button' key={animation} onClick={() => playAnimationByName(animation)}>{animation}</Button>
-            ))}
-
+          {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
+          animations.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => addToPipeline(move, 'animation', butterClient)}>{move}</Button></ButtonGroup>))
+          }
           </div>
         </Card.Body>
       </Card>

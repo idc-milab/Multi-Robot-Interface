@@ -25,8 +25,13 @@
 }
 
 .robot-card {
-	padding: 12px 0 !important;
-	margin: 12px 10% !important;
+	padding: 12px 12px 0px 12px !important;
+	margin: 12px 1 !important;
+}
+
+.pipeline-card {
+	padding: 12px 12px 0px 12px !important;
+	margin: 12px 1 !important;
 }
 
 .robot-search{
@@ -36,8 +41,7 @@
 .robot-object {
 	display: grid;
 	gap: 10px;
-	grid-template-columns: repeat(auto-fit, minmax(200px, 1.5fr));
-	grid-auto-flow: dense;
+	grid-template-columns: repeat(auto-fit, minmax(225px, 1.5fr));
 	// padding: 12px;	
 	background-color: white;
 	border-radius: 8px;
@@ -46,8 +50,15 @@
 	background-color: #ffffff;
 	opacity: 0.7;
 	float: inline-start;
-	width: auto;
-	// margin: 15px 0;	
+	//min-width: 700px;
+	// margin: 15px 0;
+	width: 100%;
+}
+
+.main-grid {
+	display: grid;
+	grid-template-columns: 60% 40%;
+	grid-auto-flow: row dense;
 }
 
 .animation-button {
@@ -70,6 +81,32 @@
 	color: red;
 	text-align: right;
 }
+
+.list-container {
+	display: flex;
+	font-size: 18px;
+	background-color: #f7f7f7;
+  	//border: solid 1px #106ef8;
+	flex-direction: column;
+	width: auto;//700px;
+  }
+  .item-container {
+	border: solid 1px #106ef8;
+	background-color: white;
+	color: #106ef8;
+	border-radius: 5px;
+	padding: 5px 5px;
+	margin: 2px 5px;
+	text-align: center;
+  	user-select: none;
+  }
+  .button-container {
+    background-color: transparent;
+    border: solid 1px #106ef8;
+    color: #106ef8;
+    border-radius: 5px;
+    text-align: center;
+  }
 
 body {
 	font-family: 'Open Sans', sans-serif;
