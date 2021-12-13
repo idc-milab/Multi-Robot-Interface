@@ -152,7 +152,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 	};
 
-	resetPipeline = () => this.setState({PipelineItems: []});
+	resetPipeline = (newPipeline: any[]) => this.setState({PipelineItems: newPipeline});
 	onToggleDelayAdder = () => this.setState({AdderMode: !this.state.AdderMode});
 	renderPipeline = () => {
 		return (
