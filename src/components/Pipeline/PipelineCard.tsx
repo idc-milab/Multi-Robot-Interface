@@ -11,10 +11,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
   const [SaveName, setSaveName] = useState('');
   const [SavedLists, setSavedLists] = useState<any[]>([]);
 
-  const ToggleLoad = () => {
-    setSaveState(false);
-    setLoadState(!LoadState);
-  };
+  const ToggleLoad = () => setLoadState(!LoadState);
   const ToggleSave = () => setSaveState(!SaveState);
 
   const AddToSavedList = () => {
@@ -37,10 +34,6 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
             <FormControl placeholder="Sequence Name" onChange={(event: any) => setSaveName(event.target.value)}/>
             <Button variant="outline-success" onClick={() => AddToSavedList()}>✔</Button>
             <Button variant="outline-danger" onClick={() => ToggleSave()}>✖</Button>
-            <Button variant="outline-secondary" onClick={() => ToggleLoad()}>📁</Button>
-            <Button variant="secondary" onClick={() => DelayAdderMode()}>➕⌚</Button>
-            <Button variant="danger" onClick={() => reset()}>🗑</Button>
-            <Button variant="success" onClick={() => run()}>➤</Button>
           </ButtonGroup>
         );
       }
