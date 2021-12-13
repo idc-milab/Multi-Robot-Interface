@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 
-function SequenceDeposit({arr, load, toggle}:{arr: any[], load: any, toggle: any}) {
+function SequenceDeposit({arr, load, toggle, remove}:{arr: any[], load: any, toggle: any, remove: any}) {
 
   const LoadSequence = (list: any[]) => {
     load(list);
@@ -11,7 +11,12 @@ function SequenceDeposit({arr, load, toggle}:{arr: any[], load: any, toggle: any
   if (arr.length !== 0) {
     return(
       <div className='robot-object'>
-      {arr.map((item) => (<ButtonGroup><Button variant="outline-primary" onClick={() => LoadSequence(item.list)}>Load: {item.name}</Button></ButtonGroup>))}
+      {arr.map((item) => (
+        <ButtonGroup>
+          <Button variant="outline-primary" onClick={() => LoadSequence(item.list)}>Load: {item.name}</Button>
+          <Button variant="danger" style={{ maxWidth: '50px' }} onClick={(item) => remove()}>🗑</Button>
+        </ButtonGroup>
+      ))}
       </div>
     );
   }

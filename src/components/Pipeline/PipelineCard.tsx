@@ -15,9 +15,20 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
   const ToggleSave = () => setSaveState(!SaveState);
 
   const AddToSavedList = () => {
-    setSavedLists([...SavedLists, {name: SaveName, list: PipelineList}]);
-    ToggleSave();
+    if (SaveName === '') alert('Please enter a name for the sequence!');
+    else {
+      setSavedLists([...SavedLists, {name: SaveName, list: PipelineList, id: new Date().getTime().toString(),}]);
+      ToggleSave();
+    }
   }
+
+  const RemoveFromSavedList = (item: any) => {
+    var list = SavedLists.concat();
+    const index = list.indexOf(item);
+    if (index > -1) list.splice(index, 1);
+    setSavedLists(list);
+  }
+
 
   const RenderButtons = () => {
     if (LoadState) {
@@ -62,7 +73,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
         </Card.Header>
         <Card.Body>
         <DragDropContext onDragEnd={handlePipelineDrag}>
-          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
+          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
         </DragDropContext>
         </Card.Body>
       </Card>
