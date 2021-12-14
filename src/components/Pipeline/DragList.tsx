@@ -1,6 +1,5 @@
 import React from 'react';
 import { Droppable } from "react-beautiful-dnd";
-import { Button } from 'react-bootstrap';
 import DragItem from './DragItem';
 
 function DragList({name, arr, handleDelete}:{name: string, arr: any[], handleDelete: any}) {

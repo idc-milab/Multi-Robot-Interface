@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
-import { Button, Card, ButtonGroup, Container, Modal, InputGroup, FormControl, Form } from 'react-bootstrap';
+import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstrap';
 import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
 
