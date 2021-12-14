@@ -17,7 +17,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
   const AddToSavedList = () => {
     if (SaveName === '') alert('Please enter a name for the sequence!');
     else {
-      setSavedLists([...SavedLists, {name: SaveName, list: PipelineList, id: new Date().getTime().toString(),}]);
+      setSavedLists([...SavedLists, {name: SaveName, list: PipelineList}]);
       ToggleSave();
     }
   }
