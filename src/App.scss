@@ -55,6 +55,14 @@
 	width: 100%;
 }
 
+.pipeline-object {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1.5fr));
+	float: inline-start;
+	width: 100%;
+}
+
 .main-grid {
 	display: grid;
 	grid-template-columns: 60% 40%;

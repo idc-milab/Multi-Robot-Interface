@@ -10,7 +10,7 @@ function SequenceDeposit({arr, load, toggle, remove}:{arr: any[], load: any, tog
 
   if (arr.length !== 0) {
     return(
-      <div className='robot-object'>
+      <div className="pipeline-object">
       {arr.map((item) => (
         <ButtonGroup>
           <Button variant="outline-primary" onClick={() => LoadSequence(item.list)}>Load: {item.name}</Button>
