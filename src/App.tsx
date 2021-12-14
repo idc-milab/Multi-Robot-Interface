@@ -22,9 +22,6 @@ export type AppState = {
 	show: boolean;
 	labCurrentIPs: string[]; //array of ip's
 	PipelineItems: any[];
-	delayAmount: string;
-	DelayMinutesState: boolean;
-	AdderMode: boolean;
 }
 
 export class App extends React.PureComponent<{}, AppState> {
@@ -44,9 +41,6 @@ export class App extends React.PureComponent<{}, AppState> {
 		//why do we need the correct ip names and not any name for example why not have it as kip?
 		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34','192.168.56.188'],
 		PipelineItems: [],
-		delayAmount: '',
-		DelayMinutesState: false,
-		AdderMode: false
 // >>>>>>> feature-PipelineAnimationDev
 	}
 	/**declaring the function of set nightstatus to be false. notice the setState command
@@ -123,16 +117,14 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	}
 
-	AddDelayToPipeline = () => {
-		var Amount = parseInt(this.state.delayAmount);
-		var MinState = this.state.DelayMinutesState ? 'minutes' : 'seconds';
+	AddDelayToPipeline = (delayAmount: string, DelayMinutesState: boolean) => {
+		var Amount = parseInt(delayAmount);
+		var MinState = DelayMinutesState ? 'minutes' : 'seconds';
 		if (!isNaN(Amount)) {
-		  var Name = Amount + ' ' + MinState + ' delay';
-		  var newDelayItem = {name: Name, id: new Date().getTime().toString(), type: 'delay', minutes: this.state.DelayMinutesState, amount: Amount};
-		  this.setState({
-			PipelineItems: [...this.state.PipelineItems, newDelayItem],
-			AdderMode: !this.state.AdderMode
-			})
+			var Name = Amount + ' ' + MinState + ' delay';
+			if (DelayMinutesState) Amount *= 60;
+			var newDelayItem = {name: Name, id: new Date().getTime().toString(), type: 'delay', amount: Amount};
+			this.setState({PipelineItems: [...this.state.PipelineItems, newDelayItem]});
 		}
 		else alert('Please enter a valit number!');
 	}
@@ -140,27 +132,25 @@ export class App extends React.PureComponent<{}, AppState> {
 	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
-		console.log("running animation: " + QueuedMoves[i].name);
-		if (QueuedMoves[i].type === 'animation') {
-			await QueuedMoves[i].client.playAnimation(QueuedMoves[i].name.trim(), true);
-		}
-		else if (QueuedMoves[i].type === 'delay') {
-			if (QueuedMoves[i].minutes) await timeout(60000 * QueuedMoves[i].amount);
-			else await timeout(1000 * QueuedMoves[i].amount);
-		}
-		else alert('Problem with pipeline items!');
+			console.log("running animation: " + QueuedMoves[i].name);
+			if (QueuedMoves[i].type === 'animation') {
+				await QueuedMoves[i].client.playAnimation(QueuedMoves[i].name.trim(), true);
+			}
+			else if (QueuedMoves[i].type === 'delay') {
+				await timeout(1000 * QueuedMoves[i].amount);
+			}
+			else alert('Problem with pipeline items!');
 		}
 	};
 
 	resetPipeline = (newPipeline: any[]) => this.setState({PipelineItems: newPipeline});
-	onToggleDelayAdder = () => this.setState({AdderMode: !this.state.AdderMode});
 	renderPipeline = () => {
 		return (
 			<PipelineCard
 				PipelineList={this.state.PipelineItems}
 				handlePipelineDrag={this.handlePipelineDrag}
 				handleDelete={this.handlePipelineDelete}
-				DelayAdderMode={this.onToggleDelayAdder}
+				DelayAdder={this.AddDelayToPipeline}
 				run={this.runPipeline}
 				reset={this.resetPipeline}
 			/>
@@ -240,23 +230,6 @@ export class App extends React.PureComponent<{}, AppState> {
 						{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
 						{this.renderPipeline()}
 					</div>
-
-					<Modal size="sm" show={this.state.AdderMode} onHide={this.onToggleDelayAdder} centered>
-        				<Modal.Header translate="true" closeButton>
-          					<Modal.Title>
-            					Delay properties:
-          					</Modal.Title>
-        				</Modal.Header>
-        				<Modal.Body>
-          					<InputGroup className="mb-3">
-            					<FormControl placeholder="0" onChange={(event: any) => this.setState({ delayAmount: event.target.value })}/>
-            					<Button variant="outline-secondary" onClick={() => this.setState({ DelayMinutesState: !this.state.DelayMinutesState })}>
-									{this.state.DelayMinutesState ? 'minutes' : 'seconds'}
-								</Button>
-            					<Button variant="outline-secondary" onClick={() => this.AddDelayToPipeline()}>Add</Button>
-          					</InputGroup>
-        				</Modal.Body>
-      				</Modal>
 			</div>
 			</Router>
 		)

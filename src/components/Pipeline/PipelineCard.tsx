@@ -1,18 +1,22 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
 import { Button, Card, ButtonGroup, Container, Modal, InputGroup, FormControl, Form } from 'react-bootstrap';
 import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
 
-function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdderMode, run, reset}:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdderMode: any, run: any, reset: any}) {
+function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, reset}:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
+  const [DelayState, setDelayState] = useState(false);
   const [SaveName, setSaveName] = useState('');
+  const [DelayAmount, setDelayAmount] = useState('');
+  const [DelayMinutesState, setDelayMinutesState] = useState(false);
   const [SavedLists, setSavedLists] = useState<any[]>([]);
 
   const ToggleLoad = () => setLoadState(!LoadState);
   const ToggleSave = () => setSaveState(!SaveState);
+  const ToggleDelay = () => setDelayState(!DelayState);
 
   const AddToSavedList = () => {
     if (SaveName === '') alert('Please enter a name for the sequence!');
@@ -29,36 +33,45 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
     setSavedLists(list);
   }
 
-
   const RenderButtons = () => {
     if (LoadState) {
       return(
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>↩</Button>
+          <Button variant="outline-primary" onClick={() => ToggleLoad()}>↩</Button>
+        </ButtonGroup>
+      );
+    }
+    else if (SaveState) {
+      return(
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <FormControl placeholder="Sequence Name" onChange={(event: any) => setSaveName(event.target.value)}/>
+          <Button variant="outline-success" onClick={() => AddToSavedList()}>✔</Button>
+          <Button variant="outline-danger" onClick={() => ToggleSave()}>✖</Button>
+        </ButtonGroup>
+      );
+    }
+    else if (DelayState) {
+      return(
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <FormControl placeholder="0" onChange={(event: any) => setDelayAmount(event.target.value)}/>
+          <Button variant="outline-secondary" onClick={() => setDelayMinutesState(!DelayMinutesState)}>
+						{DelayMinutesState ? 'minutes' : 'seconds'}
+					</Button>
+          <Button variant="outline-success" onClick={() => DelayAdder(DelayAmount, DelayMinutesState)}>✔</Button>
+          <Button variant="outline-primary" onClick={() => ToggleDelay()}>↩</Button>
         </ButtonGroup>
       );
     }
     else {
-      if (SaveState) {
-        return(
-          <ButtonGroup style={{ marginLeft: 'auto' }}>
-            <FormControl placeholder="Sequence Name" onChange={(event: any) => setSaveName(event.target.value)}/>
-            <Button variant="outline-success" onClick={() => AddToSavedList()}>✔</Button>
-            <Button variant="outline-danger" onClick={() => ToggleSave()}>✖</Button>
-          </ButtonGroup>
-        );
-      }
-      else {
-        return(
-          <ButtonGroup style={{ marginLeft: 'auto' }}>
-            <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
-            <Button variant="outline-secondary" onClick={() => ToggleLoad()}>📁</Button>
-            <Button variant="secondary" onClick={() => DelayAdderMode()}>➕⌚</Button>
-            <Button variant="danger" onClick={() => reset([])}>🗑</Button>
-            <Button variant="success" onClick={() => run()}>➤</Button>
-          </ButtonGroup>
-        );
-      }
+      return(
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
+          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>📁</Button>
+          <Button variant="secondary" onClick={() => ToggleDelay()}>➕⌚</Button>
+          <Button variant="danger" onClick={() => reset([])}>🗑</Button>
+          <Button variant="success" onClick={() => run()}>➤</Button>
+        </ButtonGroup>
+      );
     }
   }
 
