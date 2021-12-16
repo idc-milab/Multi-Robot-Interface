@@ -1,15 +1,36 @@
 import React, { Component, useEffect, useState } from 'react'
 import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
+import { Grid, Item } from 'semantic-ui-react';
+import { updateYield } from 'typescript';
+import { State } from 'react-beautiful-dnd';
+import { ClassDictionary } from 'classnames/types';
+
 
 export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, addToPipeline: any }) {
 
-  const [animations, setAnimations] = useState<string[]>([]);
+  const [animations, setAnimations] = useState<{name: string, status: boolean}[]>([]);
+
+ 
+  
+ 
+
 
   useEffect(() => {
     loadAnimations();
   }, []);
 
+  const hideShow = (move: any) => {
+    var temp = animations.concat();
+    for(var i = 0; i<temp.length; i++) {
+      if(temp[i] == move) {
+        temp[i].status = !temp[i].status
+      }
+    }
+    setAnimations(temp);
+  }
+  
+  
   const loadAnimations = async () => {
     setTimeout(() => {
     }, 5000)
@@ -21,12 +42,26 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
     const data: string = res.data.response.data as string;
     const animations = data.replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
     console.log(animations);
-    setAnimations(animations);
-  }
 
+    //this turns the animations string list to an object list that is comprised of the name of animation and its status true/false
+    let tempo= Array(0);
+    animations.map ((n) => {
+    var newAnimobject = {name: n, status: true};
+    tempo = [...tempo, newAnimobject];
+    });
+    setAnimations(tempo);
+  }
+  
+  
+  
+  
   const playAnimationByName = (animation: string) => {
     butterClient.playAnimation(animation.trim());
   }
+
+
+
+
 
   return (
     <Container className='robot-card'>
@@ -40,14 +75,16 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
           </div>
         </Card.Header>
         <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
-          <div key={butterClient.ip} className='robot-object'>
-          {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
-          animations.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => addToPipeline(move, 'animation', butterClient)}>{move}</Button></ButtonGroup>))
-          }
-          </div>
-        </Card.Body>
+        <div key={butterClient.ip} className='robot-object'>
+              {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
+              animations.map((move) => 
+             <ButtonGroup >
+              <Button type="button"  className='remove btn' variant="outline-danger" onClick={() => hideShow(move)} style={{ marginLeft: 'auto' }}>🗑</Button>
+              {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient)}>{move.name}</Button> : null}
+            </ButtonGroup>)}
+              </div>
+          </Card.Body>
       </Card>
     </Container>
   );
 }
-
