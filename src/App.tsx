@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
-import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, InputGroup, Card, useAccordionToggle } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
@@ -239,7 +239,7 @@ export class App extends React.PureComponent<{}, AppState> {
 						<Accordion>
 							<Card>
 								<Card.Header>
-									<Nav fill variant="tabs" defaultActiveKey="0">
+									<Nav fill variant="tabs" defaultActiveKey="1">
 										<Nav.Item>
 											<Nav.Link eventKey="0">Connected Robots</Nav.Link>
 										</Nav.Item>
