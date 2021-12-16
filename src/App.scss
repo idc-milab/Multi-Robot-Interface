@@ -55,6 +55,14 @@
 	width: 100%;
 }
 
+.pipeline-object {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1.5fr));
+	float: inline-start;
+	width: 100%;
+}
+
 .main-grid {
 	display: grid;
 	grid-template-columns: 60% 40%;
@@ -91,7 +99,7 @@
 	width: auto;//700px;
   }
   .item-container {
-	border: solid 1px #106ef8;
+	border: solid 2px #106ef8;
 	background-color: white;
 	color: #106ef8;
 	border-radius: 5px;

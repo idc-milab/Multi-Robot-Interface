@@ -24,7 +24,7 @@ function DragItem({item, index, handleDelete}:{item: any, index: number, handleD
     else if (item.type === 'delay') { // render delay info
       return(
         <div style={{display: "flex", justifyContent: "space-around"}}>
-          [ {index + 1} ]
+          [{index + 1}]
           <div><span style={{color: '#757575',opacity: '0.7'}}>Time: </span><span style={{ color: '#e69226'}}>{item.name}</span></div>
           <Button variant="outline-danger" onClick={() => handleDelete(index)}>🗑</Button>
         </div>
