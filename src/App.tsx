@@ -2,10 +2,12 @@ import React from 'react';
 import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
-import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, InputGroup } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, InputGroup, Card, useAccordionToggle } from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { ScenarioButtons } from './components/ScenariosButtons';
+import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
 
 
@@ -226,10 +228,42 @@ export class App extends React.PureComponent<{}, AppState> {
 						</Route>
 					</Switch>
 
-					<div className="main-grid">
-						{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
-						{this.renderPipeline()}
-					</div>
+					<Hidden smDown>
+						<div className="main-grid">
+							{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
+							{this.renderPipeline()}
+						</div>
+      				</Hidden>
+
+					<Hidden mdUp>
+						<Accordion>
+							<Card>
+								<Card.Header>
+									<Nav fill variant="tabs" defaultActiveKey="0">
+										<Nav.Item>
+											<Nav.Link eventKey="0">Connected Robots</Nav.Link>
+										</Nav.Item>
+										<Nav.Item>
+											<Nav.Link eventKey="1">Pipeline</Nav.Link>
+										</Nav.Item>
+									</Nav>
+								</Card.Header>
+								<Accordion.Collapse eventKey="0">
+									<Card.Body>
+										{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
+									</Card.Body>
+								</Accordion.Collapse>
+							</Card>
+							<Card>
+								<Accordion.Collapse eventKey="1">
+									<Card.Body>
+										{this.renderPipeline()}
+									</Card.Body>
+								</Accordion.Collapse>
+							</Card>
+						</Accordion>
+					</Hidden>
+
 			</div>
 			</Router>
 		)
