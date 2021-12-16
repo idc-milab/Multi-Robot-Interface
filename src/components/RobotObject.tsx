@@ -2,8 +2,6 @@ import React, { Component, useEffect, useState } from 'react'
 import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 
-const TestingSequence = ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9'];
-
 export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, addToPipeline: any }) {
 
   const [animations, setAnimations] = useState<string[]>([]);
@@ -43,8 +41,8 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
         </Card.Header>
         <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
           <div key={butterClient.ip} className='robot-object'>
-          {TestingSequence.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
-          TestingSequence.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => addToPipeline(move, 'animation', butterClient)}>{move}</Button></ButtonGroup>))
+          {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
+          animations.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => addToPipeline(move, 'animation', butterClient)}>{move}</Button></ButtonGroup>))
           }
           </div>
         </Card.Body>
