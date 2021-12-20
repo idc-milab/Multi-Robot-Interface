@@ -34,7 +34,6 @@ export class App extends React.PureComponent<{}, AppState> {
  */
 	state: AppState = {
 		dayNightStatus: false,
-<<<<<<< Updated upstream
 		currentIPInput: '192.168.56.227',
 		currentButterClients: [],
 		show: false,
@@ -45,12 +44,6 @@ export class App extends React.PureComponent<{}, AppState> {
 		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34','192.168.56.188'],
 		PipelineItems: [],
 // >>>>>>> feature-PipelineAnimationDev
-=======
-		currentIPInput: '192.168.57.227',
-		currentButterClients: [],
-		show: false,
-		labCurrentIPs: ['192.168.57.227', '192.168.57.32', '192.168.57.34', '192.168.56.188', '192.168.56.193', '192.168.56.206'],
->>>>>>> Stashed changes
 	}
 	/**declaring the function of set nightstatus to be false. notice the setState command
 	 * re-renders the pervious AppState command
