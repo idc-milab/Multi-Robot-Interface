@@ -102,3 +102,6 @@ dist
 
 # ignore build
 build
+build/
+build/*
+/build/*
