@@ -42,7 +42,7 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
         <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
           <div key={butterClient.ip} className='robot-object'>
           {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
-          animations.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => addToPipeline(move, 'animation', butterClient)}>{move}</Button></ButtonGroup>))
+          animations.map((move) => (<ButtonGroup><Button variant="outline-primary" onClick={() => addToPipeline(move, 'animation', butterClient.ip)}>{move}</Button></ButtonGroup>))
           }
           </div>
         </Card.Body>

@@ -179,9 +179,9 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: updatedList });
 	}
 
-	addAnimationToPipeline = (Item: any, Type: string, Client: any = null) => {
+	addAnimationToPipeline = (Item: any, Type: string, IP: string) => {
 		var newId = new Date().getTime().toString();
-		var newAnimationItem = {name: Item, id: newId, type: Type, client: Client};
+		var newAnimationItem = {name: Item, id: newId, type: Type, ip: IP};
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	}
 
@@ -202,7 +202,9 @@ export class App extends React.PureComponent<{}, AppState> {
 		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
 			if (QueuedMoves[i].type === 'animation') {
-				await QueuedMoves[i].client.playAnimation(QueuedMoves[i].name.trim(), true);
+				var Client = new HttpClient(QueuedMoves[i].ip);
+				Client.timeout = 240;
+				await Client.playAnimation(QueuedMoves[i].name.trim(), true);
 			}
 			else if (QueuedMoves[i].type === 'delay') {
 				await timeout(1000 * QueuedMoves[i].amount);

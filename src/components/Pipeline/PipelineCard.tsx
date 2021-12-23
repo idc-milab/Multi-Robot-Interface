@@ -1,3 +1,4 @@
+import { constants } from 'os';
 import React, { useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
 import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstrap';
@@ -37,6 +38,8 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
     if (LoadState) {
       return(
         <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <Button variant="outline-primary" onClick={() => onDownload()}>💾</Button>
+          <Button variant="outline-primary" onClick={() => ToggleLoad()}>📁</Button>
           <Button variant="outline-primary" onClick={() => ToggleLoad()}>↩</Button>
         </ButtonGroup>
       );
@@ -75,6 +78,18 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
     }
   }
 
+  const download = (content: any, fileName: any, contentType: any) => {
+    const a = document.createElement("a");
+    const file = new Blob([content], { type: contentType });
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+   }
+   
+   const onDownload =() => {
+    download(JSON.stringify(SavedLists), "json-file-name.json", "text/plain");
+   }
+
     return(
       <Container className='pipeline-card'>
       <Card>
@@ -86,7 +101,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
         </Card.Header>
         <Card.Body>
         <DragDropContext onDragEnd={handlePipelineDrag}>
-          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
+          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()} remove={RemoveFromSavedList} loadFile={setSavedLists}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
         </DragDropContext>
         </Card.Body>
       </Card>
