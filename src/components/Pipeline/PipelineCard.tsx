@@ -34,14 +34,30 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
     setSavedLists(list);
   }
 
+  const openFile = (evt: any) => {
+    const fileObj = evt.target.files[0];
+    const reader = new FileReader();
+    reader.onload = LOADIT;
+    reader.readAsText(fileObj);
+}
+
+function LOADIT (event: any) {
+	let str = event.target.result;
+  let arr = JSON.parse(str)
+	console.log('arr:', arr);
+  setSavedLists(arr);
+}
+
   const RenderButtons = () => {
     if (LoadState) {
       return(
-        <ButtonGroup style={{ marginLeft: 'auto' }}>
-          <Button variant="outline-primary" onClick={() => onDownload()}>💾</Button>
-          <Button variant="outline-primary" onClick={() => ToggleLoad()}>📁</Button>
-          <Button variant="outline-primary" onClick={() => ToggleLoad()}>↩</Button>
+        <div style={{ marginLeft: 'auto' }}>
+        <input type="file" className="hidden" id="fileupload" multiple={false} accept=".json" onChange={(event: any) => openFile(event)}/>
+        <ButtonGroup>
+          <Button variant="outline-secondary" onClick={() => onDownload()}>💾</Button>
+          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>↩</Button>
         </ButtonGroup>
+        </div>
       );
     }
     else if (SaveState) {
@@ -101,7 +117,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
         </Card.Header>
         <Card.Body>
         <DragDropContext onDragEnd={handlePipelineDrag}>
-          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()} remove={RemoveFromSavedList} loadFile={setSavedLists}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
+          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
         </DragDropContext>
         </Card.Body>
       </Card>
