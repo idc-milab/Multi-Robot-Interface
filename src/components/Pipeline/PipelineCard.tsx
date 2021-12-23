@@ -51,19 +51,24 @@ function LOADIT (event: any) {
   const RenderButtons = () => {
     if (LoadState) {
       return(
+        <>
         <div style={{ marginLeft: 'auto' }}>
-        <input type="file" className="hidden" id="fileupload" multiple={false} accept=".json" onChange={(event: any) => openFile(event)}/>
+        <label className="custom-file-upload">
+        <input type="file" className="hidden" id="fileupload" multiple={false} accept=".json" onChange={(event: any) => openFile(event)}/>Upload from device</label>
+        </div>
+        <div style={{ marginLeft: 'auto' }}>
         <ButtonGroup>
           <Button variant="outline-secondary" onClick={() => onDownload()}>💾</Button>
           <Button variant="outline-secondary" onClick={() => ToggleLoad()}>↩</Button>
         </ButtonGroup>
         </div>
+        </>
       );
     }
     else if (SaveState) {
       return(
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-          <FormControl placeholder="Sequence Name" onChange={(event: any) => setSaveName(event.target.value)}/>
+          <FormControl placeholder="Pipeline Name" onChange={(event: any) => setSaveName(event.target.value)}/>
           <Button variant="outline-success" onClick={() => AddToSavedList()}>✔</Button>
           <Button variant="outline-danger" onClick={() => ToggleSave()}>✖</Button>
         </ButtonGroup>
@@ -111,7 +116,7 @@ function LOADIT (event: any) {
       <Card>
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
-            The Pipeline
+            {LoadState ? 'Saved Pipelines' : 'The Pipeline'}
             {RenderButtons()}
           </div>
         </Card.Header>
