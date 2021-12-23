@@ -20,7 +20,7 @@ function SequenceDeposit({arr, load, toggle, remove}:{arr: any[], load: any, tog
         <div className="pipeline-object">
         {arr.map((item) => (
           <ButtonGroup>
-            <Button variant="outline-primary" onClick={() => LoadSequence(item.list)}>Load: {item.name}</Button>
+            <Button variant="outline-secondary" onClick={() => LoadSequence(item.list)}>Load: {item.name}</Button>
             <Button variant="danger" style={{ maxWidth: '50px' }} onClick={() => remove(item)}>🗑</Button>
           </ButtonGroup>
         ))}
