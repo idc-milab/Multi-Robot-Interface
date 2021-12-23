@@ -92,8 +92,8 @@ function LOADIT (event: any) {
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
           <Button variant="outline-secondary" onClick={() => ToggleLoad()}>📁</Button>
-          <Button variant="secondary" onClick={() => ToggleDelay()}>➕⌚</Button>
-          <Button variant="danger" onClick={() => reset([])}>🗑</Button>
+          <Button variant="outline-secondary" onClick={() => ToggleDelay()}>➕⌚</Button>
+          <Button variant="outline-danger" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
         
