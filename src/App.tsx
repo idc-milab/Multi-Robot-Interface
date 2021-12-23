@@ -34,7 +34,7 @@ export class App extends React.PureComponent<{}, AppState> {
  */
 	state: AppState = {
 		dayNightStatus: false,
-		currentIPInput: '192.168.57.32',
+		currentIPInput: '192.168.56.227',
 		currentButterClients: [],
 		show: false,
 // <<<<<<< HEAD
