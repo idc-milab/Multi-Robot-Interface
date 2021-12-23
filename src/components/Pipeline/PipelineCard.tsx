@@ -5,7 +5,7 @@ import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstr
 import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
 
-function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, reset, pauseResume, stop}:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any, pauseResume: any, stop: any}) {
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, reset, pauseResume, stop}:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any, pauseResume: any, stop: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
@@ -99,7 +99,7 @@ function LOADIT (event: any) {
         
           <Button  onClick={() => pauseResume()}>⏯️</Button>
           <Button variant="danger" onClick={() => stop()}>🛑</Button>
-          <Button variant="success" onClick={() => run()}>➤</Button>
+          {pauseState ? <Button variant="success" onClick={() => run()} disabled>➤</Button> : <Button variant="success" onClick={() => run()}>➤</Button>}
         </ButtonGroup>
         </>
       );
