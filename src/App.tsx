@@ -23,6 +23,7 @@ export type AppState = {
 	currentButterClients: HttpClient[];
 	showInst: boolean;
 	showNewIP: boolean;
+	pauseState: boolean;
 	labCurrentIPs: string[];
 	IPdeleteState: boolean[];
 	PipelineItems: any[];
@@ -40,6 +41,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		currentButterClients: [],
 		showInst: false,
 		showNewIP: false,
+		pauseState: false,
 		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34','192.168.56.188'],
 		IPdeleteState: Array(6).fill(false),
 		PipelineItems: []
@@ -213,6 +215,25 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 	};
 
+	PauseResumePipeline =  () => {
+		var connectdRobots = this.state.currentButterClients;
+		for (var i =0; i<connectdRobots.length; i++) {
+			if (!this.state.pauseState) connectdRobots[i].pauseAnimation();
+			else connectdRobots[i].resumeAnimation();
+		}
+		this.setState({pauseState: !this.state.pauseState});
+	};
+
+
+	StopPipeline =  () => {
+		var connectdRobots = this.state.currentButterClients;
+		for (var i =0; i<connectdRobots.length; i++) {
+			connectdRobots[i].stopAnimation();
+			connectdRobots[i].clearAnimation();
+		}
+	};
+	
+
 	resetPipeline = (newPipeline: any[]) => this.setState({PipelineItems: newPipeline});
 	renderPipeline = () => {
 		return (
@@ -223,6 +244,8 @@ export class App extends React.PureComponent<{}, AppState> {
 				DelayAdder={this.AddDelayToPipeline}
 				run={this.runPipeline}
 				reset={this.resetPipeline}
+				pauseResume={this.PauseResumePipeline}
+				stop={this.StopPipeline}
 			/>
 		);
 	}

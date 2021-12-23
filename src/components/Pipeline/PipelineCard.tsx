@@ -5,7 +5,7 @@ import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstr
 import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
 
-function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, reset}:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any}) {
+function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, reset, pauseResume, stop}:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any, pauseResume: any, stop: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
@@ -88,13 +88,20 @@ function LOADIT (event: any) {
     }
     else {
       return(
+        <>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
           <Button variant="outline-secondary" onClick={() => ToggleLoad()}>📁</Button>
           <Button variant="secondary" onClick={() => ToggleDelay()}>➕⌚</Button>
           <Button variant="danger" onClick={() => reset([])}>🗑</Button>
+        </ButtonGroup>
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+        
+          <Button  onClick={() => pauseResume()}>⏯️</Button>
+          <Button variant="danger" onClick={() => stop()}>🛑</Button>
           <Button variant="success" onClick={() => run()}>➤</Button>
         </ButtonGroup>
+        </>
       );
     }
   }
