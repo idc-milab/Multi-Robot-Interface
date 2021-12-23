@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from 'react'
 import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
-import { Grid, Item } from 'semantic-ui-react';
+
 
 
 
@@ -86,12 +86,14 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
         <Card.Header>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>{butterClient.ip}</p>
-            <Button type="button"  className='remove btn' variant="outline-danger" aria-hidden="true" onClick={() => onRemove(butterClient.ip)} style={{ marginLeft: 'auto' }}> 
-            🗑
-            </Button>
+            <ButtonGroup style={{ marginLeft: 'auto' }}>
+              {animations.length !== 0 ? <Button variant="outline-primary" className="btn btn-outline-info" onClick={() => setVisible(!visible)}>{visible ? 'Hide' : 'Show'} hidden</Button> 
+              : null}
+              <Button type="button"  className='remove btn' variant="outline-danger" aria-hidden="true" onClick={() => onRemove(butterClient.ip)}>🗑</Button>
+            </ButtonGroup>
           </div>
         </Card.Header>
-          <Grid key={butterClient.ip} classname='robot-object'>
+          <Card.Body key={butterClient.ip} className='robot-object'>
               {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
               animations.map((move) => 
              <ButtonGroup>
@@ -99,15 +101,10 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
               {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}</Button>: null}
             </ButtonGroup>
             )}
-          
-          </Grid>
+          </Card.Body>
       </Card>
-      <Button variant="outline-primary" className="btn btn-outline-info" onClick={() => setVisible(!visible)}>
-        {visible ? 'Hide' : 'Show'}
-      </Button>
       {visible && <Card className='robot-object'> {hiddnanim.map((but) =>  <ButtonGroup  aria-label="Basic example">
               <Button variant="outline-secondary" onClick={() => show(but)} style={{ marginRight: 'auto' }}>{but.name}</Button></ButtonGroup>)}</Card>}
-      
     </Container>
     
   );
