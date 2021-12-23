@@ -11,6 +11,7 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
   const [hiddnanim, sethiddnanimations] = useState<{name: string, status: boolean}[]>([]);
   const [visible, setVisible] = React.useState(false);
 
+
   useEffect(() => {
     loadAnimations();
   }, []);

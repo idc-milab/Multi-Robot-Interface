@@ -34,9 +34,6 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
 # Dependency directories
 node_modules/
 jspm_packages/
@@ -103,10 +100,8 @@ dist
 # TernJS port file
 .tern-port
 
-# build
-build/
-.build
+# ignore build
 build
-
-# WebStorm Files
-.idea
+build/
+build/*
+/build/*
