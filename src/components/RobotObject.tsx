@@ -20,12 +20,33 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
 
 
  
-  //this functions chagnes the state of the button if it will show or hide it
-  const hideShow = (move: any) => {
+  //this functions chagnes the state of the button if it will show or hide it and separate it into
+  const hide = (move: any) => {
     var temp = animations.concat();
     let shownAnimations: any[] = [];
-    let FinalHiddnList: any[] = [];
+    var FinalHiddnList = hiddnanim.concat();
+    for(var i = 0; i<temp.length; i++) {
+      if(temp[i] == move) {
+        temp[i].status = !temp[i].status
+      }
+      if(temp[i].status === false){
+        FinalHiddnList =[...FinalHiddnList, temp[i]];
+        console.log(FinalHiddnList);
+      }
+      else{
+        shownAnimations = [...shownAnimations, temp[i]];
+        console.log(shownAnimations);
+      }
+    }
+    setAnimations(shownAnimations);
+    sethiddnanimations(FinalHiddnList);
+  
+  }
 
+  const show = (move: any) => {
+    var temp = hiddnanim.concat();
+    let shownAnimations= animations.concat();
+    var FinalHiddnList: any[] = [];
     for(var i = 0; i<temp.length; i++) {
       if(temp[i] == move) {
         temp[i].status = !temp[i].status
@@ -34,17 +55,13 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
         FinalHiddnList =[...FinalHiddnList, temp[i]];
       }
       else{
-        shownAnimations = [...shownAnimations, temp[i]];
+        shownAnimations = [...shownAnimations, temp[i]];;
       }
     }
-
-    
-    
     setAnimations(shownAnimations);
     sethiddnanimations(FinalHiddnList);
   
   }
-
     
   
   const loadAnimations = async () => {
@@ -93,12 +110,11 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
               {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
               animations.map((move) => 
              <ButtonGroup>
-              <Button type="button"  className='remove btn' variant="outline-danger" onClick={() => hideShow(move)} style={{ marginLeft: 'auto' }}>🗑</Button>
+              <Button type="button"  className='remove btn' variant="outline-danger" onClick={() => hide(move)} style={{ marginLeft: 'auto' }}>🗑</Button>
               {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient)}>{move.name}</Button>: null}
             </ButtonGroup>
-              
             )}
-           {hiddnanim.map((but) => <Button type="button">{but.name}</Button>)}
+           {hiddnanim.map((but) => <Button type="button" onClick={() => show(but)}>{but.name}</Button>)}
           </Grid>
           <Card.Body>
           </Card.Body>
