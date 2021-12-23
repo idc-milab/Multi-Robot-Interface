@@ -96,7 +96,7 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
               animations.map((move) => 
              <ButtonGroup>
               <Button type="button"  className='remove btn' variant="outline-danger" onClick={() => hide(move)} style={{ marginLeft: 'auto' }}>🗑</Button>
-              {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient)}>{move.name}</Button>: null}
+              {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}</Button>: null}
             </ButtonGroup>
             )}
           
