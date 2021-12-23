@@ -10,26 +10,42 @@ import { ClassDictionary } from 'classnames/types';
 export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, addToPipeline: any }) {
 
   const [animations, setAnimations] = useState<{name: string, status: boolean}[]>([]);
-
- 
-  
- 
-
+  const [hiddnanim, sethiddnanimations] = useState<{name: string, status: boolean}[]>([]);
 
   useEffect(() => {
     loadAnimations();
   }, []);
+  
+ 
 
+
+ 
+  //this functions chagnes the state of the button if it will show or hide it
   const hideShow = (move: any) => {
     var temp = animations.concat();
+    let shownAnimations: any[] = [];
+    let FinalHiddnList: any[] = [];
+
     for(var i = 0; i<temp.length; i++) {
       if(temp[i] == move) {
         temp[i].status = !temp[i].status
       }
+      if(temp[i].status === false){
+        FinalHiddnList =[...FinalHiddnList, temp[i]];
+      }
+      else{
+        shownAnimations = [...shownAnimations, temp[i]];
+      }
     }
-    setAnimations(temp);
-  }
+
+    
+    
+    setAnimations(shownAnimations);
+    sethiddnanimations(FinalHiddnList);
   
+  }
+
+    
   
   const loadAnimations = async () => {
     setTimeout(() => {
@@ -43,24 +59,23 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
     const animations = data.replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
     console.log(animations);
 
-    //this turns the animations string list to an object list that is comprised of the name of animation and its status true/false
+    //this turns the animations string list to an object list that is comprised of the name of animation
+    // and its status true/false
     let tempo= Array(0);
     animations.map ((n) => {
     var newAnimobject = {name: n, status: true};
     tempo = [...tempo, newAnimobject];
+    
     });
+  
     setAnimations(tempo);
   }
-  
   
   
   
   const playAnimationByName = (animation: string) => {
     butterClient.playAnimation(animation.trim());
   }
-
-
-
 
 
   return (
@@ -74,17 +89,21 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
             </Button>
           </div>
         </Card.Header>
-        <Card.Body style={{ display: 'flex', alignItems: 'center' }}>
-        <div key={butterClient.ip} className='robot-object'>
+          <Grid key={butterClient.ip} classname='robot-object'>
               {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
               animations.map((move) => 
-             <ButtonGroup >
+             <ButtonGroup>
               <Button type="button"  className='remove btn' variant="outline-danger" onClick={() => hideShow(move)} style={{ marginLeft: 'auto' }}>🗑</Button>
-              {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient)}>{move.name}</Button> : null}
-            </ButtonGroup>)}
-              </div>
+              {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient)}>{move.name}</Button>: null}
+            </ButtonGroup>
+              
+            )}
+           {hiddnanim.map((but) => <Button type="button">{but.name}</Button>)}
+          </Grid>
+          <Card.Body>
           </Card.Body>
       </Card>
     </Container>
   );
 }
+
