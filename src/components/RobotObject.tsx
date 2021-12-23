@@ -2,9 +2,7 @@ import React, { Component, useEffect, useState } from 'react'
 import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 import { Grid, Item } from 'semantic-ui-react';
-import { updateYield } from 'typescript';
-import { State } from 'react-beautiful-dnd';
-import { ClassDictionary } from 'classnames/types';
+
 
 
 export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, addToPipeline: any }) {
