@@ -108,7 +108,7 @@ function LOADIT (event: any) {
    }
    
    const onDownload =() => {
-    download(JSON.stringify(SavedLists), "json-file-name.json", "text/plain");
+    download(JSON.stringify(SavedLists), "Pipelines.json", "text/plain");
    }
 
     return(
