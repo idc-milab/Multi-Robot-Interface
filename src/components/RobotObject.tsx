@@ -11,6 +11,7 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
 
   const [animations, setAnimations] = useState<{name: string, status: boolean}[]>([]);
   const [hiddnanim, sethiddnanimations] = useState<{name: string, status: boolean}[]>([]);
+  const [visible, setVisible] = React.useState(false);
 
   useEffect(() => {
     loadAnimations();
@@ -20,27 +21,18 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
 
 
  
-  //this functions chagnes the state of the button if it will show or hide it and separate it into
+  //this functions hides the button and puts it in new list
   const hide = (move: any) => {
     var temp = animations.concat();
     let shownAnimations: any[] = [];
     var FinalHiddnList = hiddnanim.concat();
     for(var i = 0; i<temp.length; i++) {
-      if(temp[i] == move) {
-        temp[i].status = !temp[i].status
-      }
-      if(temp[i].status === false){
-        FinalHiddnList =[...FinalHiddnList, temp[i]];
-        console.log(FinalHiddnList);
-      }
-      else{
-        shownAnimations = [...shownAnimations, temp[i]];
-        console.log(shownAnimations);
-      }
+      if(temp[i] == move) {temp[i].status = !temp[i].status}
+      if(temp[i].status === false){FinalHiddnList =[...FinalHiddnList, temp[i]];}
+      else{shownAnimations = [...shownAnimations, temp[i]];}
     }
     setAnimations(shownAnimations);
     sethiddnanimations(FinalHiddnList);
-  
   }
 
   const show = (move: any) => {
@@ -48,15 +40,9 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
     let shownAnimations= animations.concat();
     var FinalHiddnList: any[] = [];
     for(var i = 0; i<temp.length; i++) {
-      if(temp[i] == move) {
-        temp[i].status = !temp[i].status
-      }
-      if(temp[i].status === false){
-        FinalHiddnList =[...FinalHiddnList, temp[i]];
-      }
-      else{
-        shownAnimations = [...shownAnimations, temp[i]];;
-      }
+      if(temp[i] == move) {temp[i].status = !temp[i].status}
+      if(temp[i].status === false){FinalHiddnList =[...FinalHiddnList, temp[i]];}
+      else{shownAnimations = [...shownAnimations, temp[i]];}
     }
     setAnimations(shownAnimations);
     sethiddnanimations(FinalHiddnList);
@@ -114,12 +100,17 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
               {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient)}>{move.name}</Button>: null}
             </ButtonGroup>
             )}
-           {hiddnanim.map((but) => <Button type="button" onClick={() => show(but)}>{but.name}</Button>)}
+          
           </Grid>
-          <Card.Body>
-          </Card.Body>
       </Card>
+      <Button variant="outline-primary" className="btn btn-outline-info" onClick={() => setVisible(!visible)}>
+        {visible ? 'Hide' : 'Show'}
+      </Button>
+      {visible && <Card className='robot-object'> {hiddnanim.map((but) =>  <ButtonGroup  aria-label="Basic example">
+              <Button variant="outline-secondary" onClick={() => show(but)} style={{ marginRight: 'auto' }}>{but.name}</Button></ButtonGroup>)}</Card>}
+      
     </Container>
+    
   );
 }
 
