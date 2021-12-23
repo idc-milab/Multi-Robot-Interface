@@ -231,6 +231,7 @@ export class App extends React.PureComponent<{}, AppState> {
 			connectdRobots[i].stopAnimation();
 			connectdRobots[i].clearAnimation();
 		}
+		this.setState({pauseState: false});
 	};
 	
 
@@ -239,6 +240,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		return (
 			<PipelineCard
 				PipelineList={this.state.PipelineItems}
+				pauseState={this.state.pauseState}
 				handlePipelineDrag={this.handlePipelineDrag}
 				handleDelete={this.handlePipelineDelete}
 				DelayAdder={this.AddDelayToPipeline}
