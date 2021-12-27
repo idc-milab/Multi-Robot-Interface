@@ -115,7 +115,10 @@ function LOADIT (event: any) {
    }
    
    const onDownload =() => {
+    if (SavedLists.length == 0) window.alert('Please Load a File!');
+    else {
     download(JSON.stringify(SavedLists), 'Pipeilnes.Json', "text/plain");
+    }
    }
 
     return(
