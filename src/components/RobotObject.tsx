@@ -97,10 +97,20 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
               {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
               animations.map((move) => 
              <ButtonGroup>
-              <Button type="button"  className='remove btn' variant="outline-danger" onClick={() => hide(move)} style={{ marginLeft: 'auto' }}>🗑</Button>
-              {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}</Button>: null}
+                             <Button type="button"  className='remove btn' variant="outline-danger" 
+                              onClick={() => hide(move)} style={{ marginLeft: 'auto' }}>🗑
+                             </Button>
+
+              {move.status ? <Button variant="outline-primary" 
+                              onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}
+                             </Button>: null}
+
+              {move.status ? <Button variant="success"
+                              onClick={() => playAnimationByName(move.name)}>➤{move.name}
+                             </Button>: null} 
             </ButtonGroup>
             )}
+            <button>asdlfkajsdflkadjsf;lkadfjs;l</button>
           </Card.Body>
       </Card>
       {visible && <Card className='robot-object'> {hiddnanim.map((but) =>  <ButtonGroup  aria-label="Basic example">
