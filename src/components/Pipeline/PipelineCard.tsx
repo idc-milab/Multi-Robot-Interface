@@ -1,5 +1,5 @@
 import { constants } from 'os';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
 import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstrap';
 import DragList from './DragList';
@@ -14,6 +14,7 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
   const [DelayAmount, setDelayAmount] = useState('');
   const [DelayMinutesState, setDelayMinutesState] = useState(false);
   const [SavedLists, setSavedLists] = useState<any[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const ToggleLoad = () => setLoadState(!LoadState);
   const ToggleSave = () => setSaveState(!SaveState);
@@ -51,18 +52,14 @@ function LOADIT (event: any) {
   const RenderButtons = () => {
     if (LoadState) {
       return(
-        <>
-        <div style={{ marginLeft: 'auto' }}>
-        <label className="custom-file-upload">
-        <input type="file" className="hidden" id="fileupload" multiple={false} accept=".json" onChange={(event: any) => openFile(event)}/>Upload from device</label>
-        </div>
         <div style={{ marginLeft: 'auto' }}>
         <ButtonGroup>
-          <Button variant="outline-secondary" onClick={() => onDownload()}>💾</Button>
+          <Button variant="outline-secondary" onClick={() => inputRef.current?.click()}>📤</Button>
+          <input type="file" className="d-none" id="fileupload" ref={inputRef} multiple={false} accept=".json" onChange={(event: any) => openFile(event)} />
+          <Button variant="outline-secondary" onClick={() => onDownload()}>📥</Button>
           <Button variant="outline-secondary" onClick={() => ToggleLoad()}>↩</Button>
         </ButtonGroup>
         </div>
-        </>
       );
     }
     else if (SaveState) {
@@ -92,7 +89,7 @@ function LOADIT (event: any) {
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
           <Button variant="outline-secondary" onClick={() => ToggleLoad()}>📁</Button>
-          <Button variant="outline-secondary" onClick={() => ToggleDelay()}>➕⌚</Button>
+          <Button variant="outline-secondary" onClick={() => ToggleDelay()}>⌚</Button>
           <Button variant="outline-danger" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
