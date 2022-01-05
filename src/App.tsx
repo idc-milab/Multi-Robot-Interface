@@ -75,6 +75,18 @@ export class App extends React.PureComponent<{}, AppState> {
 		})
 	}
 
+	refreshRobotObject = async (ip: string) => {
+		const currentButterClient = new HttpClient(ip);
+		currentButterClient.timeout = 240;
+		this.setState({
+			currentButterClients: this.state.currentButterClients.filter(butterClient => butterClient.ip !== ip)
+		});
+		await timeout(200);
+		this.setState({
+			currentButterClients: [...this.state.currentButterClients, currentButterClient],
+		});
+	}
+
 	onRemoveRobotIP = (ip: string) => {
 		var array = [...this.state.labCurrentIPs];
 		let StateArray = [...this.state.IPdeleteState];
@@ -160,7 +172,7 @@ export class App extends React.PureComponent<{}, AppState> {
 	/**this is const that enables the connect robot button on the webpage */
 		return (
 			<ul className='robot-objects'>
-				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} addToPipeline={this.addAnimationToPipeline} />)}
+				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} refresh={this.refreshRobotObject} addToPipeline={this.addAnimationToPipeline} />)}
 			</ul>
 		);
 	}

@@ -5,7 +5,7 @@ import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } 
 
 
 
-export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, addToPipeline: any }) {
+export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, refresh: (ip: string) => void, addToPipeline: any }) {
 
   const [animations, setAnimations] = useState<{name: string, status: boolean}[]>([]);
   const [hiddnanim, sethiddnanimations] = useState<{name: string, status: boolean}[]>([]);
@@ -87,9 +87,10 @@ export function RobotObject({ butterClient, onRemove, addToPipeline }: { butterC
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>{butterClient.ip}</p>
             <ButtonGroup style={{ marginLeft: 'auto' }}>
-              {animations.length !== 0 ? <Button variant="outline-primary" className="btn btn-outline-info" onClick={() => setVisible(!visible)}>{visible ? 'Hide' : 'Show'} hidden</Button> 
+              {animations.length !== 0 ? <Button type="button" variant="light" onClick={() => setVisible(!visible)}>{visible ? <s>👁</s> : '👁'}</Button> 
               : null}
-              <Button type="button"  className='remove btn' variant="outline-danger" aria-hidden="true" onClick={() => onRemove(butterClient.ip)}>🗑</Button>
+              <Button type="button" variant="light" aria-hidden="true" onClick={() => refresh(butterClient.ip)}>↺</Button>
+              <Button type="button" variant="light" aria-hidden="true" onClick={() => onRemove(butterClient.ip)}>X</Button>
             </ButtonGroup>
           </div>
         </Card.Header>
