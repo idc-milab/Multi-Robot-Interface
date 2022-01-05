@@ -11,15 +11,10 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
   const [hiddnanim, sethiddnanimations] = useState<{name: string, status: boolean}[]>([]);
   const [visible, setVisible] = React.useState(false);
 
-
   useEffect(() => {
     loadAnimations();
   }, []);
   
- 
-
-
- 
   //this functions hides the button and puts it in new list
   const hide = (move: any) => {
     var temp = animations.concat();
@@ -48,8 +43,7 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
   
   }
     
-  
-  const loadAnimations = async () => {
+    const loadAnimations = async () => {
     setTimeout(() => {
     }, 5000)
     const res:Response = await butterClient.getAvailableAnimations();
@@ -67,13 +61,10 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
     animations.map ((n) => {
     var newAnimobject = {name: n, status: true};
     tempo = [...tempo, newAnimobject];
-    
     });
   
     setAnimations(tempo);
   }
-  
-  
   
   const playAnimationByName = (animation: string) => {
     butterClient.playAnimation(animation.trim());
