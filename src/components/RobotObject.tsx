@@ -88,10 +88,26 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
           <Card.Body key={butterClient.ip} className='robot-object'>
               {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
               animations.map((move) => 
-             <ButtonGroup>
-              <Button type="button"  className='remove btn' variant="outline-danger" onClick={() => hide(move)} style={{ marginLeft: 'auto' }}>🗑</Button>
-              {move.status ? <Button variant="outline-primary" onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}</Button>: null}
-            </ButtonGroup>
+                  <ButtonGroup>
+                                
+                                  <div className='meme'>
+                                    <button id='hide-button'
+                                      onClick={() => hide(move)} >🙈</button>
+                                  
+                      {move.status ? <button id='play-button'
+                                      onClick={() => playAnimationByName(move.name)}>➤
+                                    </button>: null} 
+                                  
+                                </div>
+                                <div className='meme2'>
+                    {move.status ? <button  id='add-pipeline'
+                                    onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}
+                                  </button>: null}
+                                  </div>
+                                
+
+                  
+                  </ButtonGroup>
             )}
           </Card.Body>
       </Card>

@@ -209,12 +209,55 @@ input[type="file"] {
     display: none;
 }
 .custom-file-upload {
-    border: 1px solid #ccc;
+    margin-top: 10px;
+	padding-top: 50px;
+	background-color: rgb(214, 205, 205);
+	border: 1px solid rgb(5, 5, 5);
     display: inline-block;
     padding: 6px 12px;
+	border-radius: 7%;
     cursor: pointer;
 }
-.hidden {
-	background-color: #72db64;
+
+
+.meme {
+	width: 50px;
+	float: left;
+	
+}
+
+.meme2 {
+	width: 200px;
+	float: left;
+	
+}
+
+#hide-button {
+	width: 100%;
+	background-color: #b1b7b9;
+	border-radius: 10%;
+	
+}
+#play-button {
+	width: 100%;
+	background-color: green;
+	color: black;
+	border-radius: 10%;
+
+}
+
+#add-pipeline {
+	width: 100%;
+	font-weight: 500;
 	font-size: large;
+	padding-left: 20px;
+	height: 60px;
+	background-color: rgb(192, 192, 228);
+	border-radius: 5%;
+	}
+
+
+
+.robot-card [style] {
+	padding-left: 20px;
 }

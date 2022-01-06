@@ -88,8 +88,8 @@ function LOADIT (event: any) {
         <>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
-          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>📁</Button>
-          <Button variant="outline-secondary" onClick={() => ToggleDelay()}>⌚</Button>
+          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>🖥️</Button>
+          <Button variant="outline-secondary" onClick={() => ToggleDelay()}>➕⌚</Button>
           <Button variant="outline-danger" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
@@ -112,7 +112,10 @@ function LOADIT (event: any) {
    }
    
    const onDownload =() => {
+    if (SavedLists.length == 0) window.alert('Please Load a File!');
+    else {
     download(JSON.stringify(SavedLists), 'Pipeilnes.Json', "text/plain");
+    }
    }
 
     return(
