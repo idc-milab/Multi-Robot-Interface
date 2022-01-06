@@ -1,7 +1,6 @@
-import { constants } from 'os';
 import React, { useEffect, useRef, useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
-import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstrap';
+import { Button, Card, ButtonGroup, Container, FormControl, Modal } from 'react-bootstrap';
 import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
 
@@ -15,6 +14,7 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
   const [DelayMinutesState, setDelayMinutesState] = useState(false);
   const [SavedLists, setSavedLists] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
 
   const ToggleLoad = () => setLoadState(!LoadState);
   const ToggleSave = () => setSaveState(!SaveState);
@@ -54,9 +54,9 @@ function LOADIT (event: any) {
       return(
         <div style={{ marginLeft: 'auto' }}>
         <ButtonGroup>
-          <Button variant="outline-secondary" onClick={() => inputRef.current?.click()}>📤</Button>
+          <Button variant="outline-secondary" onClick={() => inputRef.current?.click()}><img  src='upload.png'  style={{width: '30px', height: '30px'}}></img></Button>
           <input type="file" className="d-none" id="fileupload" ref={inputRef} multiple={false} accept=".json" onChange={(event: any) => openFile(event)} />
-          <Button variant="outline-secondary" onClick={() => onDownload()}>📥</Button>
+          <Button variant="outline-secondary" onClick={() => onDownload()}><img  src='download.png'  style={{width: '32px', height: '32px'}}></img></Button>
           <Button variant="outline-secondary" onClick={() => ToggleLoad()}>↩</Button>
         </ButtonGroup>
         </div>
@@ -79,7 +79,7 @@ function LOADIT (event: any) {
 						{DelayMinutesState ? 'minutes' : 'seconds'}
 					</Button>
           <Button variant="outline-success" onClick={() => DelayAdder(DelayAmount, DelayMinutesState)}>✔</Button>
-          <Button variant="outline-primary" onClick={() => ToggleDelay()}>↩</Button>
+          <Button variant="outline-primary" onClick={() => ToggleDelay()}>↩ </Button>
         </ButtonGroup>
       );
     }
@@ -89,14 +89,15 @@ function LOADIT (event: any) {
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
           <Button variant="outline-secondary" onClick={() => ToggleLoad()}>🖥️</Button>
-          <Button variant="outline-secondary" onClick={() => ToggleDelay()}>➕⌚</Button>
+          <Button variant="outline-secondary" onClick={() => ToggleDelay()}>⌚</Button>
           <Button variant="outline-danger" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
         
+        {pauseState ? <Button variant="success" onClick={() => run()} disabled>➤</Button> : <Button variant="success" onClick={() => run()}>➤</Button>}
           <Button  onClick={() => pauseResume()}>⏯️</Button>
           <Button variant="danger" onClick={() => stop()}>🛑</Button>
-          {pauseState ? <Button variant="success" onClick={() => run()} disabled>➤</Button> : <Button variant="success" onClick={() => run()}>➤</Button>}
+          
         </ButtonGroup>
         </>
       );
@@ -124,6 +125,7 @@ function LOADIT (event: any) {
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
             {LoadState ? 'Saved Pipelines' : 'The Pipeline'}
+            <Button type="button" variant="light" aria-hidden="true">❔</Button>
             {RenderButtons()}
           </div>
         </Card.Header>
@@ -133,6 +135,7 @@ function LOADIT (event: any) {
         </DragDropContext>
         </Card.Body>
       </Card>
+   
       </Container>
     );
 }

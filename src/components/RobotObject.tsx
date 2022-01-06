@@ -78,7 +78,7 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>{butterClient.ip}</p>
             <ButtonGroup style={{ marginLeft: 'auto' }}>
-              {animations.length !== 0 ? <Button type="button" variant="light" onClick={() => setVisible(!visible)}>{visible ? <s>👁</s> : '👁'}</Button> 
+              {((animations.length !== 0) || (hiddnanim.length !==0)) ? <Button type="button" variant="light" onClick={() => setVisible(!visible)}>{visible ? <s>👁</s> : '👁'}</Button> 
               : null}
               <Button type="button" variant="light" aria-hidden="true" onClick={() => refresh(butterClient.ip)}>↺</Button>
               <Button type="button" variant="light" aria-hidden="true" onClick={() => onRemove(butterClient.ip)}>X</Button>
@@ -91,18 +91,12 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
                   <ButtonGroup>
                                 
                                   <div className='meme'>
-                                    <button id='hide-button'
-                                      onClick={() => hide(move)} >🙈</button>
-                                  
+                                    <button id='hide-button'onClick={() => hide(move)} >🙈</button>
                       {move.status ? <button id='play-button'
-                                      onClick={() => playAnimationByName(move.name)}>➤
-                                    </button>: null} 
-                                  
+                                      onClick={() => playAnimationByName(move.name)}>➤</button>: null} 
                                 </div>
                                 <div className='meme2'>
-                    {move.status ? <button  id='add-pipeline'
-                                    onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}
-                                  </button>: null}
+                    {move.status ? <button  id='add-pipeline'onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}</button>: null}
                                   </div>
                                 
 
@@ -111,8 +105,10 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
             )}
           </Card.Body>
       </Card>
-      {visible && <Card className='robot-object'> {hiddnanim.map((but) =>  <ButtonGroup  aria-label="Basic example">
-              <Button variant="outline-secondary" onClick={() => show(but)} style={{ marginRight: 'auto' }}>{but.name}</Button></ButtonGroup>)}</Card>}
+      {visible && <Card><Card.Body className='hidden-body'> {hiddnanim.map((but) =>  <ButtonGroup  aria-label="Basic example">
+              <div >
+              <Button  variant="outline-secondary" onClick={() => show(but)} style={{ marginRight: 'auto' }}>{but.name}</Button>
+              </div></ButtonGroup>)}</Card.Body></Card>}
     </Container>
     
   );

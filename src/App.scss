@@ -41,17 +41,13 @@
 .robot-object {
 	display: grid;
 	gap: 10px;
-	grid-template-columns: repeat(auto-fit, minmax(225px, 1.5fr));
-	// padding: 12px;	
+	grid-template-columns: repeat(auto-fit, minmax(225px, 1.5fr));	
 	background-color: white;
 	border-radius: 8px;
 	color: #757575;
-	// border: 1px solid #616161;
 	background-color: #ffffff;
 	opacity: 0.7;
 	float: inline-start;
-	//min-width: 700px;
-	// margin: 15px 0;
 	width: 100%;
 }
 
@@ -260,4 +256,23 @@ input[type="file"] {
 
 .robot-card [style] {
 	padding-left: 20px;
+}
+
+
+.hidden-button {
+	float: left;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(225px, 1.5fr));	
+	border-radius: 8px;
+	color: #757575;
+	background-color: #ffffff;
+	opacity: 0.7;
+	float: inline-start;
+	width: 100%;
+	
+}
+
+#icon-image {
+	width: 32px;
+	height: 32px;
 }
