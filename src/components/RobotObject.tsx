@@ -78,10 +78,10 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>{butterClient.ip}</p>
             <ButtonGroup style={{ marginLeft: 'auto' }}>
-              {((animations.length !== 0) || (hiddnanim.length !==0)) ? <Button type="button" variant="light" onClick={() => setVisible(!visible)}>{visible ? <s>👁</s> : '👁'}</Button> 
+              {((animations.length !== 0) || (hiddnanim.length !==0)) ? <Button type="button" variant="light" title ='SHOW HIDDEN' onClick={() => setVisible(!visible)}>{visible ? <s>👁</s> : '👁'}</Button> 
               : null}
-              <Button type="button" variant="light" aria-hidden="true" onClick={() => refresh(butterClient.ip)}>↺</Button>
-              <Button type="button" variant="light" aria-hidden="true" onClick={() => onRemove(butterClient.ip)}>X</Button>
+              <Button type="button" variant="light" aria-hidden="true" title ='REFRESH' onClick={() => refresh(butterClient.ip)}>↺</Button>
+              <Button type="button" variant="light" aria-hidden="true" title ='CLOSE' onClick={() => onRemove(butterClient.ip)}>X</Button>
             </ButtonGroup>
           </div>
         </Card.Header>
@@ -91,12 +91,12 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
                   <ButtonGroup>
                                 
                                   <div className='meme'>
-                                    <button id='hide-button'onClick={() => hide(move)} >🙈</button>
+                                    <button id='hide-button' title ='HIDE' onClick={() => hide(move)} >🙈</button>
                       {move.status ? <button id='play-button'
                                       onClick={() => playAnimationByName(move.name)}>➤</button>: null} 
                                 </div>
                                 <div className='meme2'>
-                    {move.status ? <button  id='add-pipeline'onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}</button>: null}
+                    {move.status ? <button  id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}</button>: null}
                                   </div>
                                 
 
