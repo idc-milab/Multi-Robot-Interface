@@ -38,7 +38,7 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
     }
     setAnimations(shownAnimations);
     sethiddnanimations(FinalHiddnList);
-  
+    if (FinalHiddnList.length ===0) setVisible(!visible);
   }
     
     const loadAnimations = async () => {
@@ -76,7 +76,7 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>{butterClient.ip}</p>
             <ButtonGroup style={{ marginLeft: 'auto' }}>
-              {((animations.length !== 0) || (hiddnanim.length !==0)) ? <Button type="button" variant="light" title ='SHOW HIDDEN' onClick={() => setVisible(!visible)}>{visible ? <s>👁</s> : '👁'}</Button> 
+              {hiddnanim.length > 0  ? <Button type="button" variant="light" onClick={() => setVisible(!visible)}>{visible ? <s>👁</s> : '👁'}</Button> 
               : null}
               <Button type="button" variant="light" aria-hidden="true" title ='REFRESH' onClick={() => refresh(butterClient.ip)}>↺</Button>
               <Button type="button" variant="light" aria-hidden="true" title ='CLOSE' onClick={() => onRemove(butterClient.ip)}>X</Button>

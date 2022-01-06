@@ -133,8 +133,6 @@ function LOADIT (event: any) {
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
             {LoadState ? 'Saved Pipelines' : 'The Pipeline'}
-
-    
             {RenderButtons()}
           </div>
         </Card.Header>
@@ -144,10 +142,6 @@ function LOADIT (event: any) {
         </DragDropContext>
         </Card.Body>
       </Card>
-
-
-
-   
       </Container>
     );
 }
