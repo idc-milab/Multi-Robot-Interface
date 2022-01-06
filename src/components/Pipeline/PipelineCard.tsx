@@ -52,9 +52,9 @@ function LOADIT (event: any) {
     if (LoadState) {
       return(
         <>
-        <div style={{ marginLeft: 'auto' }}>
+        <div style={{ marginLeft: 'auto' }} >
         <label className="custom-file-upload">
-        <input type="file" className="hidden" id="fileupload" multiple={false} accept=".json" onChange={(event: any) => openFile(event)}/>Upload from device</label>
+        <input type="file" className="hidden" id="fileupload" multiple={false} accept=".json" onChange={(event: any) => openFile(event)}/>Upload from 📁</label>
         </div>
         <div style={{ marginLeft: 'auto' }}>
         <ButtonGroup>
@@ -91,7 +91,7 @@ function LOADIT (event: any) {
         <>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
-          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>📁</Button>
+          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>🖥️</Button>
           <Button variant="outline-secondary" onClick={() => ToggleDelay()}>➕⌚</Button>
           <Button variant="outline-danger" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
