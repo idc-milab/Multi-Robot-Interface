@@ -3,6 +3,8 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { Button, Card, ButtonGroup, Container, FormControl, Modal } from 'react-bootstrap';
 import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, reset, pauseResume, stop}:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any, pauseResume: any, stop: any}) {
 
@@ -20,6 +22,10 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
   const ToggleSave = () => setSaveState(!SaveState);
   const ToggleDelay = () => setDelayState(!DelayState);
 
+  
+
+  
+  
   const AddToSavedList = () => {
     if (SaveName === '') alert('Please enter a name for the sequence!');
     else {
@@ -49,15 +55,17 @@ function LOADIT (event: any) {
   setSavedLists(arr);
 }
 
+
+
   const RenderButtons = () => {
     if (LoadState) {
       return(
         <div style={{ marginLeft: 'auto' }}>
         <ButtonGroup>
-          <Button variant="outline-secondary" onClick={() => inputRef.current?.click()}><img  src='upload.png'  style={{width: '30px', height: '30px'}}></img></Button>
+          <Button variant="outline-secondary" title="UPLOAD"onClick={() => inputRef.current?.click()}><img  src='upload.png'  style={{width: '30px', height: '30px'}}></img></Button>
           <input type="file" className="d-none" id="fileupload" ref={inputRef} multiple={false} accept=".json" onChange={(event: any) => openFile(event)} />
-          <Button variant="outline-secondary" onClick={() => onDownload()}><img  src='download.png'  style={{width: '32px', height: '32px'}}></img></Button>
-          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>↩</Button>
+          <Button variant="outline-secondary" title="DOWNLOAD" onClick={() => onDownload()}><img  src='download.png'  style={{width: '32px', height: '32px'}}></img></Button>
+          <Button variant="outline-secondary" title="RETURN" onClick={() => ToggleLoad()}>↩</Button>
         </ButtonGroup>
         </div>
       );
@@ -87,16 +95,16 @@ function LOADIT (event: any) {
       return(
         <>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-          <Button variant="outline-secondary" onClick={() => ToggleSave()}>💾</Button>
-          <Button variant="outline-secondary" onClick={() => ToggleLoad()}>🖥️</Button>
-          <Button variant="outline-secondary" onClick={() => ToggleDelay()}>⌚</Button>
-          <Button variant="outline-danger" onClick={() => reset([])}>🗑</Button>
+          <Button variant="outline-secondary" title="Save Pipeline" onClick={() => ToggleSave()}>💾</Button>
+          <Button variant="outline-secondary" title="Load/Download From Memory" onClick={() => ToggleLoad()}>🖥️</Button>
+          <Button variant="outline-secondary" title="Add Delay" onClick={() => ToggleDelay()}>⌚</Button>
+          <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
         
-        {pauseState ? <Button variant="success" onClick={() => run()} disabled>➤</Button> : <Button variant="success" onClick={() => run()}>➤</Button>}
-          <Button  onClick={() => pauseResume()}>⏯️</Button>
-          <Button variant="danger" onClick={() => stop()}>🛑</Button>
+        {pauseState ? <Button variant="outline-secondary" onClick={() => run()} disabled>▶</Button> : <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>}
+          <Button  variant="outline-secondary" title="Pause/Resume" onClick={() => pauseResume()}>⏯</Button>
+          <Button variant="outline-secondary" title="STOP" onClick={() => stop()}>⏹</Button>
           
         </ButtonGroup>
         </>
@@ -125,7 +133,8 @@ function LOADIT (event: any) {
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
             {LoadState ? 'Saved Pipelines' : 'The Pipeline'}
-            <Button type="button" variant="light" aria-hidden="true">❔</Button>
+
+    
             {RenderButtons()}
           </div>
         </Card.Header>
@@ -135,6 +144,9 @@ function LOADIT (event: any) {
         </DragDropContext>
         </Card.Body>
       </Card>
+
+
+
    
       </Container>
     );
