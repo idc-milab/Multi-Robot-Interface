@@ -6,7 +6,6 @@ import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, Card, ListG
 import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import { ScenarioButtons } from './components/ScenariosButtons';
 import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
 
@@ -73,6 +72,18 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({
 			currentButterClients: this.state.currentButterClients.filter(butterClient => butterClient.ip !== ip)
 		})
+	}
+
+	refreshRobotObject = async (ip: string) => {
+		const currentButterClient = new HttpClient(ip);
+		currentButterClient.timeout = 240;
+		this.setState({
+			currentButterClients: this.state.currentButterClients.filter(butterClient => butterClient.ip !== ip)
+		});
+		await timeout(200);
+		this.setState({
+			currentButterClients: [...this.state.currentButterClients, currentButterClient],
+		});
 	}
 
 	onRemoveRobotIP = (ip: string) => {
@@ -160,7 +171,7 @@ export class App extends React.PureComponent<{}, AppState> {
 	/**this is const that enables the connect robot button on the webpage */
 		return (
 			<ul className='robot-objects'>
-				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} addToPipeline={this.addAnimationToPipeline} />)}
+				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} refresh={this.refreshRobotObject} addToPipeline={this.addAnimationToPipeline} />)}
 			</ul>
 		);
 	}
@@ -262,12 +273,7 @@ export class App extends React.PureComponent<{}, AppState> {
 			<div>
 					<Navbar bg="dark" variant="dark">
 						<Navbar.Brand href="/home">Multi Robot Operator</Navbar.Brand>
-						<Nav.Link href="/home" style={{ color: '#FFF' }}>Home</Nav.Link>
-						<NavDropdown title="HHRRI" id="basic-nav-dropdown" style={{ color: '#FFF' }}>
-							<NavDropdown.Item><Link to="/HHRRI/In-Group">In-Group</Link></NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item><Link to="/HHRRI/Out-Group">Out-Group</Link></NavDropdown.Item> 
-						</NavDropdown>
+						
 					</Navbar>
 
 					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
@@ -340,14 +346,6 @@ export class App extends React.PureComponent<{}, AppState> {
 						</Navbar.Collapse>
 					</Navbar>
 
-					<Switch>
-						<Route path="/HHRRI/In-Group">
-							<ScenarioButtons scenario="In-Group" />
-						</Route>
-						<Route path="/HHRRI/Out-Group">
-							<ScenarioButtons scenario="Out-Group" />
-						</Route>
-					</Switch>
 
 					<Hidden smDown>
 						<div className="main-grid">
