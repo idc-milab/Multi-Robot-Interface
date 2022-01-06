@@ -125,7 +125,6 @@ function LOADIT (event: any) {
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
             {LoadState ? 'Saved Pipelines' : 'The Pipeline'}
-            <Button type="button" variant="light" aria-hidden="true">❔</Button>
             {RenderButtons()}
           </div>
         </Card.Header>
