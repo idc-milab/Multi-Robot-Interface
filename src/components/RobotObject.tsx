@@ -3,9 +3,6 @@ import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 
 
-const TempAnimations = [{name: 'test1', status: true}, {name: 'test2', status: true}, {name: 'test3', status: true}, {name: 'test4', status: true}, {name: 'test5', status: true}, {name: 'test6', status: true}];
-
-
 export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: { butterClient: HttpClient, onRemove: (ip: string) => void, refresh: (ip: string) => void, addToPipeline: any }) {
 
   const [animations, setAnimations] = useState<{name: string, status: boolean}[]>([]);
@@ -87,8 +84,8 @@ export function RobotObject({ butterClient, onRemove, refresh, addToPipeline }: 
           </div>
         </Card.Header>
           <Card.Body key={butterClient.ip} className='robot-object'>
-              {TempAnimations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
-              TempAnimations.map((move) => 
+              {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
+              animations.map((move) => 
                   <ButtonGroup>
                                 
                                   <div className='btnGroup1'>
