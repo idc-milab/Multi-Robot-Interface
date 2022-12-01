@@ -5,7 +5,7 @@ import { RobotObject } from './components/RobotObject';
 import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, Card, ListGroup, ButtonGroup, InputGroup } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
 
@@ -279,11 +279,11 @@ export class App extends React.PureComponent<{}, AppState> {
 					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					
-						<Form inline>
+						<Form>
 						<Button variant="outline-info" onClick={this.onToggleIPadd}>Connect to a Robot</Button>
 
 						<Modal show={this.state.showNewIP} onHide={this.onToggleIPadd}>
-							<Modal.Header translate="true">
+							<Modal.Header translate="yes">
 								<Modal.Title>Robots List:</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
@@ -320,7 +320,7 @@ export class App extends React.PureComponent<{}, AppState> {
 							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
 							
 							<Modal show={this.state.showInst} onHide={this.onToggleInstructions}>
-								<Modal.Header translate="true">
+								<Modal.Header translate="yes">
 									<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
@@ -346,42 +346,10 @@ export class App extends React.PureComponent<{}, AppState> {
 						</Navbar.Collapse>
 					</Navbar>
 
-
-					<Hidden smDown>
-						<div className="main-grid">
-							{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
-							{this.renderPipeline()}
-						</div>
-      				</Hidden>
-
-					<Hidden mdUp>
-						<Accordion>
-							<Card>
-								<Card.Header>
-									<Nav fill variant="tabs" defaultActiveKey="1">
-										<Nav.Item>
-											<Nav.Link eventKey="0">Connected Robots</Nav.Link>
-										</Nav.Item>
-										<Nav.Item>
-											<Nav.Link eventKey="1">Pipeline</Nav.Link>
-										</Nav.Item>
-									</Nav>
-								</Card.Header>
-								<Accordion.Collapse eventKey="0">
-									<Card.Body>
-										{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
-									</Card.Body>
-								</Accordion.Collapse>
-							</Card>
-							<Card>
-								<Accordion.Collapse eventKey="1">
-									<Card.Body>
-										{this.renderPipeline()}
-									</Card.Body>
-								</Accordion.Collapse>
-							</Card>
-						</Accordion>
-					</Hidden>
+					<div className="main-grid">
+						{this.renderRobotObjects()}
+						{this.renderPipeline()}
+					</div>
 
 			</div>
 			</Router>
