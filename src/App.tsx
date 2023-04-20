@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
+import * as http from 'http'
 
 
 /*this is where we declare an object called AppState and in it all the constants \
@@ -212,19 +213,20 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	runPipeline = async () => {
-		var QueuedMoves = this.state.PipelineItems.concat();
-		for (var i =0; i<QueuedMoves.length; i++) {
-			console.log("running animation: " + QueuedMoves[i].name);
-			if (QueuedMoves[i].type === 'animation') {
-				var Client = new HttpClient(QueuedMoves[i].ip);
-				Client.timeout = 240;
-				await Client.playAnimation(QueuedMoves[i].name.trim(), true);
-			}
-			else if (QueuedMoves[i].type === 'delay') {
-				await timeout(1000 * QueuedMoves[i].amount);
-			}
-			else alert('Problem with pipeline items!');
-		}
+		fetch('http://localhost:3000/forward')
+		// var QueuedMoves = this.state.PipelineItems.concat();
+		// for (var i =0; i<QueuedMoves.length; i++) {
+		// 	console.log("running animation: " + QueuedMoves[i].name);
+		// 	if (QueuedMoves[i].type === 'animation') {
+		// 		var Client = new HttpClient(QueuedMoves[i].ip);
+		// 		Client.timeout = 240;
+		// 		await Client.playAnimation(QueuedMoves[i].name.trim(), true);
+		// 	}
+		// 	else if (QueuedMoves[i].type === 'delay') {
+		// 		await timeout(1000 * QueuedMoves[i].amount);
+		// 	}
+		// 	else alert('Problem with pipeline items!');
+		// }
 	};
 
 	PauseResumePipeline =  () => {
