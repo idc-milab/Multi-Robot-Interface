@@ -171,7 +171,8 @@ export class App extends React.PureComponent<{}, AppState> {
 	/**this is const that enables the connect robot button on the webpage */
 		return (
 			<ul className='robot-objects'>
-				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} refresh={this.refreshRobotObject} addToPipeline={this.addAnimationToPipeline} />)}
+				{/* {this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} refresh={this.refreshRobotObject} addToPipeline={this.addAnimationToPipeline} />)} */}
+				<RobotObject key='123' onRemove={this.onRemoveRobotObject} refresh={this.refreshRobotObject} addToPipeline={this.addAnimationToPipeline} />
 			</ul>
 		);
 	}
