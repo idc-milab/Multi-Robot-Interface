@@ -213,7 +213,11 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	runPipeline = async () => {
-		fetch('http://localhost:3000/forward')
+		fetch('http://localhost:3000/ForwardFast')
+		await timeout(1000);
+		fetch('http://localhost:3000/ForwardSlow')
+		await timeout(1000);
+		fetch('http://localhost:3000/Lookup')
 		// var QueuedMoves = this.state.PipelineItems.concat();
 		// for (var i =0; i<QueuedMoves.length; i++) {
 		// 	console.log("running animation: " + QueuedMoves[i].name);
