@@ -219,21 +219,15 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	runPipeline = async () => {
-		fetch('http://localhost:3000/forward?speed=0.25&duration=2000')
+		
+
 	
-		// var QueuedMoves = this.state.PipelineItems.concat();
-		// for (var i =0; i<QueuedMoves.length; i++) {
-		// 	console.log("running animation: " + QueuedMoves[i].name);
-		// 	if (QueuedMoves[i].type === 'animation') {
-		// 		var Client = new HttpClient(QueuedMoves[i].ip);
-		// 		Client.timeout = 240;
-		// 		await Client.playAnimation(QueuedMoves[i].name.trim(), true);
-		// 	}
-		// 	else if (QueuedMoves[i].type === 'delay') {
-		// 		await timeout(1000 * QueuedMoves[i].amount);
-		// 	}
-		// 	else alert('Problem with pipeline items!');
-		// }
+		var QueuedMoves = this.state.PipelineItems.concat();
+		for (var i =0; i<QueuedMoves.length; i++) {
+			console.log("running animation: " + QueuedMoves[i].name);
+			fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=0.25&duration=2000')
+			await timeout(2000);
+		}
 	};
 
 	PauseResumePipeline =  () => {

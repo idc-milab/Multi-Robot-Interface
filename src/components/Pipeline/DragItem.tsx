@@ -5,8 +5,6 @@ import { Button, FormControl } from 'react-bootstrap';
 interface DragItemProps {
   item: {
     id: string;
-    type: 'animation' | 'delay';
-    ip?: string;
     name: string;
     speed: number;
     time: number;
@@ -49,12 +47,10 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateSp
           {...provided.draggableProps}
           style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
         >
-          {item.type === 'animation' || item.type === 'delay' ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
               [{index + 1}]
               <div>
-                <span style={{ color: '#757575', opacity: '0.7' }}>{item.ip ? item.ip + ':' : ''}</span>
-                <span style={{ color: item.type === 'animation' ? '#28a745' : '#e69226' }}>{item.name}</span>
+               <span style={{ color:'#e69226' }}>{item.name}</span>
               </div>
               <FormControl
                 type="number"
@@ -76,9 +72,6 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateSp
                 🗑
               </Button>
             </div>
-          ) : (
-            <div>Problem with item type insertion to the list!</div>
-          )}
         </div>
       )}
     </Draggable>
