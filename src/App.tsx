@@ -275,7 +275,7 @@ export class App extends React.PureComponent<{}, AppState> {
 			else if (QueuedMoves[i].name = 'led	')
 				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?r=' + QueuedMoves[i].r + '&g=' + QueuedMoves[i].g + '&b=' + QueuedMoves[i].b)
 
-			await timeout(2000);
+			if (QueuedMoves[i].duration > 0) await timeout(QueuedMoves[i].duration);
 		}
 	};
 
