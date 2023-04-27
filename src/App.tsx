@@ -193,14 +193,24 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: updatedList });
 	}
 
-	addAnimationToPipeline = (action: string, type: string, speed: number, time: number) => {
+	addAnimationToPipeline = (action: string) => {
 		var newId = new Date().getTime().toString();
 		var newAnimationItem = {
 		  name: action,
 		  id: newId,
-		  type: type,
-		  speed: speed,
-		  time: time,
+		  type: "action",
+		  speed: 0,
+		  duration: 0,
+		  LRspeed: 0,
+		  tLRspeed: 0,
+		  BFspeed: 0,
+		  leanLRamount: 0,
+		  twistLRamount: 0,
+		  lookUDamount: 0,
+		  ESamount: 0,
+		  r: 0,
+		  g: 0,
+		  b: 0
 		};
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	  };
@@ -218,10 +228,13 @@ export class App extends React.PureComponent<{}, AppState> {
 		else alert('Please enter a valit number!');
 	}
 
-	runPipeline = async () => {
-		
+	setSpeed = (index: number, field: string, Speed: number) => {
+		var updatedList = this.state.PipelineItems.concat();
+		updatedList[index][field] = Speed;
+		this.setState({ PipelineItems: updatedList });
+	}
 
-	
+	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
@@ -299,6 +312,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				reset={this.resetPipeline}
 				pauseResume={this.PauseResumePipeline}
 				stop={this.StopPipeline}
+				updateSpeed={this.setSpeed}
 			/>
 		);
 	}
