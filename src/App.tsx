@@ -333,11 +333,6 @@ export class App extends React.PureComponent<{}, AppState> {
 					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					
-						<Form>
-						<Button variant="outline-info" onClick={this.onToggleIPadd}>Connect to a Robot</Button>
-
-				
-						</Form>
 
 					</Navbar>
 

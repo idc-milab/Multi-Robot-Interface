@@ -48,7 +48,7 @@ export function RobotObject({ onRemove, refresh, addToPipeline }: { onRemove: (i
       <Card >
         <Card.Header>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <p style={{ marginBottom: 0 }}>'test'</p>
+            <p style={{ marginBottom: 0 }}>DigiDog</p>
           </div>
         </Card.Header>
           <Card.Body className='robot-object'>
