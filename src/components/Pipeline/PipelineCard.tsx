@@ -6,7 +6,7 @@ import SequenceDeposit from './SequenceDeposit';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, reset, pauseResume, stop, updateSpeed}:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any, pauseResume: any, stop: any, updateSpeed: any}) {
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
@@ -98,13 +98,13 @@ function LOADIT (event: any) {
           <Button variant="outline-secondary" title="Save Pipeline" onClick={() => ToggleSave()}>💾</Button>
           <Button variant="outline-secondary" title="Load/Download From Memory" onClick={() => ToggleLoad()}>🖥️</Button>
           <Button variant="outline-secondary" title="Add Delay" onClick={() => ToggleDelay()}>⌚</Button>
-          <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button>
+          {/* <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button> */}
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
         
         {pauseState ? <Button variant="outline-secondary" onClick={() => run()} disabled>▶</Button> : <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>}
-          <Button  variant="outline-secondary" title="Pause/Resume" onClick={() => pauseResume()}>⏯</Button>
-          <Button variant="outline-secondary" title="STOP" onClick={() => stop()}>⏹</Button>
+          {/* <Button  variant="outline-secondary" title="Pause/Resume" onClick={() => pauseResume()}>⏯</Button> */}
+          {/* <Button variant="outline-secondary" title="STOP" onClick={() => stop()}>⏹</Button> */}
           
         </ButtonGroup>
         </>
@@ -138,7 +138,7 @@ function LOADIT (event: any) {
         </Card.Header>
         <Card.Body>
         <DragDropContext onDragEnd={handlePipelineDrag}>
-          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete} updateSpeed={updateSpeed}/>}
+          {LoadState ? <SequenceDeposit arr={SavedLists} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
         </DragDropContext>
         </Card.Body>
       </Card>
