@@ -193,11 +193,18 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: updatedList });
 	}
 
-	addAnimationToPipeline = (Item: any, Type: string, IP: string) => {
+	addAnimationToPipeline = (action: string, type: string, speed: number, time: number) => {
 		var newId = new Date().getTime().toString();
-		var newAnimationItem = {name: Item, id: newId, type: Type, ip: IP};
+		var newAnimationItem = {
+		  name: action,
+		  id: newId,
+		  type: type,
+		  speed: speed,
+		  time: time,
+		};
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
-	}
+	  };
+	  
 
 	AddDelayToPipeline = (delayAmount: string, DelayMinutesState: boolean) => {
 		var Amount = parseInt(delayAmount);

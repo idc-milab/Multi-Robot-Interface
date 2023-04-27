@@ -1,83 +1,81 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react'
 import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 
+
 export function RobotObject({ onRemove, refresh, addToPipeline }: { onRemove: (ip: string) => void, refresh: (ip: string) => void, addToPipeline: any }) {
-  const [animations, setAnimations] = useState<{ name: string, status: boolean }[]>([]);
-  const [visible, setVisible] = useState(false);
-  const [time, setTime] = useState('');
-  const [speed, setSpeed] = useState('');
+
+  const [animations, setAnimations] = useState<{name: string, status: boolean}[]>([]);
+  const [hiddnanim, sethiddnanimations] = useState<{name: string, status: boolean}[]>([]);
+  const [visible, setVisible] = React.useState(false);
 
   useEffect(() => {
     // loadAnimations();
   }, []);
+  
+  //this functions hides the button and puts it in new list
+  const hide = (move: any) => {
+    var temp = animations.concat();
+    let shownAnimations: any[] = [];
+    var FinalHiddnList = hiddnanim.concat();
+    for(var i = 0; i<temp.length; i++) {
+      if(temp[i] == move) {temp[i].status = !temp[i].status}
+      if(temp[i].status === false){FinalHiddnList =[...FinalHiddnList, temp[i]];}
+      else{shownAnimations = [...shownAnimations, temp[i]];}
+    }
+    setAnimations(shownAnimations);
+    sethiddnanimations(FinalHiddnList);
+  }
 
-  const handleButtonClick = (action: string, animationType: string) => {
-    addToPipeline(action, animationType, time, speed);
-  };
+  const show = (move: any) => {
+    var temp = hiddnanim.concat();
+    let shownAnimations= animations.concat();
+    var FinalHiddnList: any[] = [];
+    for(var i = 0; i<temp.length; i++) {
+      if(temp[i] == move) {temp[i].status = !temp[i].status}
+      if(temp[i].status === false){FinalHiddnList =[...FinalHiddnList, temp[i]];}
+      else{shownAnimations = [...shownAnimations, temp[i]];}
+    }
+    setAnimations(shownAnimations);
+    sethiddnanimations(FinalHiddnList);
+    if (FinalHiddnList.length ===0) setVisible(!visible);
+  }
+    
+
 
   return (
     <Container className='robot-card'>
-      <Card>
+      <Card >
         <Card.Header>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>'test'</p>
           </div>
         </Card.Header>
-        <Card.Body className='robot-object'>
-          <Button variant='outline-primary' id='add-pipeline' title='ADD TO PIPELINE' onClick={() => handleButtonClick('goForward', 'animation')}>
-            {'goForward'}
-          </Button>
-          <Form.Control
-            type='text'
-            placeholder='Enter time'
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-          />
-          <Form.Control
-            type='text'
-            placeholder='Enter speed'
-            value={speed}
-            onChange={(e) => setSpeed(e.target.value)}
-          />
+          <Card.Body className='robot-object'>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goForward', 'animation')}>{'goForward'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goBackward', 'animation')}>{'goBackward'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goLeft', 'animation')}>{'goLeft'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goRight', 'animation')}>{'goRight'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('turnLeft', 'animation')}>{'turnLeft'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('turnRight', 'animation')}>{'turnRight'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('extendUp', 'animation')}>{'extendUp'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('squatDown', 'animation')}>{'squatDown'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('leanLeft', 'animation')}>{'leanRight'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('twistLeft', 'animation')}>{'twistLeft'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('twistRight', 'animation')}>{'twistRight'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookDown', 'animation')}>{'lookDown'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookUp', 'animation')}>{'lookUp'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('resetBody', 'animation')}>{'resetBody'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('wait', 'animation')}>{'wait'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('setLedColor', 'animation')}>{'setLedColor'}</Button>
 
-          <Button variant='outline-primary' id='add-pipeline' title='ADD TO PIPELINE' onClick={() => handleButtonClick('goBackward', 'animation')}>
-            {'goBackward'}
-          </Button>
-          <Form.Control
-            type='text'
-            placeholder='Enter time'
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-          />
-          <Form.Control
-            type='text'
-            placeholder='Enter speed'
-            value={speed}
-            onChange={(e) => setSpeed(e.target.value)}
-          />
-
-          {/* Continue adding the remaining buttons and corresponding text boxes */}
-          <Button variant='outline-primary' id='add-pipeline' title='ADD TO PIPELINE' onClick={() => handleButtonClick('goLeft', 'animation')}>
-            {'goLeft'}
-          </Button>
-          <Form.Control
-            type='text'
-            placeholder='Enter time'
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-          />
-          <Form.Control
-            type='text'
-            placeholder='Enter speed'
-            value={speed}
-            onChange={(e) => setSpeed(e.target.value)}
-          />
-
-          {/* Repeat the pattern for the remaining buttons */}
-          {/* ... */}
-        </Card.Body>
+          </Card.Body>
       </Card>
+      {visible && <Card><Card.Body className='hidden-body'> {hiddnanim.map((but) =>  <ButtonGroup  aria-label="Basic example">
+              <div >
+              <Button  variant="outline-secondary" onClick={() => show(but)} style={{ marginRight: 'auto' }}>{but.name}</Button>
+              </div></ButtonGroup>)}</Card.Body></Card>}
     </Container>
+    
   );
 }
