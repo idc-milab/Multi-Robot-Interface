@@ -193,14 +193,24 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: updatedList });
 	}
 
-	addAnimationToPipeline = (action: string, type: string, speed: number, time: number) => {
+	addAnimationToPipeline = (action: string) => {
 		var newId = new Date().getTime().toString();
 		var newAnimationItem = {
 		  name: action,
 		  id: newId,
-		  type: type,
-		  speed: speed,
-		  time: time,
+		  type: "action",
+		  speed: 0,
+		  duration: 0,
+		  LRspeed: 0,
+		  tLRspeed: 0,
+		  BFspeed: 0,
+		  leanLRamount: 0,
+		  twistLRamount: 0,
+		  lookUDamount: 0,
+		  ESamount: 0,
+		  r: 0,
+		  g: 0,
+		  b: 0
 		};
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	  };
@@ -218,19 +228,58 @@ export class App extends React.PureComponent<{}, AppState> {
 		else alert('Please enter a valit number!');
 	}
 
-	runPipeline = async () => {
-		
+	setSpeed = (index: number, field: string, Speed: number) => {
+		var updatedList = this.state.PipelineItems.concat();
+		updatedList[index][field] = Speed;
+		this.setState({ PipelineItems: updatedList });
+	}
 
-	
+	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
-			if (QueuedMoves[i].name == 'forward') {
-				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?' + 'speed=' + QueuedMoves[i].speed)
-			  	await timeout(2000);
-			  }
-			}
+
+			if (QueuedMoves[i].name = 'forward')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'backward')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+
+			else if (QueuedMoves[i].name = 'goLeft')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'goRight')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'turnLeft')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'turnRight')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+
+			else if (QueuedMoves[i].name = 'extend')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+				else if (QueuedMoves[i].name = 'squat')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'leanLeft')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'leanRight')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'twistLeft')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'twistright')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'lookDown')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'lookUp')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			else if (QueuedMoves[i].name = 'go')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?duration=' + QueuedMoves[i].duration + '&LRspeed=' + QueuedMoves[i].LRspeed+ '&tLRspeed=' + QueuedMoves[i].tLRspeed + '&BFspeed=' + QueuedMoves[i].BFspeed)
+			else if (QueuedMoves[i].name = 'pose')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?duration=' + QueuedMoves[i].duration + '&leanLRmount=' + QueuedMoves[i].leanLRmount + '&twistLRamount=' + QueuedMoves[i].twistLRamount+ '&lookUDamount=' + QueuedMoves[i].lookUDamount)
+			else if (QueuedMoves[i].name = 'led	')
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?r=' + QueuedMoves[i].r + '&g=' + QueuedMoves[i].g + '&b=' + QueuedMoves[i].b)
+
+			if (QueuedMoves[i].duration > 0) await timeout(QueuedMoves[i].duration);
+
 		}
+	}
 
 	PauseResumePipeline =  () => {
 		var connectdRobots = this.state.currentButterClients;
@@ -265,6 +314,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				reset={this.resetPipeline}
 				pauseResume={this.PauseResumePipeline}
 				stop={this.StopPipeline}
+				updateSpeed={this.setSpeed}
 			/>
 		);
 	}
@@ -285,71 +335,7 @@ export class App extends React.PureComponent<{}, AppState> {
 					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					
-						<Form>
-						<Button variant="outline-info" onClick={this.onToggleIPadd}>Connect to a Robot</Button>
 
-						<Modal show={this.state.showNewIP} onHide={this.onToggleIPadd}>
-							<Modal.Header translate="yes">
-								<Modal.Title>Robots List:</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
-								<ListGroup className='navbar-brand'>
-									{this.state.labCurrentIPs.map(ip => (
-										<ListGroup.Item>
-											<ButtonGroup aria-label="Basic example">
-											{this.renderButtons(ip)}
-						    				</ButtonGroup>
-										</ListGroup.Item>
-									))}
-								</ListGroup>
-								<p></p>
-								<InputGroup className="mb-3">
-    								<FormControl
-      									placeholder="New Robot's IP"
-      									aria-label="New Robot's IP"
-      									aria-describedby="basic-addon2"
-									  	value={this.state.NewIPInput}
-									  	onChange={this.handleChange}
-										onKeyPress={this.handlePress}
-    								/>
-    								<Button variant="outline-secondary" id="button-addon2" onClick={this.NewIpADDED}>Add</Button>
-								</InputGroup>
-							</Modal.Body>
-							<Modal.Footer>
-								<Button variant="secondary"  onClick={this.onToggleIPadd}>🡆</Button>
-							</Modal.Footer>
-						</Modal>
-						</Form>
-						<Navbar.Collapse id="responsive-navbar-nav">
-						<Nav className="ml-auto" >
-							<Button variant="secondary" onClick={this.onToggleInstructions}>Instructions</Button>
-							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
-							
-							<Modal show={this.state.showInst} onHide={this.onToggleInstructions}>
-								<Modal.Header translate="yes">
-									<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
-								</Modal.Header>
-								<Modal.Body>
-									<p>
-									1. Make sure that your robot in connected to a ButterComposer on some laptop around the lab
-									</p>
-									<p>
-									2. Make sure that this computer is connected to milab_idc wifi network (password: milabspirit)
-									</p>
-									<p>
-									3. Try to remove and then add the robot card from the screen if there are no available animations buttons apeering on screen
-									</p>
-									4. Once you have done steps 1,2,3 - try again!
-
-								</Modal.Body>
-								<Modal.Footer>
-									<Button variant="secondary" onClick={this.onToggleInstructions}>
-									I'm ready! go back
-									</Button>
-								</Modal.Footer>
-							</Modal>
-						</Nav>
-						</Navbar.Collapse>
 					</Navbar>
 
 					<div className="main-grid">

@@ -10,13 +10,12 @@ function DragList({ arr, handleDelete, updateSpeed, updateTime }: any) {
           {...provided.droppableProps}
           ref={provided.innerRef}
         >
-          {arr.map((item: { id: string; type: "delay" | "animation"; ip?: string | undefined; name: string; speed: number; time: number; }, index: number) => (
+          {arr.map((item: any, index: number) => (
             <DragItem
               item={item}
               index={index}
               handleDelete={handleDelete}
-              updateSpeed={updateSpeed}
-              updateTime={updateTime}
+              updateField={updateSpeed}
             />
           ))}
           {provided.placeholder}

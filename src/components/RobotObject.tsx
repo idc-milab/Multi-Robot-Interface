@@ -48,11 +48,12 @@ export function RobotObject({ onRemove, refresh, addToPipeline }: { onRemove: (i
       <Card >
         <Card.Header>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <p style={{ marginBottom: 0 }}>'test'</p>
+            <p style={{ marginBottom: 0 }}>DigiDog</p>
           </div>
         </Card.Header>
           <Card.Body className='robot-object'>
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('forward')}>{'forward'}</Button>
+
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('backward')}>{'backward'}</Button>
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goLeft')}>{'goLeft'}</Button>
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goRight')}>{'goRight'}</Button>
@@ -68,6 +69,7 @@ export function RobotObject({ onRemove, refresh, addToPipeline }: { onRemove: (i
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('resetBody')}>{'resetBody'}</Button>
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('go')}>{'go'}</Button>
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('led', 'animation')}>{'setLedColor'}</Button>
+
 
           </Card.Body>
       </Card>
