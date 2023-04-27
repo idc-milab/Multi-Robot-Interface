@@ -53,21 +53,21 @@ export function RobotObject({ onRemove, refresh, addToPipeline }: { onRemove: (i
         </Card.Header>
           <Card.Body className='robot-object'>
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('forward')}>{'forward'}</Button>
-            {/* <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goBackward', 'animation')}>{'goBackward'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goLeft', 'animation')}>{'goLeft'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goRight', 'animation')}>{'goRight'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('turnLeft', 'animation')}>{'turnLeft'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('turnRight', 'animation')}>{'turnRight'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('extendUp', 'animation')}>{'extendUp'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('squatDown', 'animation')}>{'squatDown'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('leanLeft', 'animation')}>{'leanRight'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('twistLeft', 'animation')}>{'twistLeft'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('twistRight', 'animation')}>{'twistRight'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookDown', 'animation')}>{'lookDown'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookUp', 'animation')}>{'lookUp'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('resetBody', 'animation')}>{'resetBody'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('wait', 'animation')}>{'wait'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('setLedColor', 'animation')}>{'setLedColor'}</Button> */}
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('backward')}>{'backward'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goLeft')}>{'goLeft'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goRight')}>{'goRight'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('turnLeft')}>{'turnLeft'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('turnRight')}>{'turnRight'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('extend')}>{'extendUp'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('squat')}>{'squatDown'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('leanLeft')}>{'leanRight'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('twistLeft')}>{'twistLeft'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('twistRight')}>{'twistRight'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookDown')}>{'lookDown'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookUp')}>{'lookUp'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('resetBody')}>{'resetBody'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('go')}>{'go'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('led', 'animation')}>{'setLedColor'}</Button>
 
           </Card.Body>
       </Card>

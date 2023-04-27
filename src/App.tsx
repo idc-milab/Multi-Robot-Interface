@@ -225,10 +225,12 @@ export class App extends React.PureComponent<{}, AppState> {
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
-			fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=0.25&duration=2000')
-			await timeout(2000);
+			if (QueuedMoves[i].name == 'forward') {
+				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?' + 'speed=' + QueuedMoves[i].speed)
+			  	await timeout(2000);
+			  }
+			}
 		}
-	};
 
 	PauseResumePipeline =  () => {
 		var connectdRobots = this.state.currentButterClients;
