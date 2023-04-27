@@ -322,68 +322,9 @@ export class App extends React.PureComponent<{}, AppState> {
 						<Form>
 						<Button variant="outline-info" onClick={this.onToggleIPadd}>Connect to a Robot</Button>
 
-						<Modal show={this.state.showNewIP} onHide={this.onToggleIPadd}>
-							<Modal.Header translate="yes">
-								<Modal.Title>Robots List:</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
-								<ListGroup className='navbar-brand'>
-									{this.state.labCurrentIPs.map(ip => (
-										<ListGroup.Item>
-											<ButtonGroup aria-label="Basic example">
-											{this.renderButtons(ip)}
-						    				</ButtonGroup>
-										</ListGroup.Item>
-									))}
-								</ListGroup>
-								<p></p>
-								<InputGroup className="mb-3">
-    								<FormControl
-      									placeholder="New Robot's IP"
-      									aria-label="New Robot's IP"
-      									aria-describedby="basic-addon2"
-									  	value={this.state.NewIPInput}
-									  	onChange={this.handleChange}
-										onKeyPress={this.handlePress}
-    								/>
-    								<Button variant="outline-secondary" id="button-addon2" onClick={this.NewIpADDED}>Add</Button>
-								</InputGroup>
-							</Modal.Body>
-							<Modal.Footer>
-								<Button variant="secondary"  onClick={this.onToggleIPadd}>🡆</Button>
-							</Modal.Footer>
-						</Modal>
+				
 						</Form>
-						<Navbar.Collapse id="responsive-navbar-nav">
-						<Nav className="ml-auto" >
-							<Button variant="secondary" onClick={this.onToggleInstructions}>Instructions</Button>
-							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
-							
-							<Modal show={this.state.showInst} onHide={this.onToggleInstructions}>
-								<Modal.Header translate="yes">
-									<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
-								</Modal.Header>
-								<Modal.Body>
-									<p>
-									1. Make sure that your robot in connected to a ButterComposer on some laptop around the lab
-									</p>
-									<p>
-									2. Make sure that this computer is connected to milab_idc wifi network (password: milabspirit)
-									</p>
-									<p>
-									3. Try to remove and then add the robot card from the screen if there are no available animations buttons apeering on screen
-									</p>
-									4. Once you have done steps 1,2,3 - try again!
 
-								</Modal.Body>
-								<Modal.Footer>
-									<Button variant="secondary" onClick={this.onToggleInstructions}>
-									I'm ready! go back
-									</Button>
-								</Modal.Footer>
-							</Modal>
-						</Nav>
-						</Navbar.Collapse>
 					</Navbar>
 
 					<div className="main-grid">
