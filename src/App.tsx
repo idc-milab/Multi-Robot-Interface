@@ -6,7 +6,6 @@ import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, Card, ListG
 import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
 import * as http from 'http'
 
@@ -172,7 +171,8 @@ export class App extends React.PureComponent<{}, AppState> {
 	/**this is const that enables the connect robot button on the webpage */
 		return (
 			<ul className='robot-objects'>
-				{this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} refresh={this.refreshRobotObject} addToPipeline={this.addAnimationToPipeline} />)}
+				{/* {this.state.currentButterClients.map((butterClient) => <RobotObject key={butterClient.ip} butterClient={butterClient} onRemove={this.onRemoveRobotObject} refresh={this.refreshRobotObject} addToPipeline={this.addAnimationToPipeline} />)} */}
+				<RobotObject key='123' onRemove={this.onRemoveRobotObject} refresh={this.refreshRobotObject} addToPipeline={this.addAnimationToPipeline} />
 			</ul>
 		);
 	}
@@ -193,11 +193,18 @@ export class App extends React.PureComponent<{}, AppState> {
 		this.setState({ PipelineItems: updatedList });
 	}
 
-	addAnimationToPipeline = (Item: any, Type: string, IP: string) => {
+	addAnimationToPipeline = (action: string, type: string, speed: number, time: number) => {
 		var newId = new Date().getTime().toString();
-		var newAnimationItem = {name: Item, id: newId, type: Type, ip: IP};
+		var newAnimationItem = {
+		  name: action,
+		  id: newId,
+		  type: type,
+		  speed: speed,
+		  time: time,
+		};
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
-	}
+	  };
+	  
 
 	AddDelayToPipeline = (delayAmount: string, DelayMinutesState: boolean) => {
 		var Amount = parseInt(delayAmount);
@@ -212,7 +219,8 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	runPipeline = async () => {
-		fetch('http://localhost:3000/forward')
+		fetch('http://localhost:3000/forward?speed=0.25&duration=2000')
+	
 		// var QueuedMoves = this.state.PipelineItems.concat();
 		// for (var i =0; i<QueuedMoves.length; i++) {
 		// 	console.log("running animation: " + QueuedMoves[i].name);

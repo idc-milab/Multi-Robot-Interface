@@ -1,58 +1,88 @@
 import React from 'react';
-import { Draggable } from "react-beautiful-dnd";
-import { Button } from 'react-bootstrap';
+import { Draggable } from 'react-beautiful-dnd';
+import { Button, FormControl } from 'react-bootstrap';
 
-function DragItem({item, index, handleDelete}:{item: any, index: number, handleDelete: any}) {
+interface DragItemProps {
+  item: {
+    id: string;
+    type: 'animation' | 'delay';
+    ip?: string;
+    name: string;
+    speed: number;
+    time: number;
+  };
+  index: number;
+  handleDelete: (index: number) => void;
+  updateSpeed: (index: number, speed: number) => void;
+  updateTime: (index: number, time: number) => void;
+}
 
-  const getItemStyle = (isDragging: any, draggableStyle: any) => ({
-    boxShadow: isDragging ? '0 4px 8px 0 grey' : 'none',
-    ...draggableStyle
-  });
+const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
+  boxShadow: isDragging ? '0 4px 8px 0 grey' : 'none',
+  ...draggableStyle,
+});
 
-  const contents = () => {
+const updateSpeed = (index: number, speed: number) => {
+  // Update the speed of the item at the given index in your pipeline state.
+};
 
-    if (item.type === 'animation'){ // render animation info
-      return(
-        <div style={{display: "flex", justifyContent: "space-around"}}>
-          [{index + 1}]
-          <div><span style={{color: '#757575',opacity: '0.7'}}>{item.ip}:</span><span style={{ color: '#28a745'}}>{item.name}</span></div>
-          <Button variant="outline-danger" onClick={() => handleDelete(index)}>🗑</Button>
-        </div>
-      );
-    }
+const updateTime = (index: number, time: number) => {
+  // Update the time of the item at the given index in your pipeline state.
+};
 
-    else if (item.type === 'delay') { // render delay info
-      return(
-        <div style={{display: "flex", justifyContent: "space-around"}}>
-          [{index + 1}]
-          <div><span style={{color: '#757575',opacity: '0.7'}}>Time: </span><span style={{ color: '#e69226'}}>{item.name}</span></div>
-          <Button variant="outline-danger" onClick={() => handleDelete(index)}>🗑</Button>
-        </div>
-      );
-    }
+const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateSpeed, updateTime }) => {
+  const handleSpeedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateSpeed(index, parseFloat(e.target.value));
+  };
 
-    else alert('Problem with item type insertion to the list!');
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateTime(index, parseFloat(e.target.value));
+  };
 
-  }
-
-  return(
+  return (
     <Draggable key={item.id} draggableId={item.id} index={index}>
-      {(provided: any, snapshot: any) => (
+      {(provided, snapshot) => (
         <div
           className="item-container"
           ref={provided.innerRef}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
-          style={getItemStyle(
-            snapshot.isDragging,
-            provided.draggableProps.style
-          )}
+          style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
         >
-          {contents()}
+          {item.type === 'animation' || item.type === 'delay' ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
+              [{index + 1}]
+              <div>
+                <span style={{ color: '#757575', opacity: '0.7' }}>{item.ip ? item.ip + ':' : ''}</span>
+                <span style={{ color: item.type === 'animation' ? '#28a745' : '#e69226' }}>{item.name}</span>
+              </div>
+              <FormControl
+                type="number"
+                min="0"
+                max="1"
+                step="0.01"
+                value={item.speed}
+                onChange={handleSpeedChange}
+                style={{ marginRight: '1rem', width: '4rem' }}
+              />
+              <FormControl
+                type="number"
+                min="0"
+                value={item.time}
+                onChange={handleTimeChange}
+                style={{ marginRight: '1rem', width: '4rem' }}
+              />
+              <Button variant="outline-danger" onClick={() => handleDelete(index)}>
+                🗑
+              </Button>
+            </div>
+          ) : (
+            <div>Problem with item type insertion to the list!</div>
+          )}
         </div>
       )}
     </Draggable>
   );
-}
+};
 
 export default DragItem;

@@ -1,28 +1,29 @@
-import React from 'react';
+import React from "react";
 import { Droppable } from "react-beautiful-dnd";
-import DragItem from './DragItem';
+import DragItem from "./DragItem";
 
-function DragList({name, arr, handleDelete}:{name: string, arr: any[], handleDelete: any}) {
-
-  if (arr.length !== 0) {
-    return(
-      <Droppable droppableId={name}>
-        {(provided: any) => (
-          <div
-            className="list-container"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {arr.map((item, index) => (<DragItem item={item} index={index} handleDelete={handleDelete}/>))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+function DragList({ arr, handleDelete, updateSpeed, updateTime }: any) {
+  return (
+    <Droppable droppableId="droppable">
+      {(provided) => (
+        <div
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+        >
+          {arr.map((item: { id: string; type: "delay" | "animation"; ip?: string | undefined; name: string; speed: number; time: number; }, index: number) => (
+            <DragItem
+              item={item}
+              index={index}
+              handleDelete={handleDelete}
+              updateSpeed={updateSpeed}
+              updateTime={updateTime}
+            />
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
-  }
-  else return(<h6 style={{color: '#757575',opacity: '0.7'}}>Pipeline is currently empty...</h6>);
-
-    
 }
 
 export default DragList;
