@@ -6,7 +6,6 @@ import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, Card, ListG
 import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
 import * as http from 'http'
 
@@ -213,11 +212,8 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	runPipeline = async () => {
-		fetch('http://localhost:3000/ForwardFast')
-		await timeout(1000);
-		fetch('http://localhost:3000/ForwardSlow')
-		await timeout(1000);
-		fetch('http://localhost:3000/Lookup')
+		fetch('http://localhost:3000/forward?speed=0.25&duration=2000')
+	
 		// var QueuedMoves = this.state.PipelineItems.concat();
 		// for (var i =0; i<QueuedMoves.length; i++) {
 		// 	console.log("running animation: " + QueuedMoves[i].name);

@@ -1,115 +1,83 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { HttpClient, Response } from '@butter-robotics/mas-javascript-api';
 import { Navbar, Nav, Form, FormControl, Button, Container, ButtonGroup, Card } from 'react-bootstrap';
 
-
 export function RobotObject({ onRemove, refresh, addToPipeline }: { onRemove: (ip: string) => void, refresh: (ip: string) => void, addToPipeline: any }) {
-
-  const [animations, setAnimations] = useState<{name: string, status: boolean}[]>([]);
-  const [hiddnanim, sethiddnanimations] = useState<{name: string, status: boolean}[]>([]);
-  const [visible, setVisible] = React.useState(false);
+  const [animations, setAnimations] = useState<{ name: string, status: boolean }[]>([]);
+  const [visible, setVisible] = useState(false);
+  const [time, setTime] = useState('');
+  const [speed, setSpeed] = useState('');
 
   useEffect(() => {
     // loadAnimations();
   }, []);
-  
-  //this functions hides the button and puts it in new list
-  const hide = (move: any) => {
-    var temp = animations.concat();
-    let shownAnimations: any[] = [];
-    var FinalHiddnList = hiddnanim.concat();
-    for(var i = 0; i<temp.length; i++) {
-      if(temp[i] == move) {temp[i].status = !temp[i].status}
-      if(temp[i].status === false){FinalHiddnList =[...FinalHiddnList, temp[i]];}
-      else{shownAnimations = [...shownAnimations, temp[i]];}
-    }
-    setAnimations(shownAnimations);
-    sethiddnanimations(FinalHiddnList);
-  }
 
-  const show = (move: any) => {
-    var temp = hiddnanim.concat();
-    let shownAnimations= animations.concat();
-    var FinalHiddnList: any[] = [];
-    for(var i = 0; i<temp.length; i++) {
-      if(temp[i] == move) {temp[i].status = !temp[i].status}
-      if(temp[i].status === false){FinalHiddnList =[...FinalHiddnList, temp[i]];}
-      else{shownAnimations = [...shownAnimations, temp[i]];}
-    }
-    setAnimations(shownAnimations);
-    sethiddnanimations(FinalHiddnList);
-    if (FinalHiddnList.length ===0) setVisible(!visible);
-  }
-    
-  //   const loadAnimations = async () => {
-  //   setTimeout(() => {
-  //   }, 5000)
-  //   const res:Response = await butterClient.getAvailableAnimations();
-  //   if (res.status !== 200) {
-  //     console.error('Failed to get robot animations', res);
-  //     return;
-  //   }
-  //   const data: string = res.data.response.data as string;
-  //   const animations = data.replace('[', '').replace(']', '').replace(/\\s+/, '').split(',');
-  //   console.log(animations);
-
-  //   //this turns the animations string list to an object list that is comprised of the name of animation
-  //   // and its status true/false
-  //   let tempo= Array(0);
-  //   animations.map ((n) => {
-  //   var newAnimobject = {name: n, status: true};
-  //   tempo = [...tempo, newAnimobject];
-  //   });
-  
-  //   setAnimations(tempo);
-  // }
-  
-  // const playAnimationByName = (animation: string) => {
-  //   butterClient.playAnimation(animation.trim());
-  // }
-
-
+  const handleButtonClick = (action: string, animationType: string) => {
+    addToPipeline(action, animationType, time, speed);
+  };
 
   return (
     <Container className='robot-card'>
-      <Card >
+      <Card>
         <Card.Header>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>'test'</p>
           </div>
         </Card.Header>
-          <Card.Body className='robot-object'>
-              {/* {animations.length === 0 ? 'No animations were loaded from the robot... please try again...' : 
-              animations.map((move) => 
-                  <ButtonGroup>
-                                
-                                  <div className='btnGroup1'>
-                                    <Button variant='outline-secondary' id='hide-button' title ='HIDE' onClick={() => hide(move)} >X</Button>
-                      {move.status ? <Button variant='outline-success' id='play-button' title ='PLAY'
-                                      onClick={() => playAnimationByName(move.name)}>➤</Button>: null} 
-                                </div>
-                                <div className='btnGroup2'>
-                    {move.status ? <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline(move.name, 'animation', butterClient.ip)}>{move.name}</Button>: null}
-                                  </div>
-                                
+        <Card.Body className='robot-object'>
+          <Button variant='outline-primary' id='add-pipeline' title='ADD TO PIPELINE' onClick={() => handleButtonClick('goForward', 'animation')}>
+            {'goForward'}
+          </Button>
+          <Form.Control
+            type='text'
+            placeholder='Enter time'
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+          <Form.Control
+            type='text'
+            placeholder='Enter speed'
+            value={speed}
+            onChange={(e) => setSpeed(e.target.value)}
+          />
 
-                  
-                  </ButtonGroup>
-            )} */}
-            <Button variant='outline-success' id='play-button' title ='PLAY' onClick={() => "test"}>➤</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('move-forward', 'animation')}>{'forward'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('move-forward', 'animation')}>{'forward'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('move-forward', 'animation')}>{'forward'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('move-forward', 'animation')}>{'forward'}</Button>
+          <Button variant='outline-primary' id='add-pipeline' title='ADD TO PIPELINE' onClick={() => handleButtonClick('goBackward', 'animation')}>
+            {'goBackward'}
+          </Button>
+          <Form.Control
+            type='text'
+            placeholder='Enter time'
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+          <Form.Control
+            type='text'
+            placeholder='Enter speed'
+            value={speed}
+            onChange={(e) => setSpeed(e.target.value)}
+          />
 
-          </Card.Body>
+          {/* Continue adding the remaining buttons and corresponding text boxes */}
+          <Button variant='outline-primary' id='add-pipeline' title='ADD TO PIPELINE' onClick={() => handleButtonClick('goLeft', 'animation')}>
+            {'goLeft'}
+          </Button>
+          <Form.Control
+            type='text'
+            placeholder='Enter time'
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+          <Form.Control
+            type='text'
+            placeholder='Enter speed'
+            value={speed}
+            onChange={(e) => setSpeed(e.target.value)}
+          />
+
+          {/* Repeat the pattern for the remaining buttons */}
+          {/* ... */}
+        </Card.Body>
       </Card>
-      {visible && <Card><Card.Body className='hidden-body'> {hiddnanim.map((but) =>  <ButtonGroup  aria-label="Basic example">
-              <div >
-              <Button  variant="outline-secondary" onClick={() => show(but)} style={{ marginRight: 'auto' }}>{but.name}</Button>
-              </div></ButtonGroup>)}</Card.Body></Card>}
     </Container>
-    
   );
 }
-
