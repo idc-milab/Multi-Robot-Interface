@@ -27,7 +27,7 @@ export function RobotObject({addToPipeline }: {  addToPipeline: any }) {
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookUp')}>{'lookUp'}</Button>
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('resetBody')}>{'resetBody'}</Button>
             <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('go')}>{'go'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('led', 'animation')}>{'setLedColor'}</Button>
+            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('led')}>{'setLedColor'}</Button>
           </Card.Body>
       </Card>
     </Container>
