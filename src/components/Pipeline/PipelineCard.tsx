@@ -22,7 +22,40 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
   const ToggleSave = () => setSaveState(!SaveState);
   const ToggleDelay = () => setDelayState(!DelayState);
 
+  console.log(SavedLists)
+
+  const handleAnimationButtonClick = (animation: any) => {
+    // Perform the action for the animation button press
+    console.log(animation);
   
+    // Accessing the attributes from the animation object
+    const name = animation.name;
+    const id = animation.id;
+    const type = animation.type;
+    const speed = animation.speed;
+    const duration = animation.duration;
+  
+    // Perform desired actions using the attribute
+    
+  };
+  
+
+
+const renderAnimationButtons = () => {
+  return SavedLists.map((item, index) => (
+    <button
+      key={index}
+      onClick={() => handleAnimationButtonClick(item)}
+      data-name={item.name}
+      data-id={item.id}
+      data-type={item.type}
+      data-speed={item.speed}
+      data-duration={item.duration}
+    >
+      {item.name}
+    </button>
+  ));
+};
 
   
   
@@ -138,7 +171,27 @@ function LOADIT (event: any) {
         </Card.Header>
         <Card.Body>
         <DragDropContext onDragEnd={handlePipelineDrag}>
-          {LoadState ? <SequenceDeposit arr={SavedLists} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
+          {/* {LoadState ? <SequenceDeposit arr={SavedLists} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>} */}
+          {LoadState === true
+          ? React.createElement(SequenceDeposit, { arr: SavedLists, toggle: () => ToggleLoad(), remove: RemoveFromSavedList })
+           : React.createElement(DragList, { name: "Queue", arr: PipelineList, handleDelete: handleDelete })}
+
+
+          
+        </DragDropContext>
+        </Card.Body>
+      </Card>
+
+      <Card>
+        <Card.Header>
+          <div style={{display: "flex", alignItems: 'center'}}>
+            
+          </div>
+        </Card.Header>
+        <Card.Body>
+        <DragDropContext onDragEnd={handlePipelineDrag}> 
+        {renderAnimationButtons()}
+        
         </DragDropContext>
         </Card.Body>
       </Card>
