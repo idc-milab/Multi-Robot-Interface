@@ -6,7 +6,7 @@ import SequenceDeposit from './SequenceDeposit';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any}) {
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline, reset }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any, reset: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
@@ -37,15 +37,21 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
 
 const renderAnimationButtons = () => {
   return SavedLists.map((item, index) => (
-    <button
-      key={index}
-      onClick={() => handleAnimationButtonClick(item)}
-      data-name={item.name}
-    >
-      {item.name}
-    </button>
+    <ButtonGroup style={{ marginLeft: 'auto' }} id='add-pipeline'>
+      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => handleAnimationButtonClick(item)} >{item.name}</Button>
+      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => runAnimation(item)} >play</Button>
+      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => RemoveFromSavedList(index)} >del</Button>
+    </ButtonGroup>
   ));
 };
+
+const runAnimation = (animation: any) => {
+  var listToRun = animation.list;
+  var oldList = PipelineList.concat();
+  reset(listToRun);
+  run();
+  reset(oldList);
+}
 
   
   
@@ -57,9 +63,8 @@ const renderAnimationButtons = () => {
     }
   }
 
-  const RemoveFromSavedList = (item: any) => {
+  const RemoveFromSavedList = (index: number) => {
     var list = SavedLists.concat();
-    const index = list.indexOf(item);
     if (index > -1) list.splice(index, 1);
     setSavedLists(list);
   }
@@ -80,20 +85,8 @@ function LOADIT (event: any) {
 
 
 
-  const RenderButtons = () => {
-    if (LoadState) {
-      return(
-        <div style={{ marginLeft: 'auto' }}>
-        <ButtonGroup>
-          <Button variant="outline-secondary" title="UPLOAD"onClick={() => inputRef.current?.click()}><img  src='upload.png'  style={{width: '30px', height: '30px'}}></img></Button>
-          <input type="file" className="d-none" id="fileupload" ref={inputRef} multiple={false} accept=".json" onChange={(event: any) => openFile(event)} />
-          <Button variant="outline-secondary" title="DOWNLOAD" onClick={() => onDownload()}><img  src='download.png'  style={{width: '32px', height: '32px'}}></img></Button>
-          <Button variant="outline-secondary" title="RETURN" onClick={() => ToggleLoad()}>↩</Button>
-        </ButtonGroup>
-        </div>
-      );
-    }
-    else if (SaveState) {
+  const RenderButtonsPipeline = () => {
+   if (SaveState) {
       return(
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <FormControl placeholder="Pipeline Name" onChange={(event: any) => setSaveName(event.target.value)}/>
@@ -119,21 +112,42 @@ function LOADIT (event: any) {
         <>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <Button variant="outline-secondary" title="Save Pipeline" onClick={() => ToggleSave()}>💾</Button>
-          <Button variant="outline-secondary" title="Load/Download From Memory" onClick={() => ToggleLoad()}>🖥️</Button>
           <Button variant="outline-secondary" title="Add Delay" onClick={() => ToggleDelay()}>⌚</Button>
-          {/* <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button> */}
+          <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
+
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-        
         {pauseState ? <Button variant="outline-secondary" onClick={() => run()} disabled>▶</Button> : <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>}
-          {/* <Button  variant="outline-secondary" title="Pause/Resume" onClick={() => pauseResume()}>⏯</Button> */}
-          {/* <Button variant="outline-secondary" title="STOP" onClick={() => stop()}>⏹</Button> */}
-          
         </ButtonGroup>
         </>
       );
     }
   }
+
+  const RenderButtonsList = () => {
+    if (LoadState) {
+      return(
+        <div style={{ marginLeft: 'auto' }}>
+        <ButtonGroup>
+          <Button variant="outline-secondary" title="UPLOAD" onClick={() => inputRef.current?.click()}><img  src='upload.png'  style={{width: '30px', height: '30px'}}></img></Button>
+          <input type="file" className="d-none" id="fileupload" ref={inputRef} multiple={false} accept=".json" onChange={(event: any) => openFile(event)} />
+          <Button variant="outline-secondary" title="DOWNLOAD" onClick={() => onDownload()}><img  src='download.png'  style={{width: '32px', height: '32px'}}></img></Button>
+          <Button variant="outline-secondary" title="RETURN" onClick={() => ToggleLoad()}>↩</Button>
+        </ButtonGroup>
+        </div>
+      );
+    }
+    else {
+      return(
+        <>
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <Button variant="outline-secondary" title="Load/Download From Memory" onClick={() => ToggleLoad()}>🖥️</Button>
+        </ButtonGroup>
+        </>
+      );
+    }
+  }
+  
 
   const download = (content: any, fileName: any, contentType: any) => {
     const a = document.createElement("a");
@@ -144,9 +158,9 @@ function LOADIT (event: any) {
    }
    
    const onDownload =() => {
-    if (SavedLists.length == 0) window.alert('Please Load a File!');
+    if (SavedLists.length == 0) window.alert('List is empty!');
     else {
-    download(JSON.stringify(SavedLists), 'Pipeilnes.Json', "text/plain");
+    download(JSON.stringify(SavedLists), 'Animations.Json', "text/plain");
     }
    }
 
@@ -155,19 +169,13 @@ function LOADIT (event: any) {
       <Card>
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
-            {LoadState ? 'Saved Pipelines' : 'The Pipeline'}
-            {RenderButtons()}
+            The Pipeline
+            {RenderButtonsPipeline()}
           </div>
         </Card.Header>
         <Card.Body>
         <DragDropContext onDragEnd={handlePipelineDrag}>
-          {/* {LoadState ? <SequenceDeposit arr={SavedLists} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>} */}
-          {LoadState === true
-          ? React.createElement(SequenceDeposit, { arr: SavedLists, toggle: () => ToggleLoad(), remove: RemoveFromSavedList })
-           : React.createElement(DragList, { arr: PipelineList, handleDelete: handleDelete, updateSpeed: updateSpeed })}
-
-
-          
+          {React.createElement(DragList, { arr: PipelineList, handleDelete: handleDelete, updateSpeed: updateSpeed })}
         </DragDropContext>
         </Card.Body>
       </Card>
@@ -175,13 +183,13 @@ function LOADIT (event: any) {
       <Card>
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
-            
+            Saved Animations
+          {RenderButtonsList()}
           </div>
         </Card.Header>
-        <Card.Body>
+        <Card.Body className='robot-object'>
         <DragDropContext onDragEnd={handlePipelineDrag}> 
-        {renderAnimationButtons()}
-        
+          {renderAnimationButtons()}
         </DragDropContext>
         </Card.Body>
       </Card>
