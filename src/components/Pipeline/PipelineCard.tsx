@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useRef, useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
 import { Button, Card, ButtonGroup, Container, FormControl, Modal } from 'react-bootstrap';
 import DragList from './DragList';
-import SequenceDeposit from './SequenceDeposit';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline, reset }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any, reset: any}) {
@@ -37,10 +35,10 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
 
 const renderAnimationButtons = () => {
   return SavedLists.map((item, index) => (
-    <ButtonGroup style={{ marginLeft: 'auto' }} id='add-pipeline'>
+    <ButtonGroup className='btnGroup2'>
+      <Button variant='outline-success' id='play-button' title ='PLAY' onClick={() => runAnimation(item)} >➤</Button>
       <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => handleAnimationButtonClick(item)} >{item.name}</Button>
-      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => runAnimation(item)} >play</Button>
-      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => RemoveFromSavedList(index)} >del</Button>
+      <Button variant='outline-primary' id='hide-button' title ='ADD TO PIPELINE' onClick={() => RemoveFromSavedList(index)} >X</Button>
     </ButtonGroup>
   ));
 };
