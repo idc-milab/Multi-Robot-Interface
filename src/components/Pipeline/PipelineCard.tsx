@@ -162,6 +162,27 @@ function LOADIT (event: any) {
     }
    }
 
+  const renderSavedList = () => {
+    return(
+      <>
+        <br/>
+        <Card>
+          <Card.Header>
+            <div style={{display: "flex", alignItems: 'center'}}>
+              Saved Animations
+            {RenderButtonsList()}
+            </div>
+          </Card.Header>
+          <Card.Body className='robot-object'>
+          <DragDropContext onDragEnd={handlePipelineDrag}> 
+            {renderAnimationButtons()}
+          </DragDropContext>
+          </Card.Body>
+        </Card>
+      </>
+    )
+  }
+
     return(
       <Container className='pipeline-card'>
       <Card>
@@ -177,20 +198,8 @@ function LOADIT (event: any) {
         </DragDropContext>
         </Card.Body>
       </Card>
-
-      <Card>
-        <Card.Header>
-          <div style={{display: "flex", alignItems: 'center'}}>
-            Saved Animations
-          {RenderButtonsList()}
-          </div>
-        </Card.Header>
-        <Card.Body className='robot-object'>
-        <DragDropContext onDragEnd={handlePipelineDrag}> 
-          {renderAnimationButtons()}
-        </DragDropContext>
-        </Card.Body>
-      </Card>
+      {SavedLists.length > 0 && renderSavedList()}
+      
       </Container>
     );
 }
