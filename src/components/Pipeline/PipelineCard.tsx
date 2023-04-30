@@ -189,7 +189,7 @@ const runAnimation = (animation: any) => {
         </DragDropContext>
         </Card.Body>
       </Card>
-      {SavedLists.length > 0 && renderSavedList()}
+      {renderSavedList()}
       
       </Container>
     );
