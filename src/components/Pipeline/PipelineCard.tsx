@@ -87,7 +87,7 @@ function LOADIT (event: any) {
    if (SaveState) {
       return(
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-          <FormControl placeholder="Pipeline Name" onChange={(event: any) => setSaveName(event.target.value)}/>
+          <FormControl placeholder="Animation Name" onChange={(event: any) => setSaveName(event.target.value)}/>
           <Button variant="outline-success" onClick={() => AddToSavedList()}>✔</Button>
           <Button variant="outline-danger" onClick={() => ToggleSave()}>✖</Button>
         </ButtonGroup>
@@ -109,7 +109,7 @@ function LOADIT (event: any) {
       return(
         <>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-          <Button variant="outline-secondary" title="Save Pipeline" onClick={() => ToggleSave()}>💾</Button>
+          <Button variant="outline-secondary" title="Save Animation" onClick={() => ToggleSave()}>💾</Button>
           <Button variant="outline-secondary" title="Add Delay" onClick={() => ToggleDelay()}>⌚</Button>
           <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
