@@ -19,7 +19,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
   const [DelayState, setDelayState] = useState(false);
   const [SaveName, setSaveName] = useState('');
   const [DelayAmount, setDelayAmount] = useState('');
-  const [DelayMinutesState, setDelayMinutesState] = useState(false);
+  const [DelayMiliState, setDelayMiliState] = useState(false);
   const [SavedLists, setSavedLists] = useState<any[]>([]);
   
   // Create a reference for the input element  this is used when saving an animation list on the computer
@@ -94,10 +94,10 @@ const runAnimation = (animation: any) => {
       return(
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <FormControl placeholder="0" onChange={(event: any) => setDelayAmount(event.target.value)}/>
-          <Button variant="outline-secondary" onClick={() => setDelayMinutesState(!DelayMinutesState)}>
-						{DelayMinutesState ? 'minutes' : 'seconds'}
+          <Button variant="outline-secondary" onClick={() => setDelayMiliState(!DelayMiliState)}>
+						{DelayMiliState ? 'miliseconds' : 'seconds'}
 					</Button>
-          <Button variant="outline-success" onClick={() => DelayAdder(DelayAmount, DelayMinutesState)}>✔</Button>
+          <Button variant="outline-success" onClick={() => DelayAdder(DelayAmount, DelayMiliState)}>✔</Button>
           <Button variant="outline-primary" onClick={() => ToggleDelay()}>↩ </Button>
         </ButtonGroup>
       );

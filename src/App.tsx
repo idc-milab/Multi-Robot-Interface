@@ -65,12 +65,12 @@ export class App extends React.PureComponent<{}, AppState> {
 	};
 
 	// A handle for adding a delay to the pipeline.
-  	AddDelayToPipeline = (delayAmount: string, DelayMinutesState: boolean) => {
+  	AddDelayToPipeline = (delayAmount: string, DelayMiliState: boolean) => {
 		var Amount = parseInt(delayAmount);
-		var MinState = DelayMinutesState ? 'minutes' : 'seconds';
+		var MinState = DelayMiliState ? 'miliseconds' : 'seconds';
 		if (!isNaN(Amount)) {
 			var Name = Amount + ' ' + MinState + ' delay';
-			if (DelayMinutesState) Amount *= 60;
+			if (!DelayMiliState) Amount *= 1000;
 			var newDelayItem = {name: Name, id: new Date().getTime().toString(), type: 'delay', amount: Amount};
 			this.setState({PipelineItems: [...this.state.PipelineItems, newDelayItem]});
 		}
