@@ -65,6 +65,12 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
         </>
       )
     }
+    else if (item.name === 'resetBody') {
+      return(
+        <>
+        </>
+      )
+    }
     else {
       return(
         <>
