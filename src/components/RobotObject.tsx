@@ -2,33 +2,40 @@
 import {Button, Container, Card } from 'react-bootstrap';
 export function RobotObject({addToPipeline }: {  addToPipeline: any }) {
 
+  const renderButton = (name: string) => {
+    return(
+      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline(name)}>{name}</Button>
+    )
+  }
+
 
   return (
     <Container className='robot-card'>
       <Card >
         <Card.Header>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <p style={{ marginBottom: 0 }}>DigiDog</p>
+            <p style={{ marginBottom: 0 }}>DigiDog (not deided yet)</p>
           </div>
         </Card.Header>
           <Card.Body className='robot-object'>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('forward')}>{'forward'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('backward')}>{'backward'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goLeft')}>{'goLeft'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('goRight')}>{'goRight'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('turnLeft')}>{'turnLeft'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('turnRight')}>{'turnRight'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('extend')}>{'extendUp'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('squat')}>{'squatDown'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('leanLeft')}>{'leanRight'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('twistLeft')}>{'twistLeft'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('twistRight')}>{'twistRight'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookDown')}>{'lookDown'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('lookUp')}>{'lookUp'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('resetBody')}>{'resetBody'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('go')}>{'go'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('led')}>{'led'}</Button>
-            <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline('pose')}>{'pose'}</Button>
+            {renderButton('forward')}
+            {renderButton('backward')}
+            {renderButton('goLeft')}
+            {renderButton('goRight')}
+            {renderButton('turnLeft')}
+            {renderButton('turnRight')}
+            {renderButton('extendUp')}
+            {renderButton('squatDown')}
+            {renderButton('leanLeft')}
+            {renderButton('leanRight')}
+            {renderButton('twistLeft')}
+            {renderButton('twistRight')}
+            {renderButton('lookDown')}
+            {renderButton('lookUp')}
+            {renderButton('resetBody')}
+            {renderButton('go')}
+            {renderButton('led')}
+            {renderButton('pose')}
           </Card.Body>
       </Card>
     </Container>

@@ -136,18 +136,17 @@ export class App extends React.PureComponent<{}, AppState> {
 		return (
 			<Router>
 			<div>
-					<Navbar bg="dark" variant="dark">
-						<Navbar.Brand href="/home">Multi Robot Operator</Navbar.Brand>
-					</Navbar>
-					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
-					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
-					</Navbar>
+				<Navbar bg="dark" variant="dark">
+					<Navbar.Brand href="/">🐕 Robot Dog Operator 🐕</Navbar.Brand>
+				</Navbar>
+				<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
+				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
+				</Navbar>
 
-					<div className="main-grid">
-						{this.renderRobotObjects()}
-						{this.renderPipeline()}
-					</div>
-
+				<div className="main-grid">
+					{this.renderRobotObjects()}
+					{this.renderPipeline()}
+				</div>
 			</div>
 			</Router>
 		)
