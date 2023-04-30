@@ -20,11 +20,11 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
   const ToggleSave = () => setSaveState(!SaveState);
   const ToggleDelay = () => setDelayState(!DelayState);
 
-  console.log(SavedLists)
+  //console.log(SavedLists)
 
   const handleAnimationButtonClick = (animation: any) => {
     // Perform the action for the animation button press
-    console.log(animation);
+    //console.log(animation);
 
   
     // Perform desired actions using the attribute
