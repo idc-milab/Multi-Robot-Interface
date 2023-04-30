@@ -95,7 +95,7 @@ const runAnimation = (animation: any) => {
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <FormControl placeholder="0" onChange={(event: any) => setDelayAmount(event.target.value)}/>
           <Button variant="outline-secondary" onClick={() => setDelayMiliState(!DelayMiliState)}>
-						{DelayMiliState ? 'miliseconds' : 'seconds'}
+						{DelayMiliState ? 'seconds' : 'miliseconds'}
 					</Button>
           <Button variant="outline-success" onClick={() => DelayAdder(DelayAmount, DelayMiliState)}>✔</Button>
           <Button variant="outline-primary" onClick={() => ToggleDelay()}>↩ </Button>

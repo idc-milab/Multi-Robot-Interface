@@ -70,7 +70,7 @@ export class App extends React.PureComponent<{}, AppState> {
 	// A handle for adding a delay to the pipeline.
   	AddDelayToPipeline = (delayAmount: string, DelayMiliState: boolean) => {
 		var Amount = parseInt(delayAmount);
-		var MinState = DelayMiliState ? 'miliseconds' : 'seconds';
+		var MinState = DelayMiliState ? 'seconds' : 'miliseconds';
 		if (!isNaN(Amount)) {
 			var Name = Amount + ' ' + MinState + ' delay';
 			if (!DelayMiliState) Amount *= 1000;
@@ -110,7 +110,7 @@ export class App extends React.PureComponent<{}, AppState> {
 
 		fetch("http://localhost:3000/forward?duration=500&speed=0")
 		await timeout(500);
-		
+
 		console.log("finished animation: " + this.state.AnimationRunning.toString());
 		this.setState({AnimationRunning: false});
 	}
