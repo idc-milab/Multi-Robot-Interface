@@ -17,168 +17,59 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateField }) => {
   const handleFieldChange = (e: React.ChangeEvent<any>, field: string) => {updateField(index, field, parseFloat(e.target.value));};
 
+  const renderForm = (min: number, max: number, step: number, value: number, field: string) => {
+    return(
+      <>
+        <span style={{ color:'gray' }}>{field}:</span>
+        <FormControl
+                type="number"
+                min={min}
+                max={max}
+                step={step}
+                value={value}
+                onChange={(e) => handleFieldChange(e, field)}
+                style={{ marginRight: '1rem', width: '5rem' }}
+              />
+      </>
+    )
+  }
+
   const getForms = () => {
     if (item.name === 'go') {
       return(
         <>
-        <span style={{ color:'gray' }}>LRspeed:</span>
-        <FormControl
-                type="number"
-                min="-1"
-                max="1"
-                step="0.05"
-                value={item.LRspeed}
-                onChange={(e) => handleFieldChange(e, "LRspeed")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>tLRspeed:</span>
-              <FormControl
-                type="number"
-                min="-1"
-                max="1"
-                step="0.05"
-                value={item.tLRspeed}
-                onChange={(e) => handleFieldChange(e, "tLRspeed")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>BFspeed:</span>
-              <FormControl
-                type="number"
-                min="-1"
-                max="1"
-                step="0.05"
-                value={item.BFspeed}
-                onChange={(e) => handleFieldChange(e, "BFspeed")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>duration:</span>
-              <FormControl
-                type="number"
-                min="0"
-                step="500"
-                defaultValue={"1"}
-                value={item.duration}
-                onChange={(e) => handleFieldChange(e, "duration")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
+          {renderForm(-1, 1, 0.05, item.LRspeed, 'LRspeed')}
+          {renderForm(-1, 1, 0.05, item.tLRspeed, 'tLRspeed')}
+          {renderForm(-1, 1, 0.05, item.BFspeed, 'BFspeed')}
+          {renderForm(0, 50000, 500, item.duration, 'duration')}
         </>
       )
     }
     else if (item.name === 'pose') {
       return(
         <>
-        <span style={{ color:'gray' }}>leanLRamount:</span>
-        <FormControl
-                type="number"
-                min="-1"
-                max="1"
-                step="0.05"
-                value={item.leanLRamount}
-                onChange={(e) => handleFieldChange(e, "leanLRamount")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>tLRamount:</span>
-              <FormControl
-                type="number"
-                min="-1"
-                max="1"
-                step="0.05"
-                value={item.tLRamount}
-                onChange={(e) => handleFieldChange(e, "tLRspeed")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>lookUDamount:</span>
-              <FormControl
-                type="number"
-                min="-1"
-                max="1"
-                step="0.05"
-                value={item.lookUDamount}
-                onChange={(e) => handleFieldChange(e, "lookUDamount")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>ESamount:</span>
-              <FormControl
-                type="number"
-                min="-1"
-                max="1"
-                step="0.05"
-                value={item.ESamount}
-                onChange={(e) => handleFieldChange(e, "ESamount")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>duration:</span>
-              <FormControl
-                type="number"
-                min="0"
-                defaultValue={"1"}
-                step="500"
-                value={item.duration}
-                onChange={(e) => handleFieldChange(e, "duration")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
+          {renderForm(-1, 1, 0.05, item.leanLRamount, 'leanLRamount')}
+          {renderForm(-1, 1, 0.05, item.tLRamount, 'tLRamount')}
+          {renderForm(-1, 1, 0.05, item.lookUDamount, 'lookUDamount')}
+          {renderForm(-1, 1, 0.05, item.ESamount, 'ESamount')}
+          {renderForm(0, 50000, 0.05, item.duration, 'duration')}
         </>
       )
     }
     else if (item.name === 'led') {
       return(
         <>
-        <span style={{ color:'gray' }}>r:</span>
-        <FormControl
-                type="number"
-                min="0"
-                max="255"
-                step="1"
-                value={item.r}
-                onChange={(e) => handleFieldChange(e, "r")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>g:</span>
-              <FormControl
-                type="number"
-                min="0"
-                max="255"
-                step="1"
-                value={item.g}
-                onChange={(e) => handleFieldChange(e, "g")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>b:</span>
-              <FormControl
-                type="number"
-                min="0"
-                max="255"
-                step="1"
-                value={item.b}
-                onChange={(e) => handleFieldChange(e, "b")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
+          {renderForm(0, 255, 1, item.r, 'r')}
+          {renderForm(0, 255, 1, item.g, 'g')}
+          {renderForm(0, 255, 1, item.b, 'b')}
         </>
       )
     }
     else {
       return(
         <>
-        <span style={{ color:'gray' }}>Speed:</span>
-        <FormControl
-                type="number"
-                min="0"
-                max="1"
-                step="0.05"
-                value={item.speed}
-                onChange={(e) => handleFieldChange(e, "speed")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
-              <span style={{ color:'gray' }}>Duration:</span>
-              <FormControl
-                type="number"
-                min="0"
-                step="500"
-                defaultValue={"1"}
-                value={item.duration}
-                onChange={(e) => handleFieldChange(e, "duration")}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
+          {renderForm(0, 1, 0.05, item.speed, 'speed')}
+          {renderForm(0, 50000, 0.05, item.duration, 'duration')}
         </>
       )
     }
