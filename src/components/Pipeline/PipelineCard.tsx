@@ -4,8 +4,16 @@ import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstr
 import DragList from './DragList';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline, reset }:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any, reset: any}) {
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateField, addToPipeline, reset }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateField: any, addToPipeline: any, reset: any}) {
 
+  // This component uses several useState hooks to manage the states of various features
+  // such as load, save, and delay functionality, as well as save names and delay amounts.
+  // It also utilizes useRef to create a reference to an input element.
+  // Toggle functions are defined to easily switch between the states of load, save, and delay.
+
+  // Initialize state variables for load, save, delay, save name, delay amount, delay minutes, and saved lists
+  
+  
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
   const [DelayState, setDelayState] = useState(false);
@@ -13,46 +21,41 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
   const [DelayAmount, setDelayAmount] = useState('');
   const [DelayMinutesState, setDelayMinutesState] = useState(false);
   const [SavedLists, setSavedLists] = useState<any[]>([]);
+  
+  // Create a reference for the input element  this is used when saving an animation list on the computer
   const inputRef = useRef<HTMLInputElement>(null);
-
-
+  
+  // Define toggle functions to switch between states (Load, Save, Delay) this is used when we wish to save a list of animations from the pipe line
+  //or we wish to save the animations on the computer
   const ToggleLoad = () => setLoadState(!LoadState);
   const ToggleSave = () => setSaveState(!SaveState);
   const ToggleDelay = () => setDelayState(!DelayState);
 
-  //console.log(SavedLists)
 
-  const handleAnimationButtonClick = (animation: any) => {
-    // Perform the action for the animation button press
-    //console.log(animation);
+  //creats a list of all the saved animations in the pipeline list
+  const animationsSavedFromPipeline = (animation: any) => {
 
-  
-    // Perform desired actions using the attribute
     addToPipeline(animation.list);
   };
   
-
-
-const renderAnimationButtons = () => {
+  // creates a button in the new card under the pipe line with the attributes of the pipe line list
+  //uses the function  of @
+  const renderAnimationsSavedFromPipelineButtons = () => {
   return SavedLists.map((item, index) => (
     <ButtonGroup className='btnGroup2'>
       <Button variant='outline-success' id='play-button' title ='PLAY' onClick={() => runAnimation(item)} >➤</Button>
-      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => handleAnimationButtonClick(item)} >{item.name}</Button>
+      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => animationsSavedFromPipeline(item)} >{item.name}</Button>
       <Button variant='outline-primary' id='hide-button' title ='ADD TO PIPELINE' onClick={() => RemoveFromSavedList(index)} >X</Button>
     </ButtonGroup>
   ));
-};
-
+  }
 const runAnimation = (animation: any) => {
   var listToRun = animation.list;
   var oldList = PipelineList.concat();
   reset(listToRun);
   run();
   reset(oldList);
-}
-
-  
-  
+  }
   const AddToSavedList = () => {
     if (SaveName === '') alert('Please enter a name for the sequence!');
     else {
@@ -60,29 +63,23 @@ const runAnimation = (animation: any) => {
       ToggleSave();
     }
   }
-
   const RemoveFromSavedList = (index: number) => {
     var list = SavedLists.concat();
     if (index > -1) list.splice(index, 1);
     setSavedLists(list);
   }
-
   const openFile = (evt: any) => {
     const fileObj = evt.target.files[0];
     const reader = new FileReader();
     reader.onload = LOADIT;
     reader.readAsText(fileObj);
-}
-
-function LOADIT (event: any) {
+  }
+  function LOADIT (event: any) {
 	let str = event.target.result;
   let arr = JSON.parse(str)
 	console.log('arr:', arr);
   setSavedLists(arr);
-}
-
-
-
+  }
   const RenderButtonsPipeline = () => {
    if (SaveState) {
       return(
@@ -115,13 +112,12 @@ function LOADIT (event: any) {
         </ButtonGroup>
 
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-        <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>
+        {pauseState ? <Button variant="outline-secondary" onClick={() => run()} disabled>▶</Button> : <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>}
         </ButtonGroup>
         </>
       );
     }
   }
-
   const RenderButtonsList = () => {
     if (LoadState) {
       return(
@@ -145,8 +141,6 @@ function LOADIT (event: any) {
       );
     }
   }
-  
-
   const download = (content: any, fileName: any, contentType: any) => {
     const a = document.createElement("a");
     const file = new Blob([content], { type: contentType });
@@ -154,14 +148,12 @@ function LOADIT (event: any) {
     a.download = fileName;
     a.click();
    }
-   
    const onDownload =() => {
     if (SavedLists.length === 0) window.alert('List is empty!');
     else {
     download(JSON.stringify(SavedLists), 'Animations.Json', "text/plain");
     }
    }
-
   const renderSavedList = () => {
     return(
       <>
@@ -175,14 +167,13 @@ function LOADIT (event: any) {
           </Card.Header>
           <Card.Body className='robot-object'>
           <DragDropContext onDragEnd={handlePipelineDrag}> 
-            {renderAnimationButtons()}
+            {renderAnimationsSavedFromPipelineButtons()}
           </DragDropContext>
           </Card.Body>
         </Card>
       </>
     )
   }
-
     return(
       <Container className='pipeline-card'>
       <Card>
@@ -194,7 +185,7 @@ function LOADIT (event: any) {
         </Card.Header>
         <Card.Body>
         <DragDropContext onDragEnd={handlePipelineDrag}>
-          {React.createElement(DragList, { arr: PipelineList, handleDelete: handleDelete, updateSpeed: updateSpeed })}
+          {React.createElement(DragList, { arr: PipelineList, handleDelete: handleDelete, updateField: updateField })}
         </DragDropContext>
         </Card.Body>
       </Card>
