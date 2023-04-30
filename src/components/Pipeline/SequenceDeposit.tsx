@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ButtonGroup, Form, InputGroup } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';
 
 function SequenceDeposit({arr, toggle, remove}:{arr: any[], toggle: any, remove: any}) {
 
@@ -7,10 +7,6 @@ function SequenceDeposit({arr, toggle, remove}:{arr: any[], toggle: any, remove:
 
   const LoadSequence = (list: any[]) => {
     toggle();
-  }
-
-  const ToggleLoad = () => {
-    setLoadMode(!LoadMode);
   }
 
   const contents = () => {

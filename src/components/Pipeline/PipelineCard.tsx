@@ -1,6 +1,6 @@
 import React, {useRef, useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
-import { Button, Card, ButtonGroup, Container, FormControl, Modal } from 'react-bootstrap';
+import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstrap';
 import DragList from './DragList';
 import 'reactjs-popup/dist/index.css';
 
@@ -127,9 +127,9 @@ function LOADIT (event: any) {
       return(
         <div style={{ marginLeft: 'auto' }}>
         <ButtonGroup>
-          <Button variant="outline-secondary" title="UPLOAD" onClick={() => inputRef.current?.click()}><img  src='upload.png'  style={{width: '30px', height: '30px'}}></img></Button>
+          <Button variant="outline-secondary" title="UPLOAD" onClick={() => inputRef.current?.click()}><img  src='upload.png'  style={{width: '30px', height: '30px'}} alt="upload"/></Button>
           <input type="file" className="d-none" id="fileupload" ref={inputRef} multiple={false} accept=".json" onChange={(event: any) => openFile(event)} />
-          <Button variant="outline-secondary" title="DOWNLOAD" onClick={() => onDownload()}><img  src='download.png'  style={{width: '32px', height: '32px'}}></img></Button>
+          <Button variant="outline-secondary" title="DOWNLOAD" onClick={() => onDownload()}><img  src='download.png'  style={{width: '32px', height: '32px'}} alt="download"/></Button>
           <Button variant="outline-secondary" title="RETURN" onClick={() => ToggleLoad()}>↩</Button>
         </ButtonGroup>
         </div>
@@ -156,7 +156,7 @@ function LOADIT (event: any) {
    }
    
    const onDownload =() => {
-    if (SavedLists.length == 0) window.alert('List is empty!');
+    if (SavedLists.length === 0) window.alert('List is empty!');
     else {
     download(JSON.stringify(SavedLists), 'Animations.Json', "text/plain");
     }
