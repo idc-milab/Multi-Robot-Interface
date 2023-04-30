@@ -10,10 +10,13 @@ import { Commands } from './data/DogCommands';
 // A timeout function for waiting between animations, in milliseconds.
 function timeout(delay: number) { return new Promise(res => setTimeout(res, delay)); };
 
-export type AppState = {PipelineItems: any[]}
+export type AppState = {PipelineItems: any[], AnimationRunning: boolean}
 export class App extends React.PureComponent<{}, AppState> {
 	// Declaring what the initial value of the state will be.
-	state: AppState = {PipelineItems: []}
+	state: AppState = {
+		PipelineItems: [],
+		AnimationRunning: false
+	}
 
 	// Creates the card holding the dog's available commands
 	renderDogObject = () => {
@@ -65,12 +68,12 @@ export class App extends React.PureComponent<{}, AppState> {
 	};
 
 	// A handle for adding a delay to the pipeline.
-  	AddDelayToPipeline = (delayAmount: string, DelayMinutesState: boolean) => {
+  	AddDelayToPipeline = (delayAmount: string, DelayMiliState: boolean) => {
 		var Amount = parseInt(delayAmount);
-		var MinState = DelayMinutesState ? 'minutes' : 'seconds';
+		var MinState = DelayMiliState ? 'seconds' : 'miliseconds';
 		if (!isNaN(Amount)) {
 			var Name = Amount + ' ' + MinState + ' delay';
-			if (DelayMinutesState) Amount *= 60;
+			if (!DelayMiliState) Amount *= 1000;
 			var newDelayItem = {name: Name, id: new Date().getTime().toString(), type: 'delay', amount: Amount};
 			this.setState({PipelineItems: [...this.state.PipelineItems, newDelayItem]});
 		}
@@ -79,24 +82,37 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	// A handle for running the pipeline.
 	runPipeline = async () => {
+		this.setState({AnimationRunning: true});
+		console.log("running pipeline");
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
-			console.log("running animation: " + QueuedMoves[i].name);
-
-			var request = "http://localhost:3000/" + QueuedMoves[i].name;
-			var fields = Object.keys(Commands[QueuedMoves[i].name])
-			if (fields.length > 0) {
-				request += '?';
-				fields.forEach((field: string) => {
-					request += field + '=' + QueuedMoves[i][field] + '&';
-				});
-				request = request.slice(0, -1);
+			if (QueuedMoves[i].type === 'delay') {
+				console.log("running delay: " + QueuedMoves[i].name);
+				await timeout(QueuedMoves[i].amount * 1000);
 			}
-			fetch(request);
+			else {
+				console.log("running animation: " + QueuedMoves[i].name);
 
-			if (QueuedMoves[i].duration > 0) await timeout(QueuedMoves[i].duration);
+				var request = "http://localhost:3000/" + QueuedMoves[i].name;
+				var fields = Object.keys(Commands[QueuedMoves[i].name])
+				if (fields.length > 0) {
+					request += '?';
+					fields.forEach((field: string) => {
+						request += field + '=' + QueuedMoves[i][field] + '&';
+					});
+					request = request.slice(0, -1);
+				}
+				fetch(request);
 
+				if (QueuedMoves[i].duration > 0) await timeout(QueuedMoves[i].duration);
+			}
 		}
+
+		fetch("http://localhost:3000/forward?duration=500&speed=0")
+		await timeout(500);
+
+		console.log("finished animation: " + this.state.AnimationRunning.toString());
+		this.setState({AnimationRunning: false});
 	}
 
 	// A handle for resetting the pipeline with a different set of animations. 
@@ -118,6 +134,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				updateField={this.updateField}
 				addToPipeline={this.addListToPipeline}
 				reset={this.resetPipeline}
+				AnimationRunning={this.state.AnimationRunning}
 			/>
 		);
 	}

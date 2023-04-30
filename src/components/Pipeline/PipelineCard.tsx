@@ -4,7 +4,7 @@ import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstr
 import DragList from './DragList';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, updateField, addToPipeline, reset }:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateField: any, addToPipeline: any, reset: any}) {
+function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, updateField, addToPipeline, reset, AnimationRunning }:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateField: any, addToPipeline: any, reset: any, AnimationRunning: boolean}) {
 
   // This component uses several useState hooks to manage the states of various features
   // such as load, save, and delay functionality, as well as save names and delay amounts.
@@ -19,7 +19,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
   const [DelayState, setDelayState] = useState(false);
   const [SaveName, setSaveName] = useState('');
   const [DelayAmount, setDelayAmount] = useState('');
-  const [DelayMinutesState, setDelayMinutesState] = useState(false);
+  const [DelayMiliState, setDelayMiliState] = useState(false);
   const [SavedLists, setSavedLists] = useState<any[]>([]);
   
   // Create a reference for the input element  this is used when saving an animation list on the computer
@@ -43,7 +43,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
   const renderAnimationsSavedFromPipelineButtons = () => {
   return SavedLists.map((item, index) => (
     <ButtonGroup className='btnGroup2'>
-      <Button variant='outline-success' id='play-button' title ='PLAY' onClick={() => runAnimation(item)} >➤</Button>
+      {AnimationRunning ? <Button variant='outline-primary' id='play-button' title ='PLAY' disabled>➤</Button> : <Button variant='outline-success' id='play-button' title ='PLAY' onClick={() => runAnimation(item)} >➤</Button>}
       <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => animationsSavedFromPipeline(item)} >{item.name}</Button>
       <Button variant='outline-primary' id='hide-button' title ='ADD TO PIPELINE' onClick={() => RemoveFromSavedList(index)} >X</Button>
     </ButtonGroup>
@@ -94,10 +94,10 @@ const runAnimation = (animation: any) => {
       return(
         <ButtonGroup style={{ marginLeft: 'auto' }}>
           <FormControl placeholder="0" onChange={(event: any) => setDelayAmount(event.target.value)}/>
-          <Button variant="outline-secondary" onClick={() => setDelayMinutesState(!DelayMinutesState)}>
-						{DelayMinutesState ? 'minutes' : 'seconds'}
+          <Button variant="outline-secondary" onClick={() => setDelayMiliState(!DelayMiliState)}>
+						{DelayMiliState ? 'seconds' : 'miliseconds'}
 					</Button>
-          <Button variant="outline-success" onClick={() => DelayAdder(DelayAmount, DelayMinutesState)}>✔</Button>
+          <Button variant="outline-success" onClick={() => DelayAdder(DelayAmount, DelayMiliState)}>✔</Button>
           <Button variant="outline-primary" onClick={() => ToggleDelay()}>↩ </Button>
         </ButtonGroup>
       );
@@ -112,7 +112,7 @@ const runAnimation = (animation: any) => {
         </ButtonGroup>
 
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-        <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>
+          {AnimationRunning ? <Button variant="outline-secondary" title="Play" disabled>▶</Button>: <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>}
         </ButtonGroup>
         </>
       );
