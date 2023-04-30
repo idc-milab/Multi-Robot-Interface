@@ -23,10 +23,7 @@ export type AppState = {
 	pauseState: boolean;
 	PipelineItems: any[];
 }
-
 export class App extends React.PureComponent<{}, AppState> {
-
-
 /**
  * declaring what the default values of the const. will be
  */
@@ -38,7 +35,6 @@ export class App extends React.PureComponent<{}, AppState> {
 		pauseState: false,
 		PipelineItems: []
 	}
-
 	renderRobotObjects = () => {
 	/**this is const that enables the connect robot button on the webpage */
 		return (
