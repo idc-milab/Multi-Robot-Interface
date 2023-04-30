@@ -4,7 +4,7 @@ import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstr
 import DragList from './DragList';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline, reset }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any, reset: any}) {
+function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline, reset }:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any, reset: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
@@ -115,7 +115,7 @@ function LOADIT (event: any) {
         </ButtonGroup>
 
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-        {pauseState ? <Button variant="outline-secondary" onClick={() => run()} disabled>▶</Button> : <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>}
+        <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>
         </ButtonGroup>
         </>
       );
