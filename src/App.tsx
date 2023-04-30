@@ -60,6 +60,11 @@ export class App extends React.PureComponent<{}, AppState> {
 		updatedList.splice(index, 1);
 		this.setState({ PipelineItems: updatedList });
 	}
+	setSpeed = (index: number, field: string, Speed: number) => {
+		var updatedList = this.state.PipelineItems.concat();
+		updatedList[index][field] = Speed;
+		this.setState({ PipelineItems: updatedList });
+	}
 	addAnimationToPipeline = (action: string) => {
 		var newId = new Date().getTime().toString();
 		var newAnimationItem = {
@@ -146,6 +151,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				handleDelete={this.handlePipelineDelete}
 				DelayAdder={this.AddDelayToPipeline}
 				run={this.runPipeline}
+				updateSpeed={this.setSpeed}
 			/>
 		);
 	}

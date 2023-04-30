@@ -6,7 +6,7 @@ import SequenceDeposit from './SequenceDeposit';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any}) {
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
@@ -174,7 +174,7 @@ function LOADIT (event: any) {
           {/* {LoadState ? <SequenceDeposit arr={SavedLists} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>} */}
           {LoadState === true
           ? React.createElement(SequenceDeposit, { arr: SavedLists, toggle: () => ToggleLoad(), remove: RemoveFromSavedList })
-           : React.createElement(DragList, { name: "Queue", arr: PipelineList, handleDelete: handleDelete })}
+           : React.createElement(DragList, { arr: PipelineList, handleDelete: handleDelete, updateSpeed: updateSpeed })}
 
 
           
