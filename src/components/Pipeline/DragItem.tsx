@@ -50,7 +50,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
               <div>
                <span style={{ color:'#e69226', fontWeight: 'bold' }}>{item.name}</span>
               </div>
-                {Object.keys(Commands[item.name]).map((field) => renderForm(field))}
+                {item.type === 'action' && Object.keys(Commands[item.name]).map((field) => renderForm(field))}
                 <Button variant="outline-danger" onClick={() => handleDelete(index)}>🗑</Button>
             </div>
         </div>

@@ -81,21 +81,26 @@ export class App extends React.PureComponent<{}, AppState> {
 	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
-			console.log("running animation: " + QueuedMoves[i].name);
-
-			var request = "http://localhost:3000/" + QueuedMoves[i].name;
-			var fields = Object.keys(Commands[QueuedMoves[i].name])
-			if (fields.length > 0) {
-				request += '?';
-				fields.forEach((field: string) => {
-					request += field + '=' + QueuedMoves[i][field] + '&';
-				});
-				request = request.slice(0, -1);
+			if (QueuedMoves[i].type === 'delay') {
+				console.log("running delay: " + QueuedMoves[i].name);
+				await timeout(QueuedMoves[i].amount * 1000);
 			}
-			fetch(request);
+			else {
+				console.log("running animation: " + QueuedMoves[i].name);
 
-			if (QueuedMoves[i].duration > 0) await timeout(QueuedMoves[i].duration);
+				var request = "http://localhost:3000/" + QueuedMoves[i].name;
+				var fields = Object.keys(Commands[QueuedMoves[i].name])
+				if (fields.length > 0) {
+					request += '?';
+					fields.forEach((field: string) => {
+						request += field + '=' + QueuedMoves[i][field] + '&';
+					});
+					request = request.slice(0, -1);
+				}
+				fetch(request);
 
+				if (QueuedMoves[i].duration > 0) await timeout(QueuedMoves[i].duration);
+			}
 		}
 	}
 
