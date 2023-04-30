@@ -6,7 +6,7 @@ import SequenceDeposit from './SequenceDeposit';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any}) {
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
@@ -27,16 +27,10 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
   const handleAnimationButtonClick = (animation: any) => {
     // Perform the action for the animation button press
     console.log(animation);
-  
-    // Accessing the attributes from the animation object
-    const name = animation.name;
-    const id = animation.id;
-    const type = animation.type;
-    const speed = animation.speed;
-    const duration = animation.duration;
+
   
     // Perform desired actions using the attribute
-    
+    addToPipeline(animation.list);
   };
   
 
@@ -47,10 +41,6 @@ const renderAnimationButtons = () => {
       key={index}
       onClick={() => handleAnimationButtonClick(item)}
       data-name={item.name}
-      data-id={item.id}
-      data-type={item.type}
-      data-speed={item.speed}
-      data-duration={item.duration}
     >
       {item.name}
     </button>

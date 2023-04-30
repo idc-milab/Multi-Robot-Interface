@@ -142,6 +142,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 	}
 	resetPipeline = (newPipeline: any[]) => this.setState({PipelineItems: newPipeline});
+	addToPipeline = (newPipeline: any[]) => this.setState({PipelineItems: this.state.PipelineItems.concat(newPipeline)});
 	renderPipeline = () => {
 		return (
 			<PipelineCard
@@ -152,6 +153,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				DelayAdder={this.AddDelayToPipeline}
 				run={this.runPipeline}
 				updateSpeed={this.setSpeed}
+				addToPipeline={this.addToPipeline}
 			/>
 		);
 	}
