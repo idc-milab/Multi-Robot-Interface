@@ -39,7 +39,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="0.05"
                 value={item.LRspeed}
                 onChange={handleLRChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>tLRspeed:</span>
               <FormControl
@@ -49,7 +49,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="0.05"
                 value={item.tLRspeed}
                 onChange={handleTLRChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>BFspeed:</span>
               <FormControl
@@ -59,17 +59,17 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="0.05"
                 value={item.BFspeed}
                 onChange={handleBFChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>duration:</span>
               <FormControl
                 type="number"
-                min="1"
+                min="0"
                 step="500"
                 defaultValue={"1"}
                 value={item.duration}
                 onChange={handleDurationChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
         </>
       )
@@ -85,7 +85,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="0.05"
                 value={item.leanLRamount}
                 onChange={handleLLRChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>tLRamount:</span>
               <FormControl
@@ -95,7 +95,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="0.05"
                 value={item.tLRamount}
                 onChange={handleTLRChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>lookUDamount:</span>
               <FormControl
@@ -105,7 +105,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="0.05"
                 value={item.lookUDamount}
                 onChange={handleLUDChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>ESamount:</span>
               <FormControl
@@ -115,17 +115,17 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="0.05"
                 value={item.ESamount}
                 onChange={handleESChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>Duration:</span>
               <FormControl
                 type="number"
-                min="1"
+                min="0"
                 defaultValue={"1"}
                 step="500"
                 value={item.duration}
                 onChange={handleDurationChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
         </>
       )
@@ -141,7 +141,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="1"
                 value={item.r}
                 onChange={handleRChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>G:</span>
               <FormControl
@@ -151,7 +151,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="1"
                 value={item.g}
                 onChange={handleGChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>B:</span>
               <FormControl
@@ -161,7 +161,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="1"
                 value={item.b}
                 onChange={handleBChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
         </>
       )
@@ -177,17 +177,17 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
                 step="0.05"
                 value={item.speed}
                 onChange={handleSpeedChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
               <span style={{ color:'gray' }}>Duration:</span>
               <FormControl
                 type="number"
-                min="1"
+                min="0"
                 step="500"
                 defaultValue={"1"}
                 value={item.duration}
                 onChange={handleDurationChange}
-                style={{ marginRight: '1rem', width: '4rem' }}
+                style={{ marginRight: '1rem', width: '5rem' }}
               />
         </>
       )
