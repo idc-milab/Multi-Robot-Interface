@@ -8,6 +8,27 @@ export function RobotObject({addToPipeline }: {  addToPipeline: any }) {
     )
   }
 
+  const moves: string[] = [
+    'forward',
+    'backward',
+    'goLeft',
+    'goRight',
+    'turnLeft',
+    'turnRight',
+    'extendUp',
+    'squatDown',
+    'leanLeft',
+    'leanRight',
+    'twistLeft',
+    'twistRight',
+    'lookDown',
+    'lookUp',
+    'resetBody',
+    'go',
+    'led',
+    'pose'
+  ]
+
 
   return (
     <Container className='robot-card'>
@@ -18,24 +39,7 @@ export function RobotObject({addToPipeline }: {  addToPipeline: any }) {
           </div>
         </Card.Header>
           <Card.Body className='robot-object'>
-            {renderButton('forward')}
-            {renderButton('backward')}
-            {renderButton('goLeft')}
-            {renderButton('goRight')}
-            {renderButton('turnLeft')}
-            {renderButton('turnRight')}
-            {renderButton('extendUp')}
-            {renderButton('squatDown')}
-            {renderButton('leanLeft')}
-            {renderButton('leanRight')}
-            {renderButton('twistLeft')}
-            {renderButton('twistRight')}
-            {renderButton('lookDown')}
-            {renderButton('lookUp')}
-            {renderButton('resetBody')}
-            {renderButton('go')}
-            {renderButton('led')}
-            {renderButton('pose')}
+            {moves.map((move) => renderButton(move))}
           </Card.Body>
       </Card>
     </Container>
