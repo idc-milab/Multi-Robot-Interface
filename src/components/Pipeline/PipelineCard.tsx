@@ -6,7 +6,7 @@ import SequenceDeposit from './SequenceDeposit';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any}) {
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateSpeed, addToPipeline, reset }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateSpeed: any, addToPipeline: any, reset: any}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
@@ -80,7 +80,46 @@ function LOADIT (event: any) {
 
 
 
-  const RenderButtons = () => {
+  const RenderButtonsPipeline = () => {
+   if (SaveState) {
+      return(
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <FormControl placeholder="Pipeline Name" onChange={(event: any) => setSaveName(event.target.value)}/>
+          <Button variant="outline-success" onClick={() => AddToSavedList()}>✔</Button>
+          <Button variant="outline-danger" onClick={() => ToggleSave()}>✖</Button>
+        </ButtonGroup>
+      );
+    }
+    else if (DelayState) {
+      return(
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <FormControl placeholder="0" onChange={(event: any) => setDelayAmount(event.target.value)}/>
+          <Button variant="outline-secondary" onClick={() => setDelayMinutesState(!DelayMinutesState)}>
+						{DelayMinutesState ? 'minutes' : 'seconds'}
+					</Button>
+          <Button variant="outline-success" onClick={() => DelayAdder(DelayAmount, DelayMinutesState)}>✔</Button>
+          <Button variant="outline-primary" onClick={() => ToggleDelay()}>↩ </Button>
+        </ButtonGroup>
+      );
+    }
+    else {
+      return(
+        <>
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <Button variant="outline-secondary" title="Save Pipeline" onClick={() => ToggleSave()}>💾</Button>
+          <Button variant="outline-secondary" title="Add Delay" onClick={() => ToggleDelay()}>⌚</Button>
+          <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button>
+        </ButtonGroup>
+
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+        {pauseState ? <Button variant="outline-secondary" onClick={() => run()} disabled>▶</Button> : <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>}
+        </ButtonGroup>
+        </>
+      );
+    }
+  }
+
+  const RenderButtonsList = () => {
     if (LoadState) {
       return(
         <div style={{ marginLeft: 'auto' }}>
@@ -134,6 +173,7 @@ function LOADIT (event: any) {
       );
     }
   }
+  
 
   const download = (content: any, fileName: any, contentType: any) => {
     const a = document.createElement("a");
@@ -156,7 +196,7 @@ function LOADIT (event: any) {
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
             {LoadState ? 'Saved Pipelines' : 'The Pipeline'}
-            {RenderButtons()}
+            {RenderButtonsPipeline()}
           </div>
         </Card.Header>
         <Card.Body>

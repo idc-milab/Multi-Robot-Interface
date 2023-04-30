@@ -154,6 +154,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				run={this.runPipeline}
 				updateSpeed={this.setSpeed}
 				addToPipeline={this.addToPipeline}
+				reset={this.resetPipeline}
 			/>
 		);
 	}
