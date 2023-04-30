@@ -92,16 +92,16 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
-		for (var i=0; i<QueuedMoves.length; i++) {
+		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
 
 			var request = "http://localhost:3000/" + QueuedMoves[i].name;
 			var fields = Object.keys(Commands[QueuedMoves[i].name])
 			if (fields.length > 0) {
 				request += '?';
-				for(let j=0; i<fields.length-1; i++) {
-					request += fields[j] + '=' + QueuedMoves[i][fields[j]] + '&';
-				}
+				fields.forEach((field: string) => {
+					request += field + '=' + QueuedMoves[i][field] + '&';
+				});
 				request = request.slice(0, -1);
 			}
 			fetch(request);
