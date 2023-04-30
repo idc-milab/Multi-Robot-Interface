@@ -37,17 +37,21 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
 
 const renderAnimationButtons = () => {
   return SavedLists.map((item, index) => (
-    <Button
-    variant='outline-primary'
-    id='add-pipeline'
-    title ='ADD TO PIPELINE'
-      onClick={() => handleAnimationButtonClick(item)}
-      data-name={item.name}
-    >
-      {item.name}
-    </Button>
+    <ButtonGroup style={{ marginLeft: 'auto' }} id='add-pipeline'>
+      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => handleAnimationButtonClick(item)} >{item.name}</Button>
+      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => runAnimation(item)} >play</Button>
+      <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => RemoveFromSavedList(index)} >del</Button>
+    </ButtonGroup>
   ));
 };
+
+const runAnimation = (animation: any) => {
+  var listToRun = animation.list;
+  var oldList = PipelineList.concat();
+  reset(listToRun);
+  run();
+  reset(oldList);
+}
 
   
   
@@ -59,9 +63,8 @@ const renderAnimationButtons = () => {
     }
   }
 
-  const RemoveFromSavedList = (item: any) => {
+  const RemoveFromSavedList = (index: number) => {
     var list = SavedLists.concat();
-    const index = list.indexOf(item);
     if (index > -1) list.splice(index, 1);
     setSavedLists(list);
   }
