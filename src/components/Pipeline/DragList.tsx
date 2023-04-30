@@ -2,7 +2,7 @@ import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import DragItem from "./DragItem";
 
-function DragList({ arr, handleDelete, updateSpeed }: any) {
+function DragList({ arr, handleDelete, updateField }: any) {
   return (
     <Droppable droppableId="droppable">
       {(provided) => (
@@ -15,7 +15,7 @@ function DragList({ arr, handleDelete, updateSpeed }: any) {
               item={item}
               index={index}
               handleDelete={handleDelete}
-              updateField={updateSpeed}
+              updateField={updateField}
             />
           ))}
           {provided.placeholder}
