@@ -88,12 +88,12 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
               [{index + 1}]
               <div>
-               <span style={{ color:'#e69226' }}>{item.name}</span>
+               <span style={{ color:'#e69226', fontWeight: 'bold' }}>{item.name}</span>
               </div>
-              {getForms()}
-              <Button variant="outline-danger" onClick={() => handleDelete(index)}>
-                🗑
-              </Button>
+                {getForms()}
+                <Button variant="outline-danger" onClick={() => handleDelete(index)}>
+                  🗑
+                </Button>
             </div>
         </div>
       )}
