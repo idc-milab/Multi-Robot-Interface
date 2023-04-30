@@ -102,6 +102,9 @@ export class App extends React.PureComponent<{}, AppState> {
 				if (QueuedMoves[i].duration > 0) await timeout(QueuedMoves[i].duration);
 			}
 		}
+
+		fetch("http://localhost:3000/forward?duration=500&speed=0")
+		await timeout(500);
 	}
 
 	// A handle for resetting the pipeline with a different set of animations. 
