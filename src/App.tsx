@@ -1,48 +1,30 @@
 import React from 'react';
 import './App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { RobotObject } from './components/RobotObject';
 import { Navbar} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router} from 'react-router-dom';
 import PipelineCard from './components/Pipeline/PipelineCard';
 import { Commands } from './data/DogCommands';
 
+// A timeout function for waiting between animations, in milliseconds.
+function timeout(delay: number) { return new Promise(res => setTimeout(res, delay)); };
 
-
-/*this is where we declare an object called AppState and in it all the constants \
-that appear on the top of the website page 
-*/
-
-function timeout(delay: number) { return new Promise(res => setTimeout(res, delay)); }; // delay function
-
-export type AppState = {
-	dayNightStatus: boolean;
-	NewIPInput: string;
-	showInst: boolean;
-	showNewIP: boolean;
-	pauseState: boolean;
-	PipelineItems: any[];
-}
+export type AppState = {PipelineItems: any[]}
 export class App extends React.PureComponent<{}, AppState> {
-/**
- * declaring what the default values of the const. will be
- */
-	state: AppState = {
-		dayNightStatus: false,
-		NewIPInput: '',
-		showInst: false,
-		showNewIP: false,
-		pauseState: false,
-		PipelineItems: []
-	}
-	renderRobotObjects = () => {
-	/**this is const that enables the connect robot button on the webpage */
+	// Declaring what the initial value of the state will be.
+	state: AppState = {PipelineItems: []}
+
+	// Creates the card holding the dog's available commands
+	renderDogObject = () => {
 		return (
 			<ul className='robot-objects'>
 				<RobotObject key='123' addToPipeline={this.addAnimationToPipeline} />
 			</ul>
 		);
 	}
+
+	// A handle for dragging an item in the pipeline.
 	handlePipelineDrag = (droppedItem: any) => {
 		if (!droppedItem.destination) return;
 		var updatedList = this.state.PipelineItems.concat();
@@ -52,16 +34,22 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 		this.setState({ PipelineItems: updatedList });
 	};
+
+	// A handle for deleting an item in the pipeline.
 	handlePipelineDelete = (index: number) => {
 		var updatedList = this.state.PipelineItems.concat();
 		updatedList.splice(index, 1);
 		this.setState({ PipelineItems: updatedList });
 	}
-	setSpeed = (index: number, field: string, Speed: number) => {
+
+	// A handle for updating a field of an item in the pipeline.
+	updateField = (index: number, field: string, Speed: number) => {
 		var updatedList = this.state.PipelineItems.concat();
 		updatedList[index][field] = Speed;
 		this.setState({ PipelineItems: updatedList });
 	}
+
+	// A handle for adding an animation to the pipeline.
 	addAnimationToPipeline = (action: string) => {
 		var newId = new Date().getTime().toString();
 		var newAnimationItem: any = {
@@ -75,6 +63,8 @@ export class App extends React.PureComponent<{}, AppState> {
 		});
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	};
+
+	// A handle for adding a delay to the pipeline.
   	AddDelayToPipeline = (delayAmount: string, DelayMinutesState: boolean) => {
 		var Amount = parseInt(delayAmount);
 		var MinState = DelayMinutesState ? 'minutes' : 'seconds';
@@ -86,6 +76,8 @@ export class App extends React.PureComponent<{}, AppState> {
 		}
 		else alert('Please enter a valit number!');
 	}
+
+	// A handle for running the pipeline.
 	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
@@ -106,23 +98,31 @@ export class App extends React.PureComponent<{}, AppState> {
 
 		}
 	}
+
+	// A handle for resetting the pipeline with a different set of animations. 
+	// Can be used to clear the pipeline by setting newPipeline to an empty array.
 	resetPipeline = (newPipeline: any[]) => this.setState({PipelineItems: newPipeline});
-	addToPipeline = (newPipeline: any[]) => this.setState({PipelineItems: this.state.PipelineItems.concat(newPipeline)});
+
+	// A handle for adding a new set of animations to the pipeline.
+	addListToPipeline = (newPipeline: any[]) => this.setState({PipelineItems: this.state.PipelineItems.concat(newPipeline)});
+
+	// Creates the card holding the pipeline.
 	renderPipeline = () => {
 		return (
 			<PipelineCard
 				PipelineList={this.state.PipelineItems}
-				pauseState={this.state.pauseState}
 				handlePipelineDrag={this.handlePipelineDrag}
 				handleDelete={this.handlePipelineDelete}
 				DelayAdder={this.AddDelayToPipeline}
 				run={this.runPipeline}
-				updateSpeed={this.setSpeed}
-				addToPipeline={this.addToPipeline}
+				updateField={this.updateField}
+				addToPipeline={this.addListToPipeline}
 				reset={this.resetPipeline}
 			/>
 		);
 	}
+
+	// Renders the app.
 	render() {
 		return (
 			<Router>
@@ -135,7 +135,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				</Navbar>
 
 				<div className="main-grid">
-					{this.renderRobotObjects()}
+					{this.renderDogObject()}
 					{this.renderPipeline()}
 				</div>
 			</div>

@@ -4,7 +4,7 @@ import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstr
 import DragList from './DragList';
 import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, updateField, addToPipeline, reset }:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateField: any, addToPipeline: any, reset: any}) {
+function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdder, run, updateField, addToPipeline, reset }:{PipelineList: any[], handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, updateField: any, addToPipeline: any, reset: any}) {
 
   // This component uses several useState hooks to manage the states of various features
   // such as load, save, and delay functionality, as well as save names and delay amounts.
@@ -112,7 +112,7 @@ const runAnimation = (animation: any) => {
         </ButtonGroup>
 
         <ButtonGroup style={{ marginLeft: 'auto' }}>
-        {pauseState ? <Button variant="outline-secondary" onClick={() => run()} disabled>▶</Button> : <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>}
+        <Button variant="outline-secondary" title="Play" onClick={() => run()}>▶</Button>
         </ButtonGroup>
         </>
       );
