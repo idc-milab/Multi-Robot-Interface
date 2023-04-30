@@ -5,6 +5,7 @@ import { Navbar} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router} from 'react-router-dom';
 import PipelineCard from './components/Pipeline/PipelineCard';
+import { Commands } from './data/DogCommands';
 
 
 
@@ -67,23 +68,15 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 	addAnimationToPipeline = (action: string) => {
 		var newId = new Date().getTime().toString();
-		var newAnimationItem = {
+		var newAnimationItem: any = {
 		  name: action,
 		  id: newId,
 		  type: "action",
-		  speed: 0,
-		  duration: 0,
-		  LRspeed: 0,
-		  tLRspeed: 0,
-		  BFspeed: 0,
-		  leanLRamount: 0,
-		  twistLRamount: 0,
-		  lookUDamount: 0,
-		  ESamount: 0,
-		  r: 0,
-		  g: 0,
-		  b: 0
+		  duration: 0
 		};
+		Object.keys(Commands[action]).forEach((field: string) => {
+		  newAnimationItem[field] = 0;
+		});
 		this.setState({ PipelineItems: [...this.state.PipelineItems, newAnimationItem] });
 	};
   	AddDelayToPipeline = (delayAmount: string, DelayMinutesState: boolean) => {
@@ -102,16 +95,16 @@ export class App extends React.PureComponent<{}, AppState> {
 		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
 
-			if (QueuedMoves[i].name === 'go')
-				fetch('http://localhost:3000/go?duration=' + QueuedMoves[i].duration + '&LRspeed=' + QueuedMoves[i].LRspeed+ '&tLRspeed=' + QueuedMoves[i].tLRspeed + '&BFspeed=' + QueuedMoves[i].BFspeed)
-			else if (QueuedMoves[i].name === 'pose')
-				fetch('http://localhost:3000/pose?duration=' + QueuedMoves[i].duration + '&leanLRmount=' + QueuedMoves[i].leanLRmount + '&twistLRamount=' + QueuedMoves[i].twistLRamount+ '&lookUDamount=' + QueuedMoves[i].lookUDamount)
-			else if (QueuedMoves[i].name === 'led')
-				fetch('http://localhost:3000/led?r=' + QueuedMoves[i].r + '&g=' + QueuedMoves[i].g + '&b=' + QueuedMoves[i].b)
-			else if (QueuedMoves[i].name === 'resetBody')
-				fetch('http://localhost:3000/resetBody')
-			else
-				fetch('http://localhost:3000/' + QueuedMoves[i].name + '?speed=' + QueuedMoves[i].speed + '&duration=' + QueuedMoves[i].duration)
+			var request = "http://localhost:3000/" + QueuedMoves[i].name;
+			var fields = Object.keys(Commands[QueuedMoves[i].name])
+			if (fields.length > 0) {
+				request += '?';
+				fields.forEach((field: string) => {
+					request += field + '=' + QueuedMoves[i][field] + '&';
+				});
+				request = request.slice(0, -1);
+			}
+			fetch(request);
 
 			if (QueuedMoves[i].duration > 0) await timeout(QueuedMoves[i].duration);
 

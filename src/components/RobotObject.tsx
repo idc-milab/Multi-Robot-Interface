@@ -1,5 +1,5 @@
-
 import {Button, Container, Card } from 'react-bootstrap';
+import { Commands } from '../data/DogCommands';
 export function RobotObject({addToPipeline }: {  addToPipeline: any }) {
 
   const renderButton = (name: string) => {
@@ -7,28 +7,6 @@ export function RobotObject({addToPipeline }: {  addToPipeline: any }) {
       <Button variant='outline-primary' id='add-pipeline' title ='ADD TO PIPELINE' onClick={() => addToPipeline(name)}>{name}</Button>
     )
   }
-
-  const moves: string[] = [
-    'forward',
-    'backward',
-    'goLeft',
-    'goRight',
-    'turnLeft',
-    'turnRight',
-    'extendUp',
-    'squatDown',
-    'leanLeft',
-    'leanRight',
-    'twistLeft',
-    'twistRight',
-    'lookDown',
-    'lookUp',
-    'resetBody',
-    'go',
-    'led',
-    'pose'
-  ]
-
 
   return (
     <Container className='robot-card'>
@@ -39,7 +17,7 @@ export function RobotObject({addToPipeline }: {  addToPipeline: any }) {
           </div>
         </Card.Header>
           <Card.Body className='robot-object'>
-            {moves.map((move) => renderButton(move))}
+            {Object.keys(Commands).map((move) => renderButton(move))}
           </Card.Body>
       </Card>
     </Container>

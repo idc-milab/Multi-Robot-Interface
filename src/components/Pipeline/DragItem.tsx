@@ -1,6 +1,7 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Button, FormControl } from 'react-bootstrap';
+import { Commands } from '../../data/DogCommands';
 
 interface DragItemProps {
   item: any;
@@ -17,68 +18,21 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateField }) => {
   const handleFieldChange = (e: React.ChangeEvent<any>, field: string) => {updateField(index, field, parseFloat(e.target.value));};
 
-  const renderForm = (min: number, max: number, step: number, value: number, field: string) => {
+  const renderForm = (field: string) => {
     return(
       <>
         <span style={{ color:'gray' }}>{field}:</span>
         <FormControl
-                type="number"
-                min={min}
-                max={max}
-                step={step}
-                value={value}
-                onChange={(e) => handleFieldChange(e, field)}
-                style={{ marginRight: '1rem', width: '5rem' }}
-              />
+          type="number"
+          min={Commands[item.name][field]['min']}
+          max={Commands[item.name][field]['max']}
+          step={Commands[item.name][field]['step']}
+          value={item[field]}
+          onChange={(e) => handleFieldChange(e, field)}
+          style={{ marginRight: '1rem', width: '5rem' }}
+        />
       </>
     )
-  }
-
-  const getForms = () => {
-    if (item.name === 'go') {
-      return(
-        <>
-          {renderForm(-1, 1, 0.05, item.LRspeed, 'LRspeed')}
-          {renderForm(-1, 1, 0.05, item.tLRspeed, 'tLRspeed')}
-          {renderForm(-1, 1, 0.05, item.BFspeed, 'BFspeed')}
-          {renderForm(0, 50000, 500, item.duration, 'duration')}
-        </>
-      )
-    }
-    else if (item.name === 'pose') {
-      return(
-        <>
-          {renderForm(-1, 1, 0.05, item.leanLRamount, 'leanLRamount')}
-          {renderForm(-1, 1, 0.05, item.tLRamount, 'tLRamount')}
-          {renderForm(-1, 1, 0.05, item.lookUDamount, 'lookUDamount')}
-          {renderForm(-1, 1, 0.05, item.ESamount, 'ESamount')}
-          {renderForm(0, 50000, 0.05, item.duration, 'duration')}
-        </>
-      )
-    }
-    else if (item.name === 'led') {
-      return(
-        <>
-          {renderForm(0, 255, 1, item.r, 'r')}
-          {renderForm(0, 255, 1, item.g, 'g')}
-          {renderForm(0, 255, 1, item.b, 'b')}
-        </>
-      )
-    }
-    else if (item.name === 'resetBody') {
-      return(
-        <>
-        </>
-      )
-    }
-    else {
-      return(
-        <>
-          {renderForm(0, 1, 0.05, item.speed, 'speed')}
-          {renderForm(0, 50000, 0.05, item.duration, 'duration')}
-        </>
-      )
-    }
   }
 
   return (
@@ -96,10 +50,8 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
               <div>
                <span style={{ color:'#e69226', fontWeight: 'bold' }}>{item.name}</span>
               </div>
-                {getForms()}
-                <Button variant="outline-danger" onClick={() => handleDelete(index)}>
-                  🗑
-                </Button>
+                {Object.keys(Commands[item.name]).map((field) => renderForm(field))}
+                <Button variant="outline-danger" onClick={() => handleDelete(index)}>🗑</Button>
             </div>
         </div>
       )}
