@@ -158,7 +158,7 @@ const runAnimation = (animation: any) => {
     return(
       <>
         <br/>
-        <Card>
+        <Card className='shadow-card'>
           <Card.Header>
             <div style={{display: "flex", alignItems: 'center'}}>
               Saved Animations
@@ -176,7 +176,7 @@ const runAnimation = (animation: any) => {
   }
     return(
       <Container className='pipeline-card'>
-      <Card>
+      <Card className='shadow-card'>
         <Card.Header>
           <div style={{display: "flex", alignItems: 'center'}}>
             The Pipeline

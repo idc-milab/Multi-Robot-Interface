@@ -25,7 +25,7 @@ export function RobotObject({addToPipeline }: {  addToPipeline: any }) {
   */
   return (
     <Container className='robot-card'>
-      <Card >
+      <Card className='shadow-card'>
         <Card.Header>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <p style={{ marginBottom: 0 }}>DigiDog (not deided yet)</p>

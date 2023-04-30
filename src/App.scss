@@ -29,6 +29,10 @@
 	margin: 12px 1 !important;
 }
 
+.shadow-card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .pipeline-card {
 	padding: 12px 12px 0px 12px !important;
 	margin: 12px 1 !important;
@@ -63,6 +67,18 @@
 	display: grid;
 	grid-template-columns: 30% 70%;
 	grid-auto-flow: row dense;
+}
+
+.main-grid::before {    
+	content: "";
+	background-image: url('./dog.png');;
+	background-size: cover;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	opacity: 0.75;
 }
 
 .animation-button {
