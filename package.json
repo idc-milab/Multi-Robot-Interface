@@ -4,17 +4,13 @@
   "private": true,
   "homepage": "http://www.milabrobotics.com/",
   "dependencies": {
-    "bootstrap": "^5.2.3",
-    "eslint": "^8.39.0",
     "mqtt": "^4.3.7",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.0",
-    "react-scripts": "^5.0.1",
-    "reactjs-popup": "^2.0.5",
-    "sass": "^1.62.1"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
@@ -44,9 +40,6 @@
     ]
   },
   "devDependencies": {
-    "@types/jest": "^29.5.1",
-    "@types/node": "^18.16.3",
-    "@types/react-beautiful-dnd": "^13.1.4",
-    "@types/react-dom": "^18.2.1"
+    "@types/node": "^18.16.3"
   }
 }
