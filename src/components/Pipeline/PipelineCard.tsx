@@ -49,7 +49,7 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
     </ButtonGroup>
   ));
   }
-const runAnimation = (animation: any) => {
+  const runAnimation = (animation: any) => {
   var listToRun = animation.list;
   var oldList = PipelineList.concat();
   reset(listToRun);
@@ -78,7 +78,10 @@ const runAnimation = (animation: any) => {
 	let str = event.target.result;
   let arr = JSON.parse(str)
 	console.log('arr:', arr);
-  setSavedLists(arr);
+  //setSavedLists(arr);
+  setSavedLists([...SavedLists, {name: SaveName, list: arr}]);;
+
+  
   }
   const RenderButtonsPipeline = () => {
    if (SaveState) {
