@@ -45,7 +45,7 @@ const DragItem: React.FC<DragItemProps> = ({ item, index, handleDelete, updateFi
           {...provided.draggableProps}
           style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
+          <div className='dragItem'>
               [{index + 1}]
               <div>
                <span style={{ color:'#e69226', fontWeight: 'bold' }}>{item.name}</span>

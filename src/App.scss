@@ -289,3 +289,17 @@ input[type="file"] {
 	width: 32px;
 	height: 32px;
 }
+
+.dragItem {
+	display: flex;
+	flex-wrap: wrap; /* Allow items to wrap onto the next line */
+	align-items: center;
+	justify-content: space-around;
+}
+
+@media (max-width: 600px) {
+	.dragItem {
+		flex-direction: column; /* Stack items vertically */
+		text-align: center; /* Center-align the items */
+	}
+}

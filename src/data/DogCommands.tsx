@@ -40,7 +40,6 @@ export const Commands: any = {
     'twistRight': defaultSettings,
     'lookDown': defaultSettings,
     'lookUp': defaultSettings,
-    'resetBody': {},
     'go': {
         'LRspeed': defaultBothSides,
         'tLRspeed': defaultBothSides,
