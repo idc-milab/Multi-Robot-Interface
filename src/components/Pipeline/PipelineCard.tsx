@@ -78,8 +78,8 @@ function PipelineCard({PipelineList, handlePipelineDrag, handleDelete, DelayAdde
 	let str = event.target.result;
   let arr = JSON.parse(str)
 	console.log('arr:', arr);
-  //setSavedLists(arr);
-  setSavedLists([...SavedLists, {name: SaveName, list: arr}]);;
+  setSavedLists(SavedLists.concat(arr));
+
 
   
   }
