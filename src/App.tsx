@@ -213,7 +213,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		var Amount = parseInt(LoopAmount);
 		if (!isNaN(Amount)) {
 			var Start = "Loop for " + Amount + ' times';
-			var End = "End Loop for " + Amount + ' times';
+			var End = "End Loop";
 			var newLoopStart = {name: Start, id: new Date().getTime().toString() + "1", type: 'loop start', amount: Amount};
 			var newLoopEnd = {name: End, id: new Date().getTime().toString() + "2", type: 'loop end', amount: Amount};
 			this.setState({PipelineItems: [...this.state.PipelineItems, newLoopStart, newLoopEnd]});
