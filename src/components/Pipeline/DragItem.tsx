@@ -36,6 +36,7 @@ function DragItem({item, index, handleDelete}:{item: any, index: number, handleD
   }
 
   return(
+    
     <Draggable key={item.id} draggableId={item.id} index={index}>
       {(provided: any, snapshot: any) => (
         <div

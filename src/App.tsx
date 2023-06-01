@@ -2,10 +2,10 @@ import React from 'react';
 import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
-import { Navbar, Nav, Form, FormControl, Button, Modal, NavDropdown, Card, ListGroup, ButtonGroup, InputGroup } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Modal, Card, ListGroup, ButtonGroup, InputGroup } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
 
@@ -269,7 +269,7 @@ export class App extends React.PureComponent<{}, AppState> {
 		const { currentButterClients } = this.state;
 
 		return (
-			<Router>
+			
 			<div>
 					<Navbar bg="dark" variant="dark">
 						<Navbar.Brand href="/home">Multi Robot Operator</Navbar.Brand>
@@ -347,44 +347,17 @@ export class App extends React.PureComponent<{}, AppState> {
 					</Navbar>
 
 
-					<Hidden smDown>
+					
 						<div className="main-grid">
-							{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
+							{currentButterClients.length > 0 ? this.renderRobotObjects() : <h2>loading..</h2>}
 							{this.renderPipeline()}
 						</div>
-      				</Hidden>
+      				
 
-					<Hidden mdUp>
-						<Accordion>
-							<Card>
-								<Card.Header>
-									<Nav fill variant="tabs" defaultActiveKey="1">
-										<Nav.Item>
-											<Nav.Link eventKey="0">Connected Robots</Nav.Link>
-										</Nav.Item>
-										<Nav.Item>
-											<Nav.Link eventKey="1">Pipeline</Nav.Link>
-										</Nav.Item>
-									</Nav>
-								</Card.Header>
-								<Accordion.Collapse eventKey="0">
-									<Card.Body>
-										{currentButterClients !== [] ? this.renderRobotObjects() : <h2>loading..</h2>}
-									</Card.Body>
-								</Accordion.Collapse>
-							</Card>
-							<Card>
-								<Accordion.Collapse eventKey="1">
-									<Card.Body>
-										{this.renderPipeline()}
-									</Card.Body>
-								</Accordion.Collapse>
-							</Card>
-						</Accordion>
-					</Hidden>
+					
 
 			</div>
-			</Router>
+			
 		)
 	}
 }
