@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
 import { Button, Card, ButtonGroup, Container, FormControl, Modal } from 'react-bootstrap';
 import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+
 
 function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, reset, pauseResume, stop}:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any, pauseResume: any, stop: any}) {
 

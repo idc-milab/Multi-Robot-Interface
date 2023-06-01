@@ -3,10 +3,7 @@ import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
 import { Navbar, Nav, Form, FormControl, Button, Modal, Card, ListGroup, ButtonGroup, InputGroup } from 'react-bootstrap';
-import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
 
 
@@ -279,11 +276,11 @@ export class App extends React.PureComponent<{}, AppState> {
 					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					
-						<Form inline>
+						<Form>
 						<Button variant="outline-info" onClick={this.onToggleIPadd}>Connect to a Robot</Button>
 
 						<Modal show={this.state.showNewIP} onHide={this.onToggleIPadd}>
-							<Modal.Header translate="true">
+							<Modal.Header>
 								<Modal.Title>Robots List:</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
@@ -320,7 +317,7 @@ export class App extends React.PureComponent<{}, AppState> {
 							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
 							
 							<Modal show={this.state.showInst} onHide={this.onToggleInstructions}>
-								<Modal.Header translate="true">
+								<Modal.Header >
 									<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
