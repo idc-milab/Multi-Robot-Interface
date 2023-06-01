@@ -2,10 +2,11 @@ import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import { Button } from 'react-bootstrap';
 
-function DragItem({item, index, handleDelete}:{item: any, index: number, handleDelete: any}) {
+function DragItem({item, index, handleDelete, running}:{item: any, index: number, handleDelete: any, running: boolean}) {
 
   const getItemStyle = (isDragging: any, draggableStyle: any) => ({
     boxShadow: isDragging ? '0 4px 8px 0 grey' : 'none',
+    backgroundColor: running ? 'grey' : 'white',
     ...draggableStyle
   });
 

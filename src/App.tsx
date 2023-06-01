@@ -5,6 +5,7 @@ import { RobotObject } from './components/RobotObject';
 import { Navbar, Nav, Form, FormControl, Button, Modal, Card, ListGroup, ButtonGroup, InputGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PipelineCard from './components/Pipeline/PipelineCard';
+import { createNoSubstitutionTemplateLiteral } from 'typescript';
 
 
 /*this is where we declare an object called AppState and in it all the constants \
@@ -23,6 +24,7 @@ export type AppState = {
 	labCurrentIPs: string[];
 	IPdeleteState: boolean[];
 	PipelineItems: any[];
+	currentAnimation: number;
 }
 
 export class App extends React.PureComponent<{}, AppState> {
@@ -40,8 +42,9 @@ export class App extends React.PureComponent<{}, AppState> {
 		pauseState: false,
 		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34','192.168.56.188'],
 		IPdeleteState: Array(6).fill(false),
-		PipelineItems: []
-	}
+		PipelineItems: [],
+		currentAnimation:-1
+		}
 	/**declaring the function of set nightstatus to be false. notice the setState command
 	 * re-renders the pervious AppState command
 	  */
@@ -211,16 +214,26 @@ export class App extends React.PureComponent<{}, AppState> {
 		var QueuedMoves = this.state.PipelineItems.concat();
 		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
-			if (QueuedMoves[i].type === 'animation') {
-				var Client = new HttpClient(QueuedMoves[i].ip);
-				Client.timeout = 240;
-				await Client.playAnimation(QueuedMoves[i].name.trim(), true);
+			
+			try {
+				if (QueuedMoves[i].type === 'animation') {
+					var Client = new HttpClient(QueuedMoves[i].ip);
+					Client.timeout = 240;
+					this.setState({currentAnimation: i		
+					})
+					await Client.playAnimation(QueuedMoves[i].name.trim(), true);
+
+				}
+				else if (QueuedMoves[i].type === 'delay') {
+					await timeout(1000 * QueuedMoves[i].amount);
+				}
+				else alert('Problem with pipeline items!');
+			} finally {
+				continue;
 			}
-			else if (QueuedMoves[i].type === 'delay') {
-				await timeout(1000 * QueuedMoves[i].amount);
-			}
-			else alert('Problem with pipeline items!');
 		}
+		this.setState({currentAnimation: -1		
+		})
 	};
 
 	PauseResumePipeline =  () => {
@@ -256,6 +269,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				reset={this.resetPipeline}
 				pauseResume={this.PauseResumePipeline}
 				stop={this.StopPipeline}
+				currentAnimation={this.state.currentAnimation}
 			/>
 		);
 	}
