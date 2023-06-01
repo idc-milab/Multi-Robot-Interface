@@ -5,7 +5,6 @@ import { RobotObject } from './components/RobotObject';
 import { Navbar, Nav, Form, FormControl, Button, Modal, Card, ListGroup, ButtonGroup, InputGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PipelineCard from './components/Pipeline/PipelineCard';
-import { createNoSubstitutionTemplateLiteral } from 'typescript';
 
 
 /*this is where we declare an object called AppState and in it all the constants \
@@ -210,8 +209,49 @@ export class App extends React.PureComponent<{}, AppState> {
 		else alert('Please enter a valit number!');
 	}
 
+	AddLoopToPipeline = (LoopAmount: string) => {
+		var Amount = parseInt(LoopAmount);
+		if (!isNaN(Amount)) {
+			var Start = "Loop for " + Amount + ' times';
+			var End = "End Loop for " + Amount + ' times';
+			var newLoopStart = {name: Start, id: new Date().getTime().toString() + "1", type: 'loop start', amount: Amount};
+			var newLoopEnd = {name: End, id: new Date().getTime().toString() + "2", type: 'loop end', amount: Amount};
+			this.setState({PipelineItems: [...this.state.PipelineItems, newLoopStart, newLoopEnd]});
+		}
+		else alert('Please enter a valit number!');
+	}
+
+	checkPipeline = () => {
+		var QueuedMoves = this.state.PipelineItems.concat();
+		var inloop = false;
+		for (var i =0; i<QueuedMoves.length; i++) {
+			if (QueuedMoves[i].type === 'loop start') {
+				inloop = true
+			}
+			else if (QueuedMoves[i].type === 'loop end') {
+				if (!inloop) {
+					return false;
+				}
+				else {
+					inloop = false
+				}
+				
+			}
+		} 
+
+		return !inloop
+	}
+
 	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
+		var inloop = false;
+		let loopCount = 0;
+		let loopIndex = -1;
+		let check = this.checkPipeline()
+		if (!check) {
+			alert("Loops not ordered corectly!")
+			return;
+		}
 		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
 			
@@ -227,7 +267,28 @@ export class App extends React.PureComponent<{}, AppState> {
 				else if (QueuedMoves[i].type === 'delay') {
 					await timeout(1000 * QueuedMoves[i].amount);
 				}
-				else alert('Problem with pipeline items!');
+				else if (QueuedMoves[i].type === 'loop start') {
+					inloop = true
+					loopIndex = i;
+					loopCount = QueuedMoves[i].amount
+				}
+				else if (QueuedMoves[i].type === 'loop end') {
+					if (!inloop) {
+						alert('Loop end before start!');
+						break;
+					}
+					else {
+						loopCount -= 1
+						if (loopCount <= 0) {
+							inloop = false
+						}
+						else {
+							i = loopIndex
+						}
+					}
+					
+				}
+				else alert('Problem with pipeline items!'); break;
 			} finally {
 				continue;
 			}
@@ -265,6 +326,7 @@ export class App extends React.PureComponent<{}, AppState> {
 				handlePipelineDrag={this.handlePipelineDrag}
 				handleDelete={this.handlePipelineDelete}
 				DelayAdder={this.AddDelayToPipeline}
+				LoopAdder={this.AddLoopToPipeline}
 				run={this.runPipeline}
 				reset={this.resetPipeline}
 				pauseResume={this.PauseResumePipeline}

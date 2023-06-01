@@ -32,6 +32,16 @@ function DragItem({item, index, handleDelete, running}:{item: any, index: number
       );
     }
 
+    else if (item.type === 'loop start' || item.type === 'loop end') { // render delay info
+      return(
+        <div style={{display: "flex", justifyContent: "space-around"}}>
+          [{index + 1}]
+          <div><span style={{color: '#757575',opacity: '0.7'}}></span><span style={{ color: '#e69226'}}>{item.name}</span></div>
+          <Button variant="outline-danger" onClick={() => handleDelete(index)}>🗑</Button>
+        </div>
+      );
+    }
+
     else alert('Problem with item type insertion to the list!');
 
   }

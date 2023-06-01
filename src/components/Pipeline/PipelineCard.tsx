@@ -5,13 +5,15 @@ import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
 
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, reset, pauseResume, stop, currentAnimation}:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any, pauseResume: any, stop: any, currentAnimation: number}) {
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, LoopAdder, run, reset, pauseResume, stop, currentAnimation}:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, LoopAdder: any, run: any, reset: any, pauseResume: any, stop: any, currentAnimation: number}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
   const [DelayState, setDelayState] = useState(false);
+  const [LoopState, setLoopState] = useState(false);
   const [SaveName, setSaveName] = useState('');
   const [DelayAmount, setDelayAmount] = useState('');
+  const [LoopAmount, setLoopAmount] = useState('');
   const [DelayMinutesState, setDelayMinutesState] = useState(false);
   const [SavedLists, setSavedLists] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -20,6 +22,7 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
   const ToggleLoad = () => setLoadState(!LoadState);
   const ToggleSave = () => setSaveState(!SaveState);
   const ToggleDelay = () => setDelayState(!DelayState);
+  const ToggleLoop = () => setLoopState(!LoopState);
 
   
 
@@ -90,6 +93,15 @@ function LOADIT (event: any) {
         </ButtonGroup>
       );
     }
+    else if (LoopState) {
+      return(
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <FormControl placeholder="0" onChange={(event: any) => setLoopAmount(event.target.value)}/>
+          <Button variant="outline-success" onClick={() => LoopAdder(LoopAmount)}>✔</Button>
+          <Button variant="outline-primary" onClick={() => ToggleLoop()}>↩ </Button>
+        </ButtonGroup>
+      );
+    }
     else {
       return(
         <>
@@ -97,6 +109,7 @@ function LOADIT (event: any) {
           <Button variant="outline-secondary" title="Save Pipeline" onClick={() => ToggleSave()}>💾</Button>
           <Button variant="outline-secondary" title="Load/Download From Memory" onClick={() => ToggleLoad()}>🖥️</Button>
           <Button variant="outline-secondary" title="Add Delay" onClick={() => ToggleDelay()}>⌚</Button>
+          <Button variant="outline-secondary" title="Add Loop" onClick={() => ToggleLoop()}>loop</Button>
           <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
