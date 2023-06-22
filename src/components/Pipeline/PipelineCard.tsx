@@ -1,18 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
-import { Button, Card, ButtonGroup, Container, FormControl, Modal } from 'react-bootstrap';
+import { Button, Card, ButtonGroup, Container, FormControl } from 'react-bootstrap';
 import DragList from './DragList';
 import SequenceDeposit from './SequenceDeposit';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 
-function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, run, reset, pauseResume, stop}:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, run: any, reset: any, pauseResume: any, stop: any}) {
+
+function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelete, DelayAdder, LoopAdder, run, reset, pauseResume, stop, currentAnimation}:{PipelineList: any[], pauseState: boolean, handlePipelineDrag: any, handleDelete: any, DelayAdder: any, LoopAdder: any, run: any, reset: any, pauseResume: any, stop: any, currentAnimation: number}) {
 
   const [LoadState, setLoadState] = useState(false);
   const [SaveState, setSaveState] = useState(false);
   const [DelayState, setDelayState] = useState(false);
+  const [LoopState, setLoopState] = useState(false);
   const [SaveName, setSaveName] = useState('');
   const [DelayAmount, setDelayAmount] = useState('');
+  const [LoopAmount, setLoopAmount] = useState('');
   const [DelayMinutesState, setDelayMinutesState] = useState(false);
   const [SavedLists, setSavedLists] = useState<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -21,6 +22,7 @@ function PipelineCard({PipelineList, pauseState, handlePipelineDrag, handleDelet
   const ToggleLoad = () => setLoadState(!LoadState);
   const ToggleSave = () => setSaveState(!SaveState);
   const ToggleDelay = () => setDelayState(!DelayState);
+  const ToggleLoop = () => setLoopState(!LoopState);
 
   
 
@@ -62,9 +64,9 @@ function LOADIT (event: any) {
       return(
         <div style={{ marginLeft: 'auto' }}>
         <ButtonGroup>
-          <Button variant="outline-secondary" title="UPLOAD"onClick={() => inputRef.current?.click()}><img  src='upload.png'  style={{width: '30px', height: '30px'}}></img></Button>
+          <Button variant="outline-secondary" title="UPLOAD"onClick={() => inputRef.current?.click()}><img alt=''  src='upload.png'  style={{width: '30px', height: '30px'}}></img></Button>
           <input type="file" className="d-none" id="fileupload" ref={inputRef} multiple={false} accept=".json" onChange={(event: any) => openFile(event)} />
-          <Button variant="outline-secondary" title="DOWNLOAD" onClick={() => onDownload()}><img  src='download.png'  style={{width: '32px', height: '32px'}}></img></Button>
+          <Button variant="outline-secondary" title="DOWNLOAD" onClick={() => onDownload()}><img alt='' src='download.png'  style={{width: '32px', height: '32px'}}></img></Button>
           <Button variant="outline-secondary" title="RETURN" onClick={() => ToggleLoad()}>↩</Button>
         </ButtonGroup>
         </div>
@@ -91,6 +93,15 @@ function LOADIT (event: any) {
         </ButtonGroup>
       );
     }
+    else if (LoopState) {
+      return(
+        <ButtonGroup style={{ marginLeft: 'auto' }}>
+          <FormControl placeholder="0" onChange={(event: any) => setLoopAmount(event.target.value)}/>
+          <Button variant="outline-success" onClick={() => LoopAdder(LoopAmount)}>✔</Button>
+          <Button variant="outline-primary" onClick={() => ToggleLoop()}>↩ </Button>
+        </ButtonGroup>
+      );
+    }
     else {
       return(
         <>
@@ -98,6 +109,7 @@ function LOADIT (event: any) {
           <Button variant="outline-secondary" title="Save Pipeline" onClick={() => ToggleSave()}>💾</Button>
           <Button variant="outline-secondary" title="Load/Download From Memory" onClick={() => ToggleLoad()}>🖥️</Button>
           <Button variant="outline-secondary" title="Add Delay" onClick={() => ToggleDelay()}>⌚</Button>
+          <Button variant="outline-secondary" title="Add Loop" onClick={() => ToggleLoop()}>loop</Button>
           <Button variant="outline-danger" title="Clear Pipelline" onClick={() => reset([])}>🗑</Button>
         </ButtonGroup>
         <ButtonGroup style={{ marginLeft: 'auto' }}>
@@ -121,7 +133,7 @@ function LOADIT (event: any) {
    }
    
    const onDownload =() => {
-    if (SavedLists.length == 0) window.alert('Please Load a File!');
+    if (SavedLists.length === 0) window.alert('Please Load a File!');
     else {
     download(JSON.stringify(SavedLists), 'Pipeilnes.Json', "text/plain");
     }
@@ -138,7 +150,7 @@ function LOADIT (event: any) {
         </Card.Header>
         <Card.Body>
         <DragDropContext onDragEnd={handlePipelineDrag}>
-          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete}/>}
+          {LoadState ? <SequenceDeposit arr={SavedLists} load={reset} toggle={() => ToggleLoad()} remove={RemoveFromSavedList}/> : <DragList name="Queue" arr={PipelineList} handleDelete={handleDelete} currentAnimation={currentAnimation}/>}
         </DragDropContext>
         </Card.Body>
       </Card>

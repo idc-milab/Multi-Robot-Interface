@@ -3,10 +3,7 @@ import './App.scss';
 import { HttpClient } from '@butter-robotics/mas-javascript-api';
 import { RobotObject } from './components/RobotObject';
 import { Navbar, Nav, Form, FormControl, Button, Modal, Card, ListGroup, ButtonGroup, InputGroup } from 'react-bootstrap';
-import Accordion from 'react-bootstrap/Accordion'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
 import PipelineCard from './components/Pipeline/PipelineCard';
 
 
@@ -26,6 +23,7 @@ export type AppState = {
 	labCurrentIPs: string[];
 	IPdeleteState: boolean[];
 	PipelineItems: any[];
+	currentAnimation: number;
 }
 
 export class App extends React.PureComponent<{}, AppState> {
@@ -43,8 +41,9 @@ export class App extends React.PureComponent<{}, AppState> {
 		pauseState: false,
 		labCurrentIPs: ['192.168.56.227', '192.168.56.168', '192.168.56.255', '192.168.57.32', '192.168.56.254', '192.168.56.206', '192.168.57.34','192.168.56.188'],
 		IPdeleteState: Array(6).fill(false),
-		PipelineItems: []
-	}
+		PipelineItems: [],
+		currentAnimation:-1
+		}
 	/**declaring the function of set nightstatus to be false. notice the setState command
 	 * re-renders the pervious AppState command
 	  */
@@ -210,20 +209,92 @@ export class App extends React.PureComponent<{}, AppState> {
 		else alert('Please enter a valit number!');
 	}
 
+	AddLoopToPipeline = (LoopAmount: string) => {
+		var Amount = parseInt(LoopAmount);
+		if (!isNaN(Amount)) {
+			var Start = "Loop for " + Amount + ' times';
+			var End = "End Loop";
+			var newLoopStart = {name: Start, id: new Date().getTime().toString() + "1", type: 'loop start', amount: Amount};
+			var newLoopEnd = {name: End, id: new Date().getTime().toString() + "2", type: 'loop end', amount: Amount};
+			this.setState({PipelineItems: [...this.state.PipelineItems, newLoopStart, newLoopEnd]});
+		}
+		else alert('Please enter a valit number!');
+	}
+
+	checkPipeline = () => {
+		var QueuedMoves = this.state.PipelineItems.concat();
+		var inloop = false;
+		for (var i =0; i<QueuedMoves.length; i++) {
+			if (QueuedMoves[i].type === 'loop start') {
+				inloop = true
+			}
+			else if (QueuedMoves[i].type === 'loop end') {
+				if (!inloop) {
+					return false;
+				}
+				else {
+					inloop = false
+				}
+				
+			}
+		} 
+
+		return !inloop
+	}
+
 	runPipeline = async () => {
 		var QueuedMoves = this.state.PipelineItems.concat();
+		var inloop = false;
+		let loopCount = 0;
+		let loopIndex = -1;
+		let check = this.checkPipeline()
+		if (!check) {
+			alert("Loops not ordered corectly!")
+			return;
+		}
 		for (var i =0; i<QueuedMoves.length; i++) {
 			console.log("running animation: " + QueuedMoves[i].name);
-			if (QueuedMoves[i].type === 'animation') {
-				var Client = new HttpClient(QueuedMoves[i].ip);
-				Client.timeout = 240;
-				await Client.playAnimation(QueuedMoves[i].name.trim(), true);
+			
+			try {
+				if (QueuedMoves[i].type === 'animation') {
+					var Client = new HttpClient(QueuedMoves[i].ip);
+					Client.timeout = 240;
+					this.setState({currentAnimation: i		
+					})
+					await Client.playAnimation(QueuedMoves[i].name.trim(), true);
+
+				}
+				else if (QueuedMoves[i].type === 'delay') {
+					await timeout(1000 * QueuedMoves[i].amount);
+				}
+				else if (QueuedMoves[i].type === 'loop start') {
+					inloop = true
+					loopIndex = i;
+					loopCount = QueuedMoves[i].amount
+				}
+				else if (QueuedMoves[i].type === 'loop end') {
+					if (!inloop) {
+						alert('Loop end before start!');
+						break;
+					}
+					else {
+						loopCount -= 1
+						if (loopCount <= 0) {
+							inloop = false
+						}
+						else {
+							i = loopIndex
+						}
+					}
+					
+				}
+				else alert('Problem with pipeline items!'); break;
+			} finally {
+				continue;
 			}
-			else if (QueuedMoves[i].type === 'delay') {
-				await timeout(1000 * QueuedMoves[i].amount);
-			}
-			else alert('Problem with pipeline items!');
 		}
+		this.setState({currentAnimation: -1		
+		})
 	};
 
 	PauseResumePipeline =  () => {
@@ -255,10 +326,12 @@ export class App extends React.PureComponent<{}, AppState> {
 				handlePipelineDrag={this.handlePipelineDrag}
 				handleDelete={this.handlePipelineDelete}
 				DelayAdder={this.AddDelayToPipeline}
+				LoopAdder={this.AddLoopToPipeline}
 				run={this.runPipeline}
 				reset={this.resetPipeline}
 				pauseResume={this.PauseResumePipeline}
 				stop={this.StopPipeline}
+				currentAnimation={this.state.currentAnimation}
 			/>
 		);
 	}
@@ -279,11 +352,11 @@ export class App extends React.PureComponent<{}, AppState> {
 					<Navbar collapseOnSelect expand="lg" className='robot-search navbar-collapse' bg="dark" variant="dark">
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					
-						<Form inline>
+						<Form>
 						<Button variant="outline-info" onClick={this.onToggleIPadd}>Connect to a Robot</Button>
 
 						<Modal show={this.state.showNewIP} onHide={this.onToggleIPadd}>
-							<Modal.Header translate="true">
+							<Modal.Header>
 								<Modal.Title>Robots List:</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
@@ -320,7 +393,7 @@ export class App extends React.PureComponent<{}, AppState> {
 							<Button className="mx-2" onClick={() => { document.body.classList.toggle('background-night'); this.SetDayNightStatus() }} variant="outline-info">{this.state.dayNightStatus ? 'Bright' : 'Dark'}</Button>
 							
 							<Modal show={this.state.showInst} onHide={this.onToggleInstructions}>
-								<Modal.Header translate="true">
+								<Modal.Header >
 									<Modal.Title>Manual for the "Robot-Operator"</Modal.Title>
 								</Modal.Header>
 								<Modal.Body>
