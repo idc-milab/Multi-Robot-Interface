@@ -2,7 +2,7 @@ import React from 'react';
 import { Droppable } from "react-beautiful-dnd";
 import DragItem from './DragItem';
 
-function DragList({name, arr, handleDelete}:{name: string, arr: any[], handleDelete: any}) {
+function DragList({name, arr, handleDelete, currentAnimation}:{name: string, arr: any[], handleDelete: any, currentAnimation: number}) {
 
   if (arr.length !== 0) {
     return(
@@ -13,7 +13,7 @@ function DragList({name, arr, handleDelete}:{name: string, arr: any[], handleDel
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {arr.map((item, index) => (<DragItem item={item} index={index} handleDelete={handleDelete}/>))}
+            {arr.map((item, index) => (<DragItem item={item} index={index} handleDelete={handleDelete} running={index === currentAnimation}/>))}
             {provided.placeholder}
           </div>
         )}

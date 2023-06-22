@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
-import { Button, ButtonGroup, Form, InputGroup } from 'react-bootstrap';
+import React from 'react';
+import { Button, ButtonGroup } from 'react-bootstrap';
 
 function SequenceDeposit({arr, load, toggle, remove}:{arr: any[], load: any, toggle: any, remove: any}) {
 
-  const [LoadMode, setLoadMode] = useState(false);
 
   const LoadSequence = (list: any[]) => {
     load(list);
     toggle();
   }
 
-  const ToggleLoad = () => {
-    setLoadMode(!LoadMode);
-  }
+
 
   const contents = () => {
     if (arr.length !== 0) {
